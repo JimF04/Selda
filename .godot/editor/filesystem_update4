@@ -1,0 +1,13 @@
+res://default_bus_layout.tres
+res://default_env.tres
+res://scenes/levels/Intro.tscn
+res://scenes/misc/stats.stylebox
+res://scenes/misc/Quest.tscn
+res://scenes/characters/Player.tscn
+res://singletons/Music.tscn
+res://scenes/levels/HouseInside.tscn
+res://scenes/characters/Enemy.tscn
+res://scenes/misc/Heart.tscn
+res://scenes/misc/UI.tscn
+res://scenes/levels/Outside.tscn
+res://scenes/misc/StatusText.tscn
