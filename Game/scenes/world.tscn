@@ -377,7 +377,7 @@ script = ExtResource("2_llude")
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("2_x7has")]
 texture_filter = 1
-position = Vector2(-34, 58)
+position = Vector2(29, 83)
 script = ExtResource("3_v5g68")
 
 [node name="Player" parent="TileMap" instance=ExtResource("1_5ac3j")]
