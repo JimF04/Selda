@@ -1,0 +1,3 @@
+C:/GitHub/Selda/cpp/cmake-build-debug/CMakeFiles/cpp.dir
+C:/GitHub/Selda/cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/GitHub/Selda/cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
