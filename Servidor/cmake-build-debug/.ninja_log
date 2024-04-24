@@ -1,0 +1,4 @@
+# ninja log v5
+2	317	1713982694750601499	CMakeFiles/Servidor.dir/a_star.cpp.o	bce3076d8378976a
+2	1748	1713984055909745162	CMakeFiles/Servidor.dir/main.cpp.o	35d3c62a216bdc5
+1748	1790	1713984055953747641	Servidor	acf77c01118b3a0b

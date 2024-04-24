@@ -377,8 +377,10 @@ script = ExtResource("2_llude")
 
 [node name="Enemy" parent="TileMap" instance=ExtResource("2_x7has")]
 texture_filter = 1
-position = Vector2(29, 83)
+position = Vector2(24, 85)
 script = ExtResource("3_v5g68")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="TileMap/Enemy"]
 
 [node name="Player" parent="TileMap" instance=ExtResource("1_5ac3j")]
 position = Vector2(152, 106)

@@ -100,7 +100,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rasge"]
-size = Vector2(16, 12)
+size = Vector2(14, 12)
 
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1

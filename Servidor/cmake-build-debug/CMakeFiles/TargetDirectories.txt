@@ -1,0 +1,3 @@
+/home/jimmy/Documents/GitHub/Selda/Servidor/cmake-build-debug/CMakeFiles/Servidor.dir
+/home/jimmy/Documents/GitHub/Selda/Servidor/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/jimmy/Documents/GitHub/Selda/Servidor/cmake-build-debug/CMakeFiles/rebuild_cache.dir
