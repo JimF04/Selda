@@ -1,20 +1,20 @@
-#ifndef BALL_H
-#define BALL_H
+#ifndef WALL_H
+#define WALL_H
 
 #include <raylib.h>
 
-class Ball
+class Wall
 {
 public:
-    Ball();
+    Wall();
     void Draw() const;
     void Move(int deltaX, int deltaY); // Declaración del método Move
-    Vector2 GetPosition() const;
-    int GetRadius() const;
+    Rectangle GetCollisionRect() const;
 private:
     Vector2 position;
-    int radius;
     Color color;
+    int width;
+    int height;
 };
 
 #endif // BALL_H

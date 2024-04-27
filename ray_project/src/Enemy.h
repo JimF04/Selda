@@ -1,20 +1,23 @@
-#ifndef BALL_H
-#define BALL_H
-
+#ifndef ENEMY_H
+#define ENEMY_H
+#include "Ball.h"
 #include <raylib.h>
 
-class Ball
+class Enemy
 {
 public:
-    Ball();
+    Enemy();
     void Draw() const;
     void Move(int deltaX, int deltaY); // Declaración del método Move
     Vector2 GetPosition() const;
     int GetRadius() const;
+    void FollowBreadcrumb(const Vector2& target);
+
 private:
     Vector2 position;
     int radius;
     Color color;
+    int speed;
 };
 
 #endif // BALL_H
