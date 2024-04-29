@@ -1,3 +1,4 @@
+// wall.h
 #ifndef WALL_H
 #define WALL_H
 
@@ -6,10 +7,11 @@
 class Wall
 {
 public:
-    Wall();
+    Wall(); // Constructor sin argumentos
+    Wall(Vector2 pos, int w, int h);
     void Draw() const;
-    void Move(int deltaX, int deltaY); // Declaración del método Move
     Rectangle GetCollisionRect() const;
+
 private:
     Vector2 position;
     Color color;
@@ -17,4 +19,4 @@ private:
     int height;
 };
 
-#endif // BALL_H
+#endif // WALL_H
