@@ -5,7 +5,7 @@
 Enemy::Enemy()
 {
     position = {100, 300};
-    radius = 30;
+    radius = 15;
     color = YELLOW;
     speed = 1;
 }
