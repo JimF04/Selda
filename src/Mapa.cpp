@@ -157,10 +157,9 @@ void Mapa::DrawMap() {
 void Mapa::Draw() {
     BeginMode2D(camera);
 
-    ClearBackground(darkGreen);
+    ClearBackground(BLACK);
     DrawMap();
     ball.Draw();
-    pared.Draw();
     enemigo.Draw();
 
     EndMode2D();
