@@ -16,14 +16,22 @@ public:
     void Update();
     void Draw();
 
+    unsigned int tilesX;
+    unsigned int tilesY;
+    unsigned char *tileIds;
+    unsigned char *tileFog;
+    void ClearFogAroundPlayer();
 private:
     int screenWidth;
     int screenHeight;
     Color darkGreen;
-    Ball ball;
+    Ball personaje;
     Wall pared;
     Enemy enemigo;
     Camera2D camera;
+    void DrawMap();
+    void DrawUI();
+
 };
 
 #endif //RAYLIB_TEMPLATE_MAPA_H

@@ -15,9 +15,12 @@ public:
     void Move(int deltaX, int deltaY); // Declaración del método Move
     Vector2 GetPosition() const;
     int GetRadius() const;
-private:
+    int playerTileX;
+    int playerTileY;
     Vector2 position;
     int radius;
+private:
+
     Color color;
 };
 

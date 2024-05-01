@@ -1,10 +1,10 @@
-#include "raylib.h"
+#include <raylib.h>
 #include "Mapa.h"
 
 int main()
 {
-    const int screenWidth = 800;
-    const int screenHeight = 600;
+    const int screenWidth = 1000;
+    const int screenHeight = 800;
 
     InitWindow(screenWidth, screenHeight, "Control de bola con teclas WASD");
     SetTargetFPS(60);

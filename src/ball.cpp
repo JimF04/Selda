@@ -2,9 +2,11 @@
 
 Ball::Ball()
 {
-    position = {400, 300};
+    position = { 180, 130 };
     radius = 20;
     color = RED;
+    playerTileX = 0;
+    playerTileY = 0;
 }
 
 void Ball::Draw() const

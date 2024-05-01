@@ -17,10 +17,12 @@ public:
     Vector2 GetPosition() const;
     int GetRadius() const;
     void FollowBreadcrumb(const Vector2& target);
-
-private:
     Vector2 position;
     int radius;
+
+private:
+
+
     Color color;
     int speed;
 };
