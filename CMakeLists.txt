@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
-project(raylib_template C CXX)
+project(Selda C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+
+find_package(jsoncpp CONFIG REQUIRED)
 
 # Setting parameters for raylib
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
@@ -18,6 +20,6 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Wall.h
         src/ball.cpp
         src/ball.h)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp)
 target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
 #target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="relative-path-to-assets-in-the-game-package") # Set the asset path macro in release mode

@@ -4,7 +4,7 @@
 int main()
 {
     const int screenWidth = 800;
-    const int screenHeight = 600;
+    const int screenHeight = 608;
 
     InitWindow(screenWidth, screenHeight, "Control de bola con teclas WASD");
     SetTargetFPS(60);

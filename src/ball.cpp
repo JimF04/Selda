@@ -3,8 +3,8 @@
 Ball::Ball()
 {
     position = {400, 300};
-    radius = 20;
-    color = RED;
+    radius = 10;
+    color = PINK;
 }
 
 void Ball::Draw() const

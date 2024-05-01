@@ -9,6 +9,7 @@
 #include "ball.h"
 #include "Wall.h"
 #include "Enemy.h"
+#include <json/json.h>
 
 class Mapa {
 public:
@@ -24,6 +25,7 @@ private:
     Wall pared;
     Enemy enemigo;
     Camera2D camera;
+    void DrawMap();
 };
 
 #endif //RAYLIB_TEMPLATE_MAPA_H
