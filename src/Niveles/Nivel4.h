@@ -8,7 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include "raylib.h"
-#include "../Ball.h"
+#include "../ball.h"
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
 

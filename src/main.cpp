@@ -14,16 +14,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "Selda");
     SetTargetFPS(60);
 
-    // Crear un arreglo de punteros a objetos de tipo Nivel
-    const int numNiveles = 5;
-    Nivel* niveles[numNiveles];
-
-    // Crear instancias de los niveles y asignarlas al arreglo
-    niveles[0] = new Nivel1(screenWidth, screenHeight);
-    niveles[1] = new Nivel2(screenWidth, screenHeight);
-    niveles[2] = new Nivel3(screenWidth, screenHeight);
-    niveles[3] = new Nivel4(screenWidth, screenHeight);
-    niveles[4] = new Nivel5(screenWidth, screenHeight);
+    Nivel* nivelActual = new Nivel1(screenWidth, screenHeight);
 
     int nivelActualIndex = 0;
 
@@ -31,22 +22,36 @@ int main()
     {
         BeginDrawing();
 
-        // Obtener el nivel actual del arreglo
-        Nivel* nivelActual = niveles[nivelActualIndex];
 
         nivelActual->Update();
         nivelActual->Draw();
 
-        // Verificar la condición de victoria
-//        if (nivelActual->CheckWinCondition()){
-//            nivelActualIndex++; // Avanzar al siguiente nivel
-//        }
+        if (IsKeyPressed(KEY_SPACE)){ // cambair por nivelActual->CheckWinCondition()
+            delete nivelActual;
 
-        if (IsKeyPressed(KEY_SPACE)){
             nivelActualIndex++; // Avanzar al siguiente nivel
-            if (nivelActualIndex >= numNiveles){
+            if (nivelActualIndex >= 5){
                 nivelActualIndex = 0;
             }
+
+            switch (nivelActualIndex){
+                case 0:
+                    nivelActual = new Nivel1(screenWidth, screenHeight);
+                    break;
+                case 1:
+                    nivelActual = new Nivel2(screenWidth, screenHeight);
+                    break;
+                case 2:
+                    nivelActual = new Nivel3(screenWidth, screenHeight);
+                    break;
+                case 3:
+                    nivelActual = new Nivel4(screenWidth, screenHeight);
+                    break;
+                case 4:
+                    nivelActual = new Nivel5(screenWidth, screenHeight);
+                    break;
+            }
+
         }
 
         EndDrawing();
