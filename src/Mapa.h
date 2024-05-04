@@ -24,8 +24,9 @@ public:
     Mapa();
     void Update();
     void Draw();
-
     void DrawMap(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture);
+    Texture2D textures[MAX_TEXTURES];
+    void DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture);
 
 private:
     int screenWidth;

@@ -2,22 +2,21 @@
 #include <iostream>
 #include "Mapa.h"
 
-Texture2D textures[MAX_TEXTURES];
-
-// Método para dibujar un tile
-void DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture){
-    Rectangle sourceRec = {(float)TILE_SIZE * tile_x, (float)TILE_SIZE * tile_y, (float)TILE_SIZE, (float)TILE_SIZE };
-    Rectangle destRec = {(float)pos_x, (float)pos_y, (float)TILE_SIZE, (float)TILE_SIZE};
-    Vector2 origin = {0, 0};
-    DrawTexturePro(textures[texture], sourceRec, destRec, origin, 0.0f, WHITE);
-
-}
 
 Mapa::Mapa() {
     // Añadir texturas
     Image image = LoadImage("../assets/Dungeon_Tileset.png");
     textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
     UnloadImage(image);
+}
+
+// Método para dibujar un tile
+void Mapa::DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture){
+    Rectangle sourceRec = {(float)TILE_SIZE * tile_x, (float)TILE_SIZE * tile_y, (float)TILE_SIZE, (float)TILE_SIZE };
+    Rectangle destRec = {(float)pos_x, (float)pos_y, (float)TILE_SIZE, (float)TILE_SIZE};
+    Vector2 origin = {0, 0};
+    DrawTexturePro(textures[texture], sourceRec, destRec, origin, 0.0f, WHITE);
+
 }
 
 // Método para dibujar un sólo mapa
