@@ -15,6 +15,9 @@ public:
     void Move(int deltaX, int deltaY); // Declaración del método Move
     Vector2 GetPosition() const;
     int GetRadius() const;
+    void setPosition(Vector2 pos);
+
+
 private:
     Vector2 position;
     int radius;

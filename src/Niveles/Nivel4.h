@@ -2,8 +2,8 @@
 // Created by winjimmy on 5/3/2024.
 //
 
-#ifndef SELDA_NIVEL1_H
-#define SELDA_NIVEL1_H
+#ifndef SELDA_NIVEL4_H
+#define SELDA_NIVEL4_H
 
 #include <fstream>
 #include <iostream>
@@ -12,9 +12,9 @@
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
 
-class Nivel1 : public Nivel {
+class Nivel4 : public Nivel {
 public:
-    Nivel1(int screenWidth, int screenHeight);
+    Nivel4(int screenWidth, int screenHeight);
     virtual void Update() override;
     virtual void Draw() override;
 
@@ -24,9 +24,8 @@ public:
 
 private:
     Ball ball;
-    Enemy enemigo;
+
 };
 
 
-
-#endif //SELDA_NIVEL1_H
+#endif //SELDA_NIVEL4_H

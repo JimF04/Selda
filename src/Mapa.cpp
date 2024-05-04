@@ -15,7 +15,7 @@ void DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset textu
 
 Mapa::Mapa() {
     // Añadir texturas
-    Image image = LoadImage("../src/resources/Dungeon_Tileset.png");
+    Image image = LoadImage("../assets/Dungeon_Tileset.png");
     textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
     UnloadImage(image);
 }

@@ -8,19 +8,10 @@
 int map[MAP_WIDTH][MAP_HEIGHT];
 int wall[MAP_WIDTH][MAP_HEIGHT];
 
-
-Nivel1::Nivel1(int screenWidth, int screenHeight) {
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
-    mapa = Mapa();
-
-    // Definir la camara
-    camera = { 0 };
-    camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
-    camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
-    camera.rotation = 0.0f;
-    camera.zoom = 3.0f;
 
     // Leer json con los datos de la mapa
     std::ifstream file("../map.json");

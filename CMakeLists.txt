@@ -18,9 +18,19 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Enemy/Enemy.h
         src/ball.cpp
         src/ball.h
+        src/Nivel.h
         src/Niveles/Nivel1.cpp
         src/Niveles/Nivel1.h
-        src/Nivel.h)
+        src/Niveles/Nivel2.cpp
+        src/Niveles/Nivel2.h
+        src/Niveles/Nivel3.cpp
+        src/Niveles/Nivel3.h
+        src/Niveles/Nivel4.cpp
+        src/Niveles/Nivel4.h
+        src/Niveles/Nivel5.cpp
+        src/Niveles/Nivel5.h
+
+)
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp)
 target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
 #target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="relative-path-to-assets-in-the-game-package") # Set the asset path macro in release mode

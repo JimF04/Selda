@@ -27,3 +27,8 @@ int Ball::GetRadius() const
 {
     return radius;
 }
+
+void Ball::setPosition(Vector2 pos)
+{
+    position = pos;
+}
