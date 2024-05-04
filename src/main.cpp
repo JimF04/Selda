@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "Mapa.h"
+#include "Niveles/Nivel1.h"
 
 int main()
 {
@@ -9,12 +10,14 @@ int main()
     InitWindow(screenWidth, screenHeight, "Control de bola con teclas WASD");
     SetTargetFPS(60);
 
-    Mapa mapa(screenWidth, screenHeight);
+    //Mapa mapa(screenWidth, screenHeight);
+    Nivel1 nivel1(screenWidth, screenHeight);
 
     while (!WindowShouldClose())
     {
-        mapa.Update();
-        mapa.Draw();
+
+        nivel1.Update();
+        nivel1.Draw();
 
         EndDrawing();
     }

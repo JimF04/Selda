@@ -5,7 +5,7 @@
 #ifndef RAYLIB_TEMPLATE_ENEMY_H
 #define RAYLIB_TEMPLATE_ENEMY_H
 
-#include "ball.h"
+#include "../ball.h"
 #include "raylib.h"
 
 class Enemy

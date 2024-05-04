@@ -6,9 +6,6 @@
 #define RAYLIB_TEMPLATE_MAPA_H
 
 #include "raylib.h"
-#include "ball.h"
-#include "Wall.h"
-#include "Enemy.h"
 #include <json/json.h>
 
 #define TILE_SIZE 16
@@ -24,20 +21,15 @@ typedef enum {
 
 class Mapa {
 public:
-    Mapa(int screenWidth, int screenHeight);
+    Mapa();
     void Update();
     void Draw();
+
+    void DrawMap(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture);
 
 private:
     int screenWidth;
     int screenHeight;
-    Color darkGreen;
-    Ball ball;
-    Wall pared;
-    Enemy enemigo;
-    Camera2D camera;
-    void DrawMaps();
-    void DrawMap(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture);
 };
 
 #endif //RAYLIB_TEMPLATE_MAPA_H
