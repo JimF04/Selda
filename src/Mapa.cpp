@@ -2,60 +2,45 @@
 #include <iostream>
 #include "Mapa.h"
 
-#define TILE_SIZE 16
-#define MAP_WIDTH 50
-#define MAP_HEIGHT 38
-
-#define MAX_TEXTURES 1
-typedef enum {
-    TEXTURE_TILEMAP = 0
-} texture_asset;
-
 Texture2D textures[MAX_TEXTURES];
 
+// Incicializar matrices para cada layer
 int map[MAP_WIDTH][MAP_HEIGHT];
 int wall[MAP_WIDTH][MAP_HEIGHT];
 
-void DrawTile( int pos_x, int pos_y, int tile_x, int tile_y){
-
+// Método para dibujar un tile
+void DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture){
     Rectangle sourceRec = {(float)TILE_SIZE * tile_x, (float)TILE_SIZE * tile_y, (float)TILE_SIZE, (float)TILE_SIZE };
     Rectangle destRec = {(float)pos_x, (float)pos_y, (float)TILE_SIZE, (float)TILE_SIZE};
     Vector2 origin = {0, 0};
-    DrawTexturePro(textures[TEXTURE_TILEMAP], sourceRec, destRec, origin, 0.0f, WHITE);
+    DrawTexturePro(textures[texture], sourceRec, destRec, origin, 0.0f, WHITE);
 
 }
 
 Mapa::Mapa(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
-    darkGreen = Color{20, 160, 133, 255};
-
+    // Iniciar clases
     ball = Ball();
-    const int wallPosX = 500;
-    const int wallPosY = 100;
-    const int wallWidth = 50;
-    const int wallHeight = 50;
-    Vector2 wallPosition = { wallPosX, wallPosY };
-    pared = Wall(wallPosition, wallWidth, wallHeight);
     enemigo = Enemy();
 
+    // Definir la camara
     camera = { 0 };
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
     camera.zoom = 3.0f;
 
+    // Añadir texturas
     Image image = LoadImage("../src/resources/Dungeon_Tileset.png");
     textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
     UnloadImage(image);
 
+    // Leer json con los datos de la mapa
     std::ifstream file("../map.json");
-    // Leer el archivo JSON y parsearlo
     Json::Value root;
     file >> root;
 
-    // Obtener la capa de datos
+    // Obtener la capa de Floor
     Json::Value layer = root["layers"][0];
-
-    // Obtener los datos (la matriz de números)
     Json::Value data = layer["data"];
 
     // Llenar la matriz con los datos del JSON
@@ -66,7 +51,7 @@ Mapa::Mapa(int screenWidth, int screenHeight) : screenWidth(screenWidth), screen
             ++index;
         }
     }
-
+    // Obtener la capa Wall
     Json::Value wallLayer = root["layers"][1];
     Json::Value wallData = wallLayer["data"];
     index = 0;
@@ -120,10 +105,10 @@ void Mapa::Update() {
         // Mueve la bola
         ball.Move(deltaX, deltaY);
 
-        float ball_x = ball.GetPosition().x;
-        float ball_y = ball.GetPosition().y;
-
-        std::cout << "Ball position: " << ball_x << ", " << ball_y << std::endl;
+//        float ball_x = ball.GetPosition().x;
+//        float ball_y = ball.GetPosition().y;
+//
+//        std::cout << "Ball position: " << ball_x << ", " << ball_y << std::endl;
     }
 
     enemigo.FollowBreadcrumb(ball.GetPosition());
@@ -131,60 +116,30 @@ void Mapa::Update() {
     camera.target = ball.GetPosition();
 }
 
+// Método para dibujar un sólo mapa
+void Mapa::DrawMap(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture) {
+    for (int y = 0; y < MAP_HEIGHT; y++){
+        for (int x = 0; x < MAP_WIDTH; x++){
+            int tileID = matriz[x][y];
+            int tile_x = (tileID - 1) % tileSetSize;
+            int tile_y = (tileID - 1) / tileSetSize;
 
-
-void Mapa::DrawMap() {
-    for (int y = 0; y < MAP_HEIGHT; y++) {
-        for (int x = 0; x < MAP_WIDTH; x++) {
-            int tileType = map[x][y];
-            int tile_x;
-            int tile_y;
-
-            if (tileType % 10 == 0){
-                tile_x = 9;
-                tile_y = (tileType / 10) - 1;
-            } else if (tileType < 10 && (tileType%10 != 0)){
-                tile_x = tileType - 1;
-                tile_y = 0;
-            } else if (tileType > 10){
-                tile_x = (tileType % 10) - 1;
-                tile_y = (tileType / 10);
-            }
-
-            DrawTile(x * TILE_SIZE, y * TILE_SIZE, tile_x, tile_y);
+            DrawTile(x * TILE_SIZE, y * TILE_SIZE, tile_x, tile_y, texture);
         }
     }
+}
 
-    for (int y = 0; y < MAP_HEIGHT; y++) {
-        for (int x = 0; x < MAP_WIDTH; x++) {
-            int tileType = wall[x][y];
-            int tile_x;
-            int tile_y;
-
-            if (tileType!=0 && tileType % 10 == 0){
-                tile_x = 9;
-                tile_y = (tileType / 10) - 1;
-            } else if (tileType < 10 && (tileType%10 != 0)){
-                tile_x = tileType - 1;
-                tile_y = 0;
-            } else if (tileType > 10){
-                tile_x = (tileType % 10) - 1;
-                tile_y = (tileType / 10);
-            } else if (tileType == 0){
-                continue;
-            }
-
-            DrawTile(x * TILE_SIZE, y * TILE_SIZE, tile_x, tile_y);
-        }
-    }
-
+// Método para dibujar varias mapas
+void Mapa::DrawMaps() {
+    DrawMap(map, 10, TEXTURE_TILEMAP);
+    DrawMap(wall, 10, TEXTURE_TILEMAP);
 }
 
 void Mapa::Draw() {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
-    DrawMap();
+    DrawMaps();
     ball.Draw();
     enemigo.Draw();
 
