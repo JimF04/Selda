@@ -7,6 +7,7 @@
 
 #include "../ball.h"
 #include "raylib.h"
+#include "../DataStructures/Stack.h"
 
 class Enemy
 {
@@ -17,6 +18,7 @@ public:
     Vector2 GetPosition() const;
     int GetRadius() const;
     void FollowBreadcrumb(const Vector2& target);
+    void setPosition(Vector2 pos);
 
 private:
     Vector2 position;

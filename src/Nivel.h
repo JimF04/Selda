@@ -8,6 +8,7 @@
 
 #include "Mapa.h"
 #include "raylib.h"
+#include "DataStructures/Stack.h"
 
 class Nivel {
 public:

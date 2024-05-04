@@ -5,8 +5,10 @@
 #include "Nivel1.h"
 
 // Incicializar matrices para cada layer
-int map[MAP_WIDTH][MAP_HEIGHT];
+int floor[MAP_WIDTH][MAP_HEIGHT];
 int wall[MAP_WIDTH][MAP_HEIGHT];
+
+Stack<Vector2> path;
 
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
@@ -26,7 +28,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     int index = 0;
     for (int y = 0; y < MAP_HEIGHT; ++y) {
         for (int x = 0; x < MAP_WIDTH; ++x) {
-            map[x][y] = data[index].asInt();
+            floor[x][y] = data[index].asInt();
             ++index;
         }
     }
@@ -40,6 +42,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
             ++index;
         }
     }
+
+    camera.zoom = 1.0f;
 }
 
 void Nivel1::Update() {
@@ -84,26 +88,56 @@ void Nivel1::Update() {
         // Mueve la bola
         ball.Move(deltaX, deltaY);
 
-//        float ball_x = ball.GetPosition().x;
-//        float ball_y = ball.GetPosition().y;
-//
-//        std::cout << "Ball position: " << ball_x << ", " << ball_y << std::endl;
     }
+
+
+    // Convertir las coordenadas de la bola a las coordenadas de la matriz
+    int ball_x_grid = static_cast<int>( ball.GetPosition().x / TILE_SIZE);
+    int ball_y_grid = static_cast<int>( ball.GetPosition().y / TILE_SIZE);
+
+    int enemy_x_grid = static_cast<int>( enemigo.GetPosition().x / TILE_SIZE);
+    int enemy_y_grid = static_cast<int>( enemigo.GetPosition().y / TILE_SIZE);
+
+
+     //Crear una instancia de AStar y encontrar el camino
+    AStar astar(wall);
+    path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
+
+    path.pop(); // Elimina la posición actual del enemigo
+    //astar.printPath(path);
+    Stack<Vector2> pathCopy = path;
 
     enemigo.FollowBreadcrumb(ball.GetPosition());
 
     camera.target = ball.GetPosition();
 }
 
-
 void Nivel1::Draw() {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
-    mapa.DrawMap(map, 10, TEXTURE_TILEMAP);
+    mapa.DrawMap(floor, 10, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 10, TEXTURE_TILEMAP);
     ball.Draw();
     enemigo.Draw();
+
+// Calcula el desplazamiento necesario para centrar los círculos en cada celda
+    float offsetX = (TILE_SIZE - 5) / 2.0f; // 5 es el radio del círculo
+    float offsetY = (TILE_SIZE - 5) / 2.0f;
+
+// Dibujar círculos verdes en cada posición del camino encontrado
+    while (!path.empty()) {
+        Vector2 point = path.top();
+        path.pop();
+
+        // Convertir las coordenadas de la matriz a las coordenadas del mundo
+        float worldX = static_cast<float>(point.x * TILE_SIZE + offsetX);
+        float worldY = static_cast<float>(point.y * TILE_SIZE + offsetY);
+
+        // Dibujar un círculo verde en la posición del mundo
+        DrawCircle(worldX, worldY, 5, GREEN);
+    }
+
 
     EndMode2D();
 }

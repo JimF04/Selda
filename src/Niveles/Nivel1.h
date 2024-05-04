@@ -11,6 +11,8 @@
 #include "../ball.h"
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
+#include "../Algoritmos/AStar.h"
+#include "../DataStructures/Stack.h"
 
 class Nivel1 : public Nivel {
 public:

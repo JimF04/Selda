@@ -1,11 +1,14 @@
 #include "Enemy.h"
 #include <queue>
 #include <cmath>
+#include <unistd.h>
+#include <chrono>
+#include <thread>
 
 Enemy::Enemy()
 {
     position = {100, 300};
-    radius = 15;
+    radius = 7;
     color = YELLOW;
     speed = 1;
 }
@@ -25,12 +28,16 @@ Vector2 Enemy::GetPosition() const
     return position;
 }
 
+void Enemy::setPosition(Vector2 pos)
+{
+    position = pos;
+}
+
 int Enemy::GetRadius() const
 {
     return radius;
 }
-void Enemy::FollowBreadcrumb(const Vector2& target)
-{
+void Enemy::FollowBreadcrumb(const Vector2& target) {
     // Calcula la dirección hacia la bola
     float directionX = target.x - position.x;
     float directionY = target.y - position.y;
