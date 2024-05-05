@@ -4,6 +4,7 @@
 
 #include "Nivel1.h"
 
+
 // Incicializar matrices para cada layer
 int floor[MAP_WIDTH][MAP_HEIGHT];
 int wall[MAP_WIDTH][MAP_HEIGHT];
@@ -14,6 +15,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
 
     // Leer json con los datos de la mapa
     std::ifstream file("../map.json");
@@ -46,6 +49,18 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     camera.zoom = 1.0f;
 }
 
+void Nivel1::ResetLevel() {
+    // Reiniciar la bola
+    ball = Ball();
+
+    // Reiniciar el enemigo
+    enemigo = Enemy();
+
+    // Reiniciar otros estados necesarios
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
+}
+
 void Nivel1::Update() {
     int deltaX = 0;
     int deltaY = 0;
@@ -58,6 +73,8 @@ void Nivel1::Update() {
         deltaX -= 2;
     if (IsKeyDown(KEY_D))
         deltaX += 2;
+
+
 
     // Calcula la posición proyectada de la bola
     Vector2 projectedPosition = { ball.GetPosition().x + deltaX, ball.GetPosition().y + deltaY };
@@ -91,6 +108,7 @@ void Nivel1::Update() {
     }
 
 
+
     // Convertir las coordenadas de la bola a las coordenadas de la matriz
     int ball_x_grid = static_cast<int>( ball.GetPosition().x / TILE_SIZE);
     int ball_y_grid = static_cast<int>( ball.GetPosition().y / TILE_SIZE);
@@ -110,6 +128,31 @@ void Nivel1::Update() {
     enemigo.FollowBreadcrumb(ball.GetPosition());
 
     camera.target = ball.GetPosition();
+
+    if (GetTime() - lastCollisionDetectionTime >= 2.0) {
+        collisionDetected = false; // Restablece la bandera de colisión
+    }
+
+    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+        if (ball.CheckCollisionWithEnemy(enemigo)) {
+            // Si hay colisión, puedes hacer lo que necesites aquí
+            // Por ejemplo, decrementar vidas, mover la bola, etc.
+            ball.DecreaseLives(); // Disminuir contador de vidas
+
+            // Verifica si la bola se quedó sin vidas
+            if (ball.GetLives() <= 0) {
+                // La bola ha perdido todas sus vidas
+                ResetLevel();
+            }
+
+            // Establece la bandera de colisión en true
+            collisionDetected = true;
+
+            // Actualiza el tiempo de la última detección de colisiones
+            lastCollisionDetectionTime = GetTime();
+        }
+    }
 }
 
 void Nivel1::Draw() {

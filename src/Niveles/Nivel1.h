@@ -19,6 +19,7 @@ public:
     Nivel1(int screenWidth, int screenHeight);
     virtual void Update() override;
     virtual void Draw() override;
+    void ResetLevel();
 
     virtual bool CheckWinCondition() override {
         return winCondition;
@@ -27,6 +28,8 @@ public:
 private:
     Ball ball;
     Enemy enemigo;
+    bool collisionDetected;
+    double lastCollisionDetectionTime;
 };
 
 

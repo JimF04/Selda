@@ -1,12 +1,21 @@
 #include "ball.h"
+#include "raylib.h"
+#include "raymath.h"
+
 
 Ball::Ball()
 {
     position = {400, 300};
     radius = 10;
     color = PINK;
+    lives = 5;
 }
-
+int Ball::GetLives() const {
+    return lives;
+}
+void Ball::DecreaseLives() {
+    lives--;
+}
 void Ball::Draw() const
 {
     DrawCircleV(position, radius, color);
@@ -31,4 +40,9 @@ int Ball::GetRadius() const
 void Ball::setPosition(Vector2 pos)
 {
     position = pos;
+}
+
+bool Ball::CheckCollisionWithEnemy(const Enemy& enemy) const {
+    float distance = Vector2Distance(position, enemy.GetPosition());
+    return distance < radius + enemy.GetRadius();
 }
