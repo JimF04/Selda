@@ -26,7 +26,7 @@ int main()
         nivelActual->Update();
         nivelActual->Draw();
 
-        std::cout<<nivelActual->CheckWinCondition();
+
 
         if (nivelActual->CheckWinCondition()){
             delete nivelActual;

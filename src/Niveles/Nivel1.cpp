@@ -27,15 +27,21 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 void Nivel1::Update() {
     int deltaX = 0;
     int deltaY = 0;
+    float speed = 1.0f;
+    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+
+    if (isShiftPressed) {
+        speed *= 2.0f;
+    }
 
     if (IsKeyDown(KEY_W))
-        deltaY -= 2;
+        deltaY -= speed;
     if (IsKeyDown(KEY_S))
-        deltaY += 2;
+        deltaY += speed;
     if (IsKeyDown(KEY_A))
-        deltaX -= 2;
+        deltaX -= speed;
     if (IsKeyDown(KEY_D))
-        deltaX += 2;
+        deltaX += speed;
 
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");

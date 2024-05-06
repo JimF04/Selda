@@ -66,7 +66,6 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
                         else if (type == "stairs"){
                             for (int i=0; i<4; i++){
                                 if (tileType == stairs[i]){
-                                    std::cout<<"ssafsaf";
                                     onstairs=true;
                                 }
 
