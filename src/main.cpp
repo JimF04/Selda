@@ -26,7 +26,7 @@ int main()
         nivelActual->Update();
         nivelActual->Draw();
 
-        if (IsKeyPressed(KEY_SPACE)){ // cambair por nivelActual->CheckWinCondition()
+        if (IsKeyPressed(KEY_SPACE)){ // cambiar por nivelActual->CheckWinCondition()
             delete nivelActual;
 
             nivelActualIndex++; // Avanzar al siguiente nivel

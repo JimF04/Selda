@@ -25,8 +25,9 @@ public:
     }
 
 private:
-    Ball ball;
     Enemy enemigo;
+
+    void DrawAStar(Stack<Vector2> path);
 };
 
 

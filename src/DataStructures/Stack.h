@@ -62,7 +62,11 @@ template <class T> T Stack<T>::pop() {
 }
 
 template <class T> T Stack<T>::top() {
+    if (empty()) {
+        throw std::runtime_error("Stack is empty");
+    }
     return st[top_element];
 }
+
 
 #endif //SELDA_STACK_H

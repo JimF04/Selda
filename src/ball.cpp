@@ -32,3 +32,13 @@ void Ball::setPosition(Vector2 pos)
 {
     position = pos;
 }
+
+bool Ball::GetSafeRoom()
+{
+    return safeRoom;
+}
+
+void Ball::SetSafeRoom(bool safe)
+{
+    safeRoom = safe;
+}
