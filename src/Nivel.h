@@ -19,7 +19,7 @@ public:
         camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
         camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
         camera.rotation = 0.0f;
-        camera.zoom = 3.0f;
+        camera.zoom = 5.0f;
     };
 
     virtual void Update() = 0;

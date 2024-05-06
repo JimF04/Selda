@@ -15,7 +15,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
-     ball.setPosition({250,60});
+     ball.setPosition({150,150});
+
 
     // Leer json con los datos de la mapa
     std::ifstream file("../Level1.json");
@@ -57,7 +58,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
         }
     }
 
-    camera.zoom = 1.0f;
 }
 
 void Nivel1::Update() {
@@ -65,13 +65,13 @@ void Nivel1::Update() {
     int deltaY = 0;
 
     if (IsKeyDown(KEY_W))
-        deltaY -= 2;
+        deltaY -= 1;
     if (IsKeyDown(KEY_S))
-        deltaY += 2;
+        deltaY += 1;
     if (IsKeyDown(KEY_A))
-        deltaX -= 2;
+        deltaX -= 1;
     if (IsKeyDown(KEY_D))
-        deltaX += 2;
+        deltaX += 1;
 
     // Calcula la posición proyectada de la bola
     Vector2 projectedPosition = { ball.GetPosition().x + deltaX, ball.GetPosition().y + deltaY };
@@ -138,21 +138,21 @@ void Nivel1::Draw() {
     enemigo.Draw();
 
 // Calcula el desplazamiento necesario para centrar los círculos en cada celda
-    float offsetX = (TILE_SIZE - 5) / 2.0f; // 5 es el radio del círculo
-    float offsetY = (TILE_SIZE - 5) / 2.0f;
-
-// Dibujar círculos verdes en cada posición del camino encontrado
-    while (!path.empty()) {
-        Vector2 point = path.top();
-        path.pop();
-
-        // Convertir las coordenadas de la matriz a las coordenadas del mundo
-        float worldX = static_cast<float>(point.x * TILE_SIZE + offsetX);
-        float worldY = static_cast<float>(point.y * TILE_SIZE + offsetY);
-
-        // Dibujar un círculo verde en la posición del mundo
-        DrawCircle(worldX, worldY, 5, GREEN);
-    }
+//    float offsetX = (TILE_SIZE - 5) / 2.0f; // 5 es el radio del círculo
+//    float offsetY = (TILE_SIZE - 5) / 2.0f;
+//
+//// Dibujar círculos verdes en cada posición del camino encontrado
+//    while (!path.empty()) {
+//        Vector2 point = path.top();
+//        path.pop();
+//
+//        // Convertir las coordenadas de la matriz a las coordenadas del mundo
+//        float worldX = static_cast<float>(point.x * TILE_SIZE + offsetX);
+//        float worldY = static_cast<float>(point.y * TILE_SIZE + offsetY);
+//
+//        // Dibujar un círculo verde en la posición del mundo
+//        DrawCircle(worldX, worldY, 5, GREEN);
+//    }
 
 
     EndMode2D();

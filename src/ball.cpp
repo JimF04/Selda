@@ -3,7 +3,7 @@
 Ball::Ball()
 {
     position = {400, 300};
-    radius = 10;
+    radius = 6;
     color = PINK;
 }
 
