@@ -32,6 +32,7 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Algoritmos/AStar.cpp
         src/Algoritmos/AStar.h
         src/DataStructures/Stack.h
+        src/Nivel.cpp
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp)

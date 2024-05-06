@@ -3,7 +3,7 @@
 Ball::Ball()
 {
     position = {400, 300};
-    radius = 10;
+    radius = 6;
     color = PINK;
 }
 
@@ -31,4 +31,14 @@ int Ball::GetRadius() const
 void Ball::setPosition(Vector2 pos)
 {
     position = pos;
+}
+
+bool Ball::GetSafeRoom()
+{
+    return safeRoom;
+}
+
+void Ball::SetSafeRoom(bool safe)
+{
+    safeRoom = safe;
 }

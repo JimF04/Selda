@@ -21,12 +21,19 @@ public:
     virtual void Draw() override;
 
     virtual bool CheckWinCondition() override {
+        if (onstairs){
+            winCondition = true;
+        }
+        else {
+            winCondition= false;
+        }
         return winCondition;
     }
 
 private:
-    Ball ball;
     Enemy enemigo;
+
+    void DrawAStar(Stack<Vector2> path);
 };
 
 

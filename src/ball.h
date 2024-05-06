@@ -16,7 +16,9 @@ public:
     Vector2 GetPosition() const;
     int GetRadius() const;
     void setPosition(Vector2 pos);
-
+    bool GetSafeRoom();
+    void SetSafeRoom(bool safe);
+    bool safeRoom;
 
 private:
     Vector2 position;
