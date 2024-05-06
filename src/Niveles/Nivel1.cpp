@@ -47,7 +47,7 @@ void Nivel1::Update() {
 
 
      //Crear una instancia de AStar y encontrar el camino
-    AStar astar(wall1);
+    AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
 
     path.pop(); // Elimina la posición actual del enemigo
@@ -65,9 +65,9 @@ void Nivel1::Draw() {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
-    mapa.DrawMap(floor1, 25, TEXTURE_TILEMAP);
-    mapa.DrawMap(saferoom1, 25, TEXTURE_TILEMAP);
-    mapa.DrawMap(wall1, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
     ball.Draw();
     enemigo.Draw();
