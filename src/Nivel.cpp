@@ -10,6 +10,7 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
     camera.zoom = 5.0f;
+
 }
 
 void Nivel::LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MAP_HEIGHT]) {
@@ -79,21 +80,19 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
     camera.target = ball.GetPosition();
 }
 
-void Nivel::DrawMiniMap(std::string miniMap) {
+void Nivel::DrawMiniMap() {
     // Definir las dimensiones y posición del minimapa
-    static Texture2D miniMapTexture = LoadTexture(miniMap.c_str());
 
     const float aspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
-    const float miniMapWidth = 50;  // Ancho del minimapa en pantalla
+    const float miniMapWidth = 60;  // Ancho del minimapa en pantalla
     const float miniMapHeight = miniMapWidth / aspectRatio; // Alto del minimapa en pantalla
 
     // Calcular la posición del minimapa relativa a la cámara
     Vector2 minimapPosition;
-    minimapPosition.x = camera.target.x - miniMapWidth / 2.0f + 95;
-    minimapPosition.y = camera.target.y - miniMapHeight / 2.0f - 65;
+    minimapPosition.x = camera.target.x - miniMapWidth / 2.0f + 87;
+    minimapPosition.y = camera.target.y - miniMapHeight / 2.0f - 57;
 
-    // Dibujar el contenido del minimapa
-    BeginMode2D(camera);
+
     // Dibujar el fondo del minimapa (tu imagen del minimapa)
     DrawTexturePro(miniMapTexture, { 0.0f, 0.0f, static_cast<float>(miniMapTexture.width), static_cast<float>(miniMapTexture.height) },
                    { minimapPosition.x, minimapPosition.y, miniMapWidth, miniMapHeight }, { 0, 0 }, 0.0f, WHITE);
@@ -101,7 +100,7 @@ void Nivel::DrawMiniMap(std::string miniMap) {
     Vector2 ballPositionOnMiniMap = { minimapPosition.x + ball.GetPosition().x / (screenWidth / miniMapWidth),
                                       minimapPosition.y + ball.GetPosition().y / (screenHeight / miniMapHeight) };
     DrawRectangle(ballPositionOnMiniMap.x, ballPositionOnMiniMap.y, 1, 1, YELLOW);
-    EndMode2D();
+
 }
 
 

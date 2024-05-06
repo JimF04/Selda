@@ -9,9 +9,12 @@
 Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
-    ball.setPosition({ 100, 100 });
+    ball.setPosition({ 592, 704 });
 
-    //LoadMap("../Level5.json", 0, floor);
+    LoadMap("../BossLevel.json", 0, floor);
+    LoadMap("../BossLevel.json", 1, saferoom);
+    LoadMap("../BossLevel.json", 2, wall);
+    miniMapTexture = LoadTexture("../assets/BossLevel.png");
 }
 
 void Nivel5::Update() {
@@ -28,6 +31,7 @@ void Nivel5::Update() {
         deltaX += 2;
 
     LayerCollision(deltaX, deltaY, wall, "wall");
+    LayerCollision(deltaX, deltaY, saferoom, "saferoom");
 }
 
 
@@ -36,7 +40,11 @@ void Nivel5::Draw() {
 
     ClearBackground(BLACK);
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    DrawMiniMap();
     ball.Draw();
+
 
     EndMode2D();
 }

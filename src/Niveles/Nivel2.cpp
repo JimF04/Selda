@@ -9,10 +9,12 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
-    ball.setPosition({100,410});
+    ball.setPosition({90,416});
 
-
-    LoadMap("../Level2.json", 0,floor);
+    LoadMap("../Level2.json", 0, floor);
+    LoadMap("../Level2.json", 1, saferoom);
+    LoadMap("../Level2.json", 2, wall);
+    miniMapTexture = LoadTexture("../assets/Level2.png");
 
 }
 
@@ -30,6 +32,7 @@ void Nivel2::Update() {
         deltaX += 1;
 
     LayerCollision(deltaX, deltaY, wall, "wall");
+    LayerCollision(deltaX, deltaY, saferoom, "saferoom");
 }
 
 void Nivel2::Draw() {
@@ -37,8 +40,17 @@ void Nivel2::Draw() {
 
     ClearBackground(BLACK);
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    DrawMiniMap();
+
     ball.Draw();
     enemigo.Draw();
+
+    if (ball.GetSafeRoom()){
+        DrawCenteredText("SAFE ROOM", 10, GREEN);
+    }
+
 
     EndMode2D();
 }

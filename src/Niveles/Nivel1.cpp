@@ -14,11 +14,13 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
-    ball.setPosition({150,150});
+    ball.setPosition({90,160});
 
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
     LoadMap("../Level1.json", 2, wall);
+
+    miniMapTexture = LoadTexture("../assets/Level1.png");
 
 }
 
@@ -76,7 +78,7 @@ void Nivel1::Draw() {
         DrawCenteredText("SAFE ROOM", 10, GREEN);
     }
 
-    DrawMiniMap("../assets/Level1.png");
+    DrawMiniMap();
 
     EndMode2D();
 }

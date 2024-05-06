@@ -21,7 +21,9 @@ public:
     virtual void LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MAP_HEIGHT]);
     virtual void LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIGHT], std::string type);
     void DrawCenteredText(const char* text, int fontSize, Color color);
-    void DrawMiniMap(std::string miniMap);
+    void DrawMiniMap();
+    Texture2D miniMapTexture;
+
 
 protected:
     // Variables comunes a todos los niveles
@@ -34,6 +36,7 @@ protected:
     int wall[MAP_WIDTH][MAP_HEIGHT];
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
     Ball ball;
+    int stairs [4] = {158,159,183,184};
 
 };
 
