@@ -23,9 +23,6 @@ public:
     }
 
 private:
-    Ball ball;
-    Enemy enemigo;
-
 };
 
 

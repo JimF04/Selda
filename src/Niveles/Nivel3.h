@@ -23,7 +23,7 @@ public:
     }
 
 private:
-    Ball ball;
+
 
 };
 
