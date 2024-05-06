@@ -7,6 +7,7 @@
 // Incicializar matrices para cada layer
 int floor[MAP_WIDTH][MAP_HEIGHT];
 int wall[MAP_WIDTH][MAP_HEIGHT];
+int saferoom[MAP_WIDTH][MAP_HEIGHT];
 
 Stack<Vector2> path;
 
@@ -14,9 +15,10 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
+     ball.setPosition({250,60});
 
     // Leer json con los datos de la mapa
-    std::ifstream file("../map.json");
+    std::ifstream file("../Level1.json");
     Json::Value root;
     file >> root;
 
@@ -32,8 +34,20 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
             ++index;
         }
     }
+
+// Obtener la capa Safe
+    Json::Value safeLayer = root["layers"][1];
+    Json::Value safeData = safeLayer["data"];
+    index = 0;
+    for (int y = 0; y < MAP_HEIGHT; ++y) {
+        for (int x = 0; x < MAP_WIDTH; ++x) {
+            saferoom[x][y] = safeData[index].asInt();
+            ++index;
+        }
+    }
+
     // Obtener la capa Wall
-    Json::Value wallLayer = root["layers"][1];
+    Json::Value wallLayer = root["layers"][2];
     Json::Value wallData = wallLayer["data"];
     index = 0;
     for (int y = 0; y < MAP_HEIGHT; ++y) {
@@ -116,8 +130,10 @@ void Nivel1::Draw() {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
-    mapa.DrawMap(floor, 10, TEXTURE_TILEMAP);
-    mapa.DrawMap(wall, 10, TEXTURE_TILEMAP);
+    mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+
     ball.Draw();
     enemigo.Draw();
 

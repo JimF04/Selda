@@ -10,8 +10,8 @@
 
 #define TILE_SIZE 16
 
-#define MAP_WIDTH 50
-#define MAP_HEIGHT 38
+#define MAP_WIDTH 75
+#define MAP_HEIGHT 50
 
 #define MAX_TEXTURES 2
 typedef enum {

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define SIZE 1900
+#define SIZE 3750
 
 template <class T> class Stack {
 public:
