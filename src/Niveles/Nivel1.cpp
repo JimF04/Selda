@@ -38,7 +38,9 @@ void Nivel1::Update() {
         deltaX += 2;
 
     LayerCollision(deltaX, deltaY, wall, "wall");
+    LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+
 
     // Convertir las coordenadas de la bola a las coordenadas de la matriz
     int ball_x_grid = static_cast<int>( ball.GetPosition().x / TILE_SIZE);

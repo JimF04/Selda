@@ -31,6 +31,7 @@ void Nivel3::Update() {
         deltaX += 2;
 
     LayerCollision(deltaX, deltaY, wall, "wall");
+    LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
 }
 

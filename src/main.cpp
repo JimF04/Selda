@@ -26,7 +26,9 @@ int main()
         nivelActual->Update();
         nivelActual->Draw();
 
-        if (IsKeyPressed(KEY_SPACE)){ // cambiar por nivelActual->CheckWinCondition()
+        std::cout<<nivelActual->CheckWinCondition();
+
+        if (nivelActual->CheckWinCondition()){
             delete nivelActual;
 
             nivelActualIndex++; // Avanzar al siguiente nivel

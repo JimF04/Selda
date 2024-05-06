@@ -37,6 +37,7 @@ protected:
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
     Ball ball;
     int stairs [4] = {158,159,183,184};
+    bool onstairs = false;
 
 };
 

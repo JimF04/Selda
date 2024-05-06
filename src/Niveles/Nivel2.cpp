@@ -23,15 +23,16 @@ void Nivel2::Update() {
     int deltaY = 0;
 
     if (IsKeyDown(KEY_W))
-        deltaY -= 1;
+        deltaY -= 2;
     if (IsKeyDown(KEY_S))
-        deltaY += 1;
+        deltaY += 2;
     if (IsKeyDown(KEY_A))
-        deltaX -= 1;
+        deltaX -= 2;
     if (IsKeyDown(KEY_D))
-        deltaX += 1;
+        deltaX += 2;
 
     LayerCollision(deltaX, deltaY, wall, "wall");
+    LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
 }
 
