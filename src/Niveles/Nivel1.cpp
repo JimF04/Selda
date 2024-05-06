@@ -5,9 +5,9 @@
 #include "Nivel1.h"
 
 // Incicializar matrices para cada layer
-int floor[MAP_WIDTH][MAP_HEIGHT];
-int wall[MAP_WIDTH][MAP_HEIGHT];
-int saferoom[MAP_WIDTH][MAP_HEIGHT];
+int floor1[MAP_WIDTH][MAP_HEIGHT];
+int wall1[MAP_WIDTH][MAP_HEIGHT];
+int saferoom1[MAP_WIDTH][MAP_HEIGHT];
 
 Stack<Vector2> path;
 
@@ -15,11 +15,11 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();
-     ball.setPosition({150,150});
+     ball.setPosition({500,150});
 
 
     // Leer json con los datos de la mapa
-    std::ifstream file("../Level1.json");
+    std::ifstream file("../BossLevel.json");
     Json::Value root;
     file >> root;
 
@@ -31,7 +31,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     int index = 0;
     for (int y = 0; y < MAP_HEIGHT; ++y) {
         for (int x = 0; x < MAP_WIDTH; ++x) {
-            floor[x][y] = data[index].asInt();
+            floor1[x][y] = data[index].asInt();
             ++index;
         }
     }
@@ -42,7 +42,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     index = 0;
     for (int y = 0; y < MAP_HEIGHT; ++y) {
         for (int x = 0; x < MAP_WIDTH; ++x) {
-            saferoom[x][y] = safeData[index].asInt();
+            saferoom1[x][y] = safeData[index].asInt();
             ++index;
         }
     }
@@ -53,7 +53,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     index = 0;
     for (int y = 0; y < MAP_HEIGHT; ++y) {
         for (int x = 0; x < MAP_WIDTH; ++x) {
-            wall[x][y] = wallData[index].asInt();
+            wall1[x][y] = wallData[index].asInt();
             ++index;
         }
     }
@@ -65,13 +65,13 @@ void Nivel1::Update() {
     int deltaY = 0;
 
     if (IsKeyDown(KEY_W))
-        deltaY -= 1;
+        deltaY -= 2;
     if (IsKeyDown(KEY_S))
-        deltaY += 1;
+        deltaY += 2;
     if (IsKeyDown(KEY_A))
-        deltaX -= 1;
+        deltaX -= 2;
     if (IsKeyDown(KEY_D))
-        deltaX += 1;
+        deltaX += 2;
 
     // Calcula la posición proyectada de la bola
     Vector2 projectedPosition = { ball.GetPosition().x + deltaX, ball.GetPosition().y + deltaY };
@@ -85,7 +85,7 @@ void Nivel1::Update() {
         // Verifica si la bola está colisionando con algún tile diferente de cero en la matriz 'wall'
         for (int y = 0; y < MAP_HEIGHT; y++) {
             for (int x = 0; x < MAP_WIDTH; x++) {
-                int tileType = wall[x][y];
+                int tileType = wall1[x][y];
                 if (tileType != 0) {
                     // Si hay un tile diferente de cero, calcula su rectángulo de colisión
                     Rectangle tileRect = { static_cast<float>(x * TILE_SIZE), static_cast<float>(y * TILE_SIZE), TILE_SIZE, TILE_SIZE };
@@ -114,7 +114,7 @@ void Nivel1::Update() {
 
 
      //Crear una instancia de AStar y encontrar el camino
-    AStar astar(wall);
+    AStar astar(wall1);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
 
     path.pop(); // Elimina la posición actual del enemigo
@@ -130,30 +130,12 @@ void Nivel1::Draw() {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
-    mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
-    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
-    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(floor1, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom1, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall1, 25, TEXTURE_TILEMAP);
 
     ball.Draw();
     enemigo.Draw();
-
-// Calcula el desplazamiento necesario para centrar los círculos en cada celda
-//    float offsetX = (TILE_SIZE - 5) / 2.0f; // 5 es el radio del círculo
-//    float offsetY = (TILE_SIZE - 5) / 2.0f;
-//
-//// Dibujar círculos verdes en cada posición del camino encontrado
-//    while (!path.empty()) {
-//        Vector2 point = path.top();
-//        path.pop();
-//
-//        // Convertir las coordenadas de la matriz a las coordenadas del mundo
-//        float worldX = static_cast<float>(point.x * TILE_SIZE + offsetX);
-//        float worldY = static_cast<float>(point.y * TILE_SIZE + offsetY);
-//
-//        // Dibujar un círculo verde en la posición del mundo
-//        DrawCircle(worldX, worldY, 5, GREEN);
-//    }
-
 
     EndMode2D();
 }
