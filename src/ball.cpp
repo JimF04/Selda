@@ -3,7 +3,7 @@
 #include "raymath.h"
 #include "Hitbox.h" // Incluir el archivo de encabezado Hitbox.h
 
-Ball::Ball() : hitbox({400, 300}, 10) // Inicializar hitbox con la posición y el radio predeterminados
+Ball::Ball() : hitbox({400, 300}, 20) // Inicializar hitbox con la posición y el radio predeterminados
 {
     position = {400, 300};
     radius = 10;
