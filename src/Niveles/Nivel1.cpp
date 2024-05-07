@@ -11,7 +11,7 @@ Stack<Vector2> pathCopy;
 
 
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
-    // Iniciar clases
+    InitAudioDevice();
     ball = Ball();
     enemigo = Enemy();
     ball.setPosition({90,160});
@@ -21,7 +21,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../Level1.json", 2, wall);
 
     miniMapTexture = LoadTexture("../assets/Level1.png");
-
+    levelMusic = LoadMusicStream("../assets/lvl1_music.mp3");
+    PlayMusicStream(levelMusic);
 }
 
 void Nivel1::Update() {
@@ -29,7 +30,6 @@ void Nivel1::Update() {
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
-
     if (isShiftPressed) {
         speed *= 2.0f;
     }
@@ -46,6 +46,7 @@ void Nivel1::Update() {
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+    UpdateMusicStream(levelMusic);
 
 
     // Convertir las coordenadas de la bola a las coordenadas de la matriz
@@ -87,7 +88,6 @@ void Nivel1::Draw() {
     }
 
     DrawMiniMap();
-
     EndMode2D();
 }
 

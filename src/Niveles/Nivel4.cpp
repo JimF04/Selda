@@ -18,6 +18,8 @@ Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     }
 
     miniMapTexture = LoadTexture("../assets/Level4.png");
+    levelMusic = LoadMusicStream("../assets/lvl4_music.mp3");
+    PlayMusicStream(levelMusic);
 
 }
 
@@ -44,6 +46,7 @@ void Nivel4::Update() {
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+    UpdateMusicStream(levelMusic);
 }
 
 

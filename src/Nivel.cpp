@@ -127,3 +127,5 @@ void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
     DrawText(text, static_cast<int>(textPosition.x), static_cast<int>(textPosition.y), fontSize, color);
 }
 
+
+

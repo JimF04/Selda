@@ -10,7 +10,6 @@ int main()
 {
     const int screenWidth = 1200;
     const int screenHeight = 800;
-
     InitWindow(screenWidth, screenHeight, "Selda");
     SetTargetFPS(60);
 
@@ -60,5 +59,6 @@ int main()
     }
 
     CloseWindow();
+
     return 0;
 }

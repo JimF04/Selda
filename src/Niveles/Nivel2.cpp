@@ -15,6 +15,8 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../Level2.json", 1, saferoom);
     LoadMap("../Level2.json", 2, wall);
     miniMapTexture = LoadTexture("../assets/Level2.png");
+    levelMusic = LoadMusicStream("../assets/lvl2_music.mp3");
+    PlayMusicStream(levelMusic);
 
 }
 
@@ -41,6 +43,7 @@ void Nivel2::Update() {
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+    UpdateMusicStream(levelMusic);
 }
 
 void Nivel2::Draw() {

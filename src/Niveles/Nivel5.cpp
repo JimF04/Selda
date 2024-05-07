@@ -15,6 +15,8 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../BossLevel.json", 1, saferoom);
     LoadMap("../BossLevel.json", 2, wall);
     miniMapTexture = LoadTexture("../assets/BossLevel.png");
+    levelMusic = LoadMusicStream("../assets/boss_music.mp3");
+    PlayMusicStream(levelMusic);
 }
 
 void Nivel5::Update() {
@@ -38,6 +40,7 @@ void Nivel5::Update() {
 
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+    UpdateMusicStream(levelMusic);
 }
 
 
