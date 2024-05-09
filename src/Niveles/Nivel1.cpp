@@ -110,3 +110,5 @@ void Nivel1::DrawAStar(Stack<Vector2> path) {
         DrawCircle(worldX, worldY, 5, GREEN);
     }
 }
+
+//Holam
