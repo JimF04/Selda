@@ -187,7 +187,7 @@
             float worldX = static_cast<float>(point.x * TILE_SIZE + offsetX);
             float worldY = static_cast<float>(point.y * TILE_SIZE + offsetY);
 
-            // Dibujar un círculo verde en la posición del mundo
+            // Dibujar un círculo verde
             DrawCircle(worldX, worldY, 5, GREEN);
         }
 
