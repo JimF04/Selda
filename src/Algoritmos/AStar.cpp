@@ -45,7 +45,7 @@ void AStar::printPath(Stack<Vector2> path) const {
     }
 }
 
-AStar::AStar(int wall[][38]) :
+AStar::AStar(int wall[][50]) :
        wall(wall){}
 
 float AStar::heuristic(int x1, int y1, int x2, int y2) {

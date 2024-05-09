@@ -17,13 +17,20 @@ public:
     Nivel3(int screenWidth, int screenHeight);
     virtual void Update() override;
     virtual void Draw() override;
+    Music levelMusic;
 
     virtual bool CheckWinCondition() override {
+        if (onstairs){
+            winCondition = true;
+        }
+        else {
+            winCondition= false;
+        }
         return winCondition;
     }
 
 private:
-    Ball ball;
+
 
 };
 

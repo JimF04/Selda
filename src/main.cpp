@@ -8,9 +8,8 @@
 
 int main()
 {
-    const int screenWidth = 800;
-    const int screenHeight = 608;
-
+    const int screenWidth = 1200;
+    const int screenHeight = 800;
     InitWindow(screenWidth, screenHeight, "Selda");
     SetTargetFPS(60);
 
@@ -26,7 +25,9 @@ int main()
         nivelActual->Update();
         nivelActual->Draw();
 
-        if (IsKeyPressed(KEY_SPACE)){ // cambair por nivelActual->CheckWinCondition()
+
+
+        if (nivelActual->CheckWinCondition()){
             delete nivelActual;
 
             nivelActualIndex++; // Avanzar al siguiente nivel
@@ -58,5 +59,6 @@ int main()
     }
 
     CloseWindow();
+
     return 0;
 }

@@ -19,17 +19,22 @@ public:
     Nivel1(int screenWidth, int screenHeight);
     virtual void Update() override;
     virtual void Draw() override;
-    void ResetLevel();
+    Music levelMusic;
 
     virtual bool CheckWinCondition() override {
+        if (onstairs){
+            winCondition = true;
+        }
+        else {
+            winCondition= false;
+        }
         return winCondition;
     }
 
 private:
-    Ball ball;
     Enemy enemigo;
-    bool collisionDetected;
-    double lastCollisionDetectionTime;
+
+    void DrawAStar(Stack<Vector2> path);
 };
 
 

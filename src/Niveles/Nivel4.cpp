@@ -4,60 +4,49 @@
 
 #include "Nivel4.h"
 
-// Incicializar matrices para cada layer
-int map4[MAP_WIDTH][MAP_HEIGHT];
-
 Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
-    ball.setPosition({ 100, 100 });
+    ball.setPosition({ 112, 672 });
 
-    // Leer json con los datos de la mapa
-    std::ifstream file("../map.json");
-    Json::Value root;
-    file >> root;
+    LoadMap("../Level4.json", 0, floor);
+    LoadMap("../Level4.json", 1, saferoom);
+    LoadMap("../Level4.json", 2, wall);
 
-    // Obtener la capa de Floor
-    Json::Value layer = root["layers"][0];
-    Json::Value data = layer["data"];
-
-    // Llenar la matriz con los datos del JSON
-    int index = 0;
-    for (int y = 0; y < MAP_HEIGHT; ++y) {
-        for (int x = 0; x < MAP_WIDTH; ++x) {
-            map4[x][y] = data[index].asInt();
-            ++index;
-        }
+    if (ball.GetSafeRoom()){
+        DrawCenteredText("SAFE ROOM", 10, GREEN);
     }
+
+    miniMapTexture = LoadTexture("../assets/Level4.png");
+    levelMusic = LoadMusicStream("../assets/lvl4_music.mp3");
+    PlayMusicStream(levelMusic);
+
 }
 
 void Nivel4::Update() {
     int deltaX = 0;
     int deltaY = 0;
+    float speed = 1.0f;
+    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
 
-    if (IsKeyDown(KEY_W))
-        deltaY -= 2;
-    if (IsKeyDown(KEY_S))
-        deltaY += 2;
-    if (IsKeyDown(KEY_A))
-        deltaX -= 2;
-    if (IsKeyDown(KEY_D))
-        deltaX += 2;
-
-    // Calcula la posición proyectada de la bola
-    Vector2 projectedPosition = { ball.GetPosition().x + deltaX, ball.GetPosition().y + deltaY };
-
-    // Verifica si la posición proyectada está dentro de los límites del mapa
-    if (projectedPosition.x >= 0 && projectedPosition.x <= MAP_WIDTH * TILE_SIZE - ball.GetRadius() * 2 &&
-        projectedPosition.y >= 0 && projectedPosition.y <= MAP_HEIGHT * TILE_SIZE - ball.GetRadius() * 2) {
-        // Calcula el rectángulo de colisión de la bola en su posición proyectada
-        Rectangle ballRect = { projectedPosition.x - ball.GetRadius(), projectedPosition.y - ball.GetRadius(), static_cast<float>(ball.GetRadius() * 2), static_cast<float>(ball.GetRadius() * 2) };
-
-        // Mueve la bola
-        ball.Move(deltaX, deltaY);
+    if (isShiftPressed) {
+        speed *= 2.0f;
     }
 
-    camera.target = ball.GetPosition();
+    if (IsKeyDown(KEY_W))
+        deltaY -= speed;
+    if (IsKeyDown(KEY_S))
+        deltaY += speed;
+    if (IsKeyDown(KEY_A))
+        deltaX -= speed;
+    if (IsKeyDown(KEY_D))
+        deltaX += speed;
+
+
+    LayerCollision(deltaX, deltaY, wall, "wall");
+    LayerCollision(deltaX, deltaY, floor, "stairs");
+    LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+    UpdateMusicStream(levelMusic);
 }
 
 
@@ -65,8 +54,16 @@ void Nivel4::Draw() {
     BeginMode2D(camera);
 
     ClearBackground(BLACK);
-    mapa.DrawMap(map4, 10, TEXTURE_TILEMAP);
+    mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    DrawMiniMap();
+
     ball.Draw();
+
+    if (ball.GetSafeRoom()){
+        DrawCenteredText("SAFE ROOM", 10, GREEN);
+    }
 
     EndMode2D();
 }

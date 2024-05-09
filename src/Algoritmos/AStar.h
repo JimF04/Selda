@@ -25,12 +25,12 @@ struct AStarNode {
 
 class AStar {
 public:
-    AStar(int wall[][38]);
+    AStar(int wall[][50]);
     Stack<Vector2> findPath(int startX, int startY, int endX, int endY);
     void printPath(Stack<Vector2> path) const ;
 
 private:
-    int (*wall)[38];
+    int (*wall)[50];
 
     float heuristic(int x1, int y1, int x2, int y2);
     bool isValid(int x, int y);
