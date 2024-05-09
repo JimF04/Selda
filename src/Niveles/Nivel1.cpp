@@ -93,7 +93,7 @@ void Nivel1::Draw() {
 
 
 void Nivel1::DrawAStar(Stack<Vector2> path) {
-    // Calcula el desplazamiento necesario para centrar los círculos en cada celda
+    // Calcula el desplazamiento necesario para centrar los círculos en cada celd
     float offsetX = (TILE_SIZE - 6) / 2.0f; // 5 es el radio del círculo
     float offsetY = (TILE_SIZE - 6) / 2.0f;
 
