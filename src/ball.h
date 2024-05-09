@@ -1,18 +1,18 @@
-#ifndef BALL_H
-#define BALL_H
+//
+// Created by jimmy on 30/04/24.
+//
+
+#ifndef RAYLIB_TEMPLATE_BALL_H
+#define RAYLIB_TEMPLATE_BALL_H
 
 #include "raylib.h"
-#include "Enemy/Enemy.h"
-#include "Hitbox.h"
 
-// Declaración hacia adelante de Enemy
-class Enemy;
-
-class Ball {
+class Ball
+{
 public:
     Ball();
     void Draw() const;
-    void Move(int deltaX, int deltaY);
+    void Move(int deltaX, int deltaY); // Declaración del método Move
     Vector2 GetPosition() const;
     int GetRadius() const;
     void setPosition(Vector2 pos);
@@ -20,16 +20,11 @@ public:
     void SetSafeRoom(bool safe);
     bool safeRoom;
 
-    int GetLives() const;
-    void DecreaseLives();
-    bool CheckCollisionWithEnemy(const Enemy& enemy) const;
 private:
     Vector2 position;
     int radius;
     Color color;
-    int lives;
-    Hitbox hitbox; // Agregar el objeto Hitbox como un miembro de la clase Ball
 };
 
 
-#endif // BALL_H
+#endif //RAYLIB_TEMPLATE_BALL_H

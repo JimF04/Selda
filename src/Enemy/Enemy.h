@@ -9,7 +9,6 @@
 #include "raylib.h"
 #include "../DataStructures/Stack.h"
 
-class ball;
 class Enemy
 {
 public:
