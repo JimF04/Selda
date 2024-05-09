@@ -41,6 +41,37 @@ void Nivel5::Update() {
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
+
+    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+        if (ball.CheckCollisionWithEnemy(enemigo)) {
+            // Si hay colisión, puedes hacer lo que necesites aquí
+            // Por ejemplo, decrementar vidas, mover la bola, etc.
+            ball.DecreaseLives(); // Disminuir contador de vidas
+
+            // Verifica si la bola se quedó sin vidas
+            if (ball.GetLives() <= 0) {
+                // La bola ha perdido todas sus vidas
+                ResetLevel();
+            }
+
+            // Establece la bandera de colisión en true
+            collisionDetected = true;
+
+            // Actualiza el tiempo de la última detección de colisiones
+            lastCollisionDetectionTime = GetTime();
+        }
+    }
+}
+
+void Nivel5::ResetLevel() {
+    ball.setPosition({90, 160});
+
+    enemigo.setPosition({100, 300});
+
+    ball.ResetLives();
+
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
 }
 
 

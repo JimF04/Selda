@@ -3,13 +3,17 @@
 //
 
 #include "Nivel3.h"
-
+#include "../ball.h"
+#include "raymath.h"
 
 
 Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 368, 80 });
+    enemigo = Enemy();
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
 
     LoadMap("../Level3.json", 0, floor);
     LoadMap("../Level3.json", 1, saferoom);
@@ -43,9 +47,39 @@ void Nivel3::Update() {
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
+
+
+    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+        if (ball.CheckCollisionWithEnemy(enemigo)) {
+            // Si hay colisión, puedes hacer lo que necesites aquí
+            // Por ejemplo, decrementar vidas, mover la bola, etc.
+            ball.DecreaseLives(); // Disminuir contador de vidas
+
+            // Verifica si la bola se quedó sin vidas
+            if (ball.GetLives() <= 0) {
+                // La bola ha perdido todas sus vidas
+                ResetLevel();
+            }
+
+            // Establece la bandera de colisión en true
+            collisionDetected = true;
+
+            // Actualiza el tiempo de la última detección de colisiones
+            lastCollisionDetectionTime = GetTime();
+        }
+    }
 }
 
+void Nivel3::ResetLevel() {
+    ball.setPosition({90, 160});
 
+    enemigo.setPosition({100, 300});
+
+    ball.ResetLives();
+
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
+}
 void Nivel3::Draw() {
     BeginMode2D(camera);
 

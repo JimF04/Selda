@@ -29,7 +29,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     miniMapTexture = LoadTexture("../assets/Level1.png");
     levelMusic = LoadMusicStream("../assets/lvl1_music.mp3");
-//    image= LoadTexture("path/to/image.png");
+    image= LoadTexture("path/to/image.png");
     PlayMusicStream(levelMusic);
 }
 

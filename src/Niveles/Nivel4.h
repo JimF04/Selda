@@ -18,6 +18,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    void ResetLevel();
 
     virtual bool CheckWinCondition() override {
         if (onstairs){
@@ -30,9 +31,14 @@ public:
     }
 
 private:
-
-
+    Enemy enemigo;
+    void DrawAStar(Stack<Vector2> path);
+    bool collisionDetected;
+    double lastCollisionDetectionTime;
 };
+
+
+
 
 
 #endif //SELDA_NIVEL4_H

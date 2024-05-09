@@ -18,6 +18,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    void ResetLevel();
 
     virtual bool CheckWinCondition() override {
         if (onstairs){
@@ -30,6 +31,9 @@ public:
     }
 
 private:
+    Enemy enemigo;
+    bool collisionDetected;
+    double lastCollisionDetectionTime;
 
 
 };
