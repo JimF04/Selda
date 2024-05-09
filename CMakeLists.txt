@@ -9,6 +9,7 @@ find_package(jsoncpp CONFIG REQUIRED)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
 set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # or games
 
+
 add_subdirectory(libs/raylib)
 
 add_executable(${PROJECT_NAME} src/main.cpp
@@ -33,6 +34,8 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Algoritmos/AStar.h
         src/DataStructures/Stack.h
         src/Nivel.cpp
+        src/Hitbox.cpp
+        src/Hitbox.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp)
