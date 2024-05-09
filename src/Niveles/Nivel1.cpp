@@ -3,6 +3,11 @@
 //
 
 #include "Nivel1.h"
+#include "raylib.h"
+#include "../ball.h"
+#include "raymath.h"
+#include "../Enemy/Enemy.h"
+
 
 
 Stack<Vector2> path;
@@ -15,6 +20,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball = Ball();
     enemigo = Enemy();
     ball.setPosition({90,160});
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
 
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
@@ -22,6 +29,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     miniMapTexture = LoadTexture("../assets/Level1.png");
     levelMusic = LoadMusicStream("../assets/lvl1_music.mp3");
+//    image= LoadTexture("path/to/image.png");
     PlayMusicStream(levelMusic);
 }
 
@@ -70,11 +78,50 @@ void Nivel1::Update() {
         enemigo.FollowBreadcrumb(ball.GetPosition());
     }
 
+    if (GetTime() - lastCollisionDetectionTime >= 2.0) {
+        collisionDetected = false; // Restablece la bandera de colisión
+    }
+    float distance = Vector2Distance(ball.GetPosition(),enemigo.GetPosition());
+    if(distance<ball.GetRadius()){
+        if(IsKeyDown(KEY_P)){
+            enemigo.setPosition({-1000,1000});
+        }
+    }
+    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+        if (ball.CheckCollisionWithEnemy(enemigo)) {
+            // Si hay colisión, puedes hacer lo que necesites aquí
+            // Por ejemplo, decrementar vidas, mover la bola, etc.
+            ball.DecreaseLives(); // Disminuir contador de vidas
+
+            // Verifica si la bola se quedó sin vidas
+            if (ball.GetLives() <= 0) {
+                // La bola ha perdido todas sus vidas
+                ResetLevel();
+            }
+
+            // Establece la bandera de colisión en true
+            collisionDetected = true;
+
+            // Actualiza el tiempo de la última detección de colisiones
+            lastCollisionDetectionTime = GetTime();
+        }
+    }
+
 }
 
+void Nivel1::ResetLevel() {
+    ball.setPosition({90,160});
+
+    enemigo.setPosition({100,300});
+
+    ball.ResetLives();
+
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
+}
 void Nivel1::Draw() {
     BeginMode2D(camera);
-
     ClearBackground(BLACK);
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);

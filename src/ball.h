@@ -6,7 +6,11 @@
 #define RAYLIB_TEMPLATE_BALL_H
 
 #include "raylib.h"
+#include "Enemy/Enemy.h"
 
+
+
+class Enemy;
 class Ball
 {
 public:
@@ -19,11 +23,17 @@ public:
     bool GetSafeRoom();
     void SetSafeRoom(bool safe);
     bool safeRoom;
+    int GetLives() const;
+    void DecreaseLives();
+    bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
+    void ResetLives();
 
 private:
     Vector2 position;
     int radius;
     Color color;
+    int lives;
+    static const int INNITIAL_LIVES = 5;
 };
 
 
