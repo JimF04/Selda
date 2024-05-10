@@ -22,7 +22,9 @@ public:
     virtual void LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIGHT], std::string type);
     void DrawCenteredText(const char* text, int fontSize, Color color);
     void DrawMiniMap();
+    void DrawHeart();
     Texture2D miniMapTexture;
+    Texture2D imageTexture;
 
 
 protected:

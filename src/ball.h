@@ -6,6 +6,8 @@
 #define RAYLIB_TEMPLATE_BALL_H
 
 #include "raylib.h"
+#include "raymath.h"
+#include "Hitbox.h"
 #include "Enemy/Enemy.h"
 
 
@@ -28,12 +30,15 @@ public:
     bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
     void ResetLives();
 
+    void SetHitboxSize(int width, int height);
+
 private:
     Vector2 position;
     int radius;
     Color color;
     int lives;
     static const int INNITIAL_LIVES = 5;
+    Hitbox hitbox;
 };
 
 
