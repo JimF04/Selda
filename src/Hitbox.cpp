@@ -5,6 +5,9 @@
 
 #include "Hitbox.h"
 
+Hitbox::Hitbox() {
+    rect = {0, 0, 0, 0}; // Inicializa el rectángulo con valores por defecto
+}
 Hitbox::Hitbox(Vector2 position, int width, int height) {
     // Ajustamos el tamaño del rectángulo del hitbox
     rect.x = position.x - width / 2;
@@ -28,5 +31,9 @@ bool Hitbox::CheckCollision(const Hitbox& other) const {
 
 void Hitbox::SetRect(Rectangle newRect){
     rect = newRect;
+}
+
+Rectangle Hitbox::GetRect() const {
+    return rect;
 }
 

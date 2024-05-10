@@ -19,6 +19,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     InitAudioDevice();
     ball = Ball();
     enemigo = Enemy();
+    hitbox = Hitbox();
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
@@ -74,12 +75,20 @@ void Nivel1::Update() {
 
     //pathCopy = path;
 
-    if (!ball.GetSafeRoom()){
+    if (!ball.GetSafeRoom()&& !enemigo.IsEliminated()){
         enemigo.FollowBreadcrumb(ball.GetPosition());
     }
 
     if (GetTime() - lastCollisionDetectionTime >= 2.0) {
         collisionDetected = false; // Restablece la bandera de colisión
+    }
+    if(enemigo.GetCollisionWithHitbox(hitbox)){
+        enemigo.setPosition({-1000,1000});
+        enemigo.SetEliminated(true);
+
+        collisionDetected = true;
+
+        lastCollisionDetectionTime = GetTime();
     }
     float distance = Vector2Distance(ball.GetPosition(),enemigo.GetPosition());
     if(distance<ball.GetRadius()){
@@ -128,7 +137,10 @@ void Nivel1::Draw() {
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
     ball.Draw();
-    enemigo.Draw();
+    if(!enemigo.IsEliminated()){
+        enemigo.Draw();
+    }
+
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);

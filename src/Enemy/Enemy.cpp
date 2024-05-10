@@ -6,6 +6,7 @@
 #include <chrono>
 #include <thread>
 #include "raymath.h"
+#include "../Hitbox.h"
 
 
 Enemy::Enemy()
@@ -53,4 +54,18 @@ void Enemy::FollowBreadcrumb(const Vector2& target) {
     // Mueve al enemigo en la dirección de la bola
     position.x += directionX * speed;
     position.y += directionY * speed;
+}
+
+
+ bool Enemy::GetCollisionWithHitbox(const Hitbox& hitbox) const{
+    
+}
+
+
+void Enemy::SetEliminated(bool eliminated) {
+    this ->eliminated = eliminated;
+}
+
+bool Enemy::IsEliminated() const {
+    return eliminated;
 }

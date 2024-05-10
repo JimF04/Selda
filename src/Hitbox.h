@@ -14,11 +14,13 @@
 
 class Hitbox {
 public:
+    Hitbox();
     Hitbox(Vector2 position, int width, int height);
     void Draw(Color color) const;
     bool CheckCollision(Vector2 point) const;
     bool CheckCollision(const Hitbox& other) const;
     void SetRect(Rectangle newRect);
+    Rectangle GetRect() const;
 
 private:
     Rectangle rect;

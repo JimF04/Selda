@@ -8,6 +8,7 @@
 #include "../ball.h"
 #include "raylib.h"
 #include "../DataStructures/Stack.h"
+#include "../Hitbox.h"
 
 class Enemy
 {
@@ -19,12 +20,16 @@ public:
     int GetRadius() const;
     void FollowBreadcrumb(const Vector2& target);
     void setPosition(Vector2 pos);
+    bool GetCollisionWithHitbox(const Hitbox& hitbox) const;
+    void SetEliminated(bool eliminated);
+    bool IsEliminated() const;
 
 private:
     Vector2 position;
     int radius;
     Color color;
     int speed;
+    bool eliminated;
 };
 
 
