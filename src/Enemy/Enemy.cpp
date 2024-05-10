@@ -58,7 +58,7 @@ void Enemy::FollowBreadcrumb(const Vector2& target) {
 
 
  bool Enemy::GetCollisionWithHitbox(const Hitbox& hitbox) const{
-    
+     return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
 }
 
 
