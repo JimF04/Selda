@@ -9,7 +9,7 @@
 
 Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
-    ball = Ball();
+    ball = Ball("../assets/Level1.png");
     enemigo = Enemy();
     ball.setPosition({90,416});
 

@@ -8,7 +8,7 @@
 
 Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
-    ball = Ball();
+    ball = Ball("../assets/Level1.png");
     ball.setPosition({ 592, 704 });
 
     LoadMap("../BossLevel.json", 0, floor);

@@ -17,7 +17,7 @@ Stack<Vector2> pathCopy;
 
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
-    ball = Ball();
+    ball = Ball("../assets/a.png");
     enemigo = Enemy();
     hitbox = Hitbox();
     ball.setPosition({90,160});

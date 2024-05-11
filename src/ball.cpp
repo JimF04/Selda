@@ -4,8 +4,16 @@
     #include "Hitbox.h"
 
 
-    Ball::Ball() : position({400, 300}), radius(6), color(PINK), lives(5), hitbox({400.0f, 300.0f}, 20, 20) {
+    Ball::Ball(const char* spritePath) : position({400, 300}), radius(6), color(PINK), lives(5), hitbox({400.0f, 300.0f}, 20, 20) {
+    sprite = LoadTexture( "hola/heartimage.png");
+    if(sprite.id==0){
+        TraceLog(LOG_WARNING,"No se puedo cargar la textura: %s", spritePath);
+
+    }
         }
+        Ball::~Ball(){
+            UnloadTexture(sprite);
+}
 
     int Ball::GetLives() const {
         return lives;
@@ -17,7 +25,7 @@
 
     void Ball::Draw() const
     {
-        DrawCircleV(position, radius, color);
+        DrawTexture(sprite,static_cast<int>(position.x-sprite.width/2),static_cast<int>(position.y - sprite.height/2),WHITE);
         hitbox.Draw(color);
     }
 

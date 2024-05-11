@@ -16,7 +16,9 @@ class Enemy;
 class Ball
 {
 public:
-    Ball();
+    Ball() = default;
+    Ball(const char* spritePath);
+    ~Ball();
     void Draw() const;
     void Move(int deltaX, int deltaY); // Declaración del método Move
     Vector2 GetPosition() const;
@@ -30,9 +32,8 @@ public:
     bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
     void ResetLives();
 
-    void SetHitboxSize(int width, int height);
-
 private:
+    Texture2D sprite;
     Vector2 position;
     int radius;
     Color color;
