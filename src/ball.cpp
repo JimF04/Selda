@@ -1,4 +1,6 @@
+#include <iostream>
 #include "ball.h"
+
 
 
 Ball::Ball()
@@ -25,6 +27,8 @@ void Ball::Move(int deltaX, int deltaY)
     position.y += deltaY;
 
     GetCrumbs();
+
+
 
 }
 

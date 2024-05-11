@@ -30,9 +30,12 @@ public:
         }
         return winCondition;
     }
+    bool personaje_visto;
 
 private:
     Enemy enemigo;
+    Enemy enemigo2;
+    std::vector<Enemy> enemigos;
 
     void DrawAStar(Stack<Vector2> path);
 };

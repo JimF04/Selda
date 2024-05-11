@@ -13,8 +13,15 @@ Stack<Vector2> pathCopy;
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
     ball = Ball();
-    enemigo = Enemy();
+    enemigos;
+    enemigos.emplace_back();
+    enemigos.emplace_back();
     ball.setPosition({90,160});
+
+    personaje_visto = false;
+    enemigos[0].setPosition({368,385});
+
+
 
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
@@ -53,22 +60,37 @@ void Nivel1::Update() {
     int ball_x_grid = static_cast<int>( ball.GetPosition().x / TILE_SIZE);
     int ball_y_grid = static_cast<int>( ball.GetPosition().y / TILE_SIZE);
 
-    int enemy_x_grid = static_cast<int>( enemigo.GetPosition().x / TILE_SIZE);
-    int enemy_y_grid = static_cast<int>( enemigo.GetPosition().y / TILE_SIZE);
+    int enemy_x_grid = static_cast<int>( enemigos[0].GetPosition().x / TILE_SIZE);
+    int enemy_y_grid = static_cast<int>( enemigos[0].GetPosition().y / TILE_SIZE);
+
 
 
      //Crear una instancia de AStar y encontrar el camino
     AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
 
-    path.pop(); // Elimina la posición actual del enemigo
-    //astar.printPath(path);
 
-    //pathCopy = path;
+
 
     if (!ball.GetSafeRoom()){
-        enemigo.FollowBreadcrumb(ball.crums);
+        personaje_visto= false;
+
+        for (auto& enemigo : enemigos) {
+            if (enemigo.FollowBreadcrumb(ball.crums)) {
+                personaje_visto = true;
+                break;
+            }
+
+
+
+        }
+
     }
+
+
+
+
+
 
 }
 
@@ -81,10 +103,18 @@ void Nivel1::Draw() {
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
     ball.Draw();
-    enemigo.Draw();
+    for (const auto& enemigo : enemigos) {
+        enemigo.Draw();
+    }
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
+    }
+
+    if (personaje_visto) {
+        DrawCenteredText("En vista",10, RED);
+        // También puedes usar un emoji
+        // DrawText("\xF0\x9F\x91\x81", screenWidth / 2 - MeasureText("\xF0\x9F\x91\x81", 30) / 2, screenHeight / 2, 30, RED);
     }
 
     DrawMiniMap();

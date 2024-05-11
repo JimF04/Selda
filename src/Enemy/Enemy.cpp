@@ -11,6 +11,7 @@ Enemy::Enemy()
     radius = 7;
     color = YELLOW;
     speed = 1;
+    distanceToPlayer;
 }
 void Enemy::Draw() const
 {
@@ -40,19 +41,19 @@ int Enemy::GetRadius() const
 
 
 
-void Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
-    // Verifica si hay al menos una "crumb" para seguir
-    if (breadcrumbs.empty()) {
-        return;
+bool Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
+
+    Vector2 target = breadcrumbs.back();
+    distanceToPlayer = sqrt(pow(target.x - position.x, 2) + pow(target.y - position.y, 2));
+
+    if (breadcrumbs.empty() || distanceToPlayer>20) {
+        return false;
     }
 
     // Obtiene la última "crumb" (últimas coordenadas del jugador)
-    Vector2 target = breadcrumbs.back();
 
-    float distanceToPlayer = sqrt(pow(target.x - position.x, 2) + pow(target.y - position.y, 2));
-    std::cout << "Distancia al jugador: " << distanceToPlayer << std::endl;
     // Imprime la distancia
-    if(distanceToPlayer<15){
+    if(distanceToPlayer<20){
         // Calcula la dirección hacia la "crumb"
         float directionX = target.x - position.x;
         float directionY = target.y - position.y;
@@ -65,8 +66,9 @@ void Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
         // Mueve al enemigo en la dirección de la "crumb"
         position.x += directionX * speed;
         position.y += directionY * speed;
-
+        return true;
     }
+
 
 
 }
