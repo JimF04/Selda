@@ -91,7 +91,7 @@ void Nivel1::Update() {
         lastCollisionDetectionTime = GetTime();
     }
     float distance = Vector2Distance(ball.GetPosition(),enemigo.GetPosition());
-    if(distance<ball.GetRadius()){
+    if(distance<ball.GetRadius() + 15){
         if(IsKeyDown(KEY_P)){
             enemigo.setPosition({-1000,1000});
         }
