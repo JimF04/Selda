@@ -1,10 +1,16 @@
 #include "ball.h"
 
+
 Ball::Ball()
 {
     position = {400, 300};
     radius = 6;
     color = PINK;
+    crums;
+
+
+
+
 }
 
 void Ball::Draw() const
@@ -14,8 +20,14 @@ void Ball::Draw() const
 
 void Ball::Move(int deltaX, int deltaY)
 {
+
     position.x += deltaX;
     position.y += deltaY;
+
+
+
+    GetPosition();
+
 }
 
 Vector2 Ball::GetPosition() const
@@ -41,4 +53,9 @@ bool Ball::GetSafeRoom()
 void Ball::SetSafeRoom(bool safe)
 {
     safeRoom = safe;
+}
+
+void Ball::GetCrumbs(){
+
+    crums.push_back(GetPosition());
 }

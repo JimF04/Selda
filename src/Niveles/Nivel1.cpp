@@ -67,7 +67,7 @@ void Nivel1::Update() {
     //pathCopy = path;
 
     if (!ball.GetSafeRoom()){
-        enemigo.FollowBreadcrumb(ball.GetPosition());
+        enemigo.FollowBreadcrumb(ball.crums);
     }
 
 }

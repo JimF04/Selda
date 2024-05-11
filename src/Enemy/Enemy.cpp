@@ -37,8 +37,19 @@ int Enemy::GetRadius() const
 {
     return radius;
 }
-void Enemy::FollowBreadcrumb(const Vector2& target) {
-    // Calcula la dirección hacia la bola
+
+
+
+void Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
+    // Verifica si hay al menos una "crumb" para seguir
+    if (breadcrumbs.empty()) {
+        return;
+    }
+
+    // Obtiene la última "crumb" (últimas coordenadas del jugador)
+    Vector2 target = breadcrumbs.back();
+
+    // Calcula la dirección hacia la "crumb"
     float directionX = target.x - position.x;
     float directionY = target.y - position.y;
 
@@ -47,7 +58,7 @@ void Enemy::FollowBreadcrumb(const Vector2& target) {
     directionX /= length;
     directionY /= length;
 
-    // Mueve al enemigo en la dirección de la bola
+    // Mueve al enemigo en la dirección de la "crumb"
     position.x += directionX * speed;
     position.y += directionY * speed;
 }

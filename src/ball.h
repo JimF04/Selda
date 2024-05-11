@@ -6,6 +6,8 @@
 #define RAYLIB_TEMPLATE_BALL_H
 
 #include "raylib.h"
+#include <vector>
+
 
 class Ball
 {
@@ -19,6 +21,8 @@ public:
     bool GetSafeRoom();
     void SetSafeRoom(bool safe);
     bool safeRoom;
+    std::vector<Vector2> crums;
+    void GetCrumbs();
 
 private:
     Vector2 position;
