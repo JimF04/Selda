@@ -20,6 +20,7 @@ public:
     bool FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs);
     void setPosition(Vector2 pos);
     float distanceToPlayer;
+    void Find_player(Stack<Vector2> stack, int i);
 
 private:
     Vector2 position;

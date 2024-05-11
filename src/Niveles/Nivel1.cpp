@@ -30,6 +30,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     miniMapTexture = LoadTexture("../assets/Level1.png");
     levelMusic = LoadMusicStream("../assets/lvl1_music.mp3");
     PlayMusicStream(levelMusic);
+
+
 }
 
 void Nivel1::Update() {
@@ -57,6 +59,9 @@ void Nivel1::Update() {
 
 
     // Convertir las coordenadas de la bola a las coordenadas de la matriz
+
+
+
     int ball_x_grid = static_cast<int>( ball.GetPosition().x / TILE_SIZE);
     int ball_y_grid = static_cast<int>( ball.GetPosition().y / TILE_SIZE);
 
@@ -64,10 +69,16 @@ void Nivel1::Update() {
     int enemy_y_grid = static_cast<int>( enemigos[0].GetPosition().y / TILE_SIZE);
 
 
-
-     //Crear una instancia de AStar y encontrar el camino
     AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
+    astar.printPath(path);
+
+    if(personaje_visto){
+        enemigos[0].Find_player(path,TILE_SIZE);
+    }
+
+
+
 
 
 
