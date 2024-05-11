@@ -24,9 +24,7 @@ void Ball::Move(int deltaX, int deltaY)
     position.x += deltaX;
     position.y += deltaY;
 
-
-
-    GetPosition();
+    GetCrumbs();
 
 }
 

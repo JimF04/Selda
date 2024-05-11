@@ -49,16 +49,24 @@ void Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
     // Obtiene la última "crumb" (últimas coordenadas del jugador)
     Vector2 target = breadcrumbs.back();
 
-    // Calcula la dirección hacia la "crumb"
-    float directionX = target.x - position.x;
-    float directionY = target.y - position.y;
+    float distanceToPlayer = sqrt(pow(target.x - position.x, 2) + pow(target.y - position.y, 2));
+    std::cout << "Distancia al jugador: " << distanceToPlayer << std::endl;
+    // Imprime la distancia
+    if(distanceToPlayer<15){
+        // Calcula la dirección hacia la "crumb"
+        float directionX = target.x - position.x;
+        float directionY = target.y - position.y;
 
-    // Normaliza la dirección
-    float length = sqrt(directionX * directionX + directionY * directionY);
-    directionX /= length;
-    directionY /= length;
+        // Normaliza la dirección
+        float length = sqrt(directionX * directionX + directionY * directionY);
+        directionX /= length;
+        directionY /= length;
 
-    // Mueve al enemigo en la dirección de la "crumb"
-    position.x += directionX * speed;
-    position.y += directionY * speed;
+        // Mueve al enemigo en la dirección de la "crumb"
+        position.x += directionX * speed;
+        position.y += directionY * speed;
+
+    }
+
+
 }
