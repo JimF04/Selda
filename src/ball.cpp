@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ball.h"
-
+const int FRAME_WIDTH = 48;
+const int FRAME_HEIGHT = 48;
 
 
 Ball::Ball()
@@ -9,6 +10,19 @@ Ball::Ball()
     radius = 6;
     color = PINK;
     crums;
+    spritesheet = LoadTexture("/home/jose/Selda/assets/chara_hero.png");
+    if (spritesheet.id <= 0)
+    {
+        std::cerr << "Error cargando la textura del spritesheet" << std::endl;
+    }
+
+    sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
+
+    frameCounter = 0;
+
+    currentFrame = 0;
+
+    frameSpeed = 8;
 
 
 
@@ -17,7 +31,7 @@ Ball::Ball()
 
 void Ball::Draw() const
 {
-    DrawCircleV(position, radius, color);
+    DrawTextureRec(spritesheet, sourceRec, position, WHITE);
 }
 
 void Ball::Move(int deltaX, int deltaY)
@@ -26,7 +40,22 @@ void Ball::Move(int deltaX, int deltaY)
     position.x += deltaX;
     position.y += deltaY;
 
+    // Actualizar la animación
+    frameCounter++;
+    if (frameCounter >= frameSpeed)
+    {
+        frameCounter = 0;
+        currentFrame++;
+        if (currentFrame > 2) // Si excede el número de frames de la animación
+        {
+            currentFrame = 0; // Reiniciar la animación
+        }
+        // Actualizar el rectángulo fuente de la textura para el siguiente frame
+        sourceRec.x = currentFrame * FRAME_WIDTH;
+    }
+
     GetCrumbs();
+
 
 
 
@@ -60,4 +89,7 @@ void Ball::SetSafeRoom(bool safe)
 void Ball::GetCrumbs(){
 
     crums.push_back(GetPosition());
+
+
+
 }

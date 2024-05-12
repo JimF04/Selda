@@ -24,6 +24,12 @@ public:
     std::vector<Vector2> crums;
     void GetCrumbs();
 
+    int frameCounter;
+    int currentFrame;
+    int frameSpeed;
+    Texture2D spritesheet;
+    Rectangle sourceRec;
+
 private:
     Vector2 position;
     int radius;

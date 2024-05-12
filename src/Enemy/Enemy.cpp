@@ -95,8 +95,10 @@ bool Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
         // Mueve al enemigo en la dirección de la "crumb"
         position.x += directionX * speed;
         position.y += directionY * speed;
+
         return true;
     }
+
 
 
 

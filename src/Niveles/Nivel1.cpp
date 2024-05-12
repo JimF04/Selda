@@ -71,7 +71,7 @@ void Nivel1::Update() {
 
     AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
-    astar.printPath(path);
+
 
     if(personaje_visto){
         enemigos[0].Find_player(path,TILE_SIZE);
