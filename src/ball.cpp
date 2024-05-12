@@ -5,10 +5,18 @@
 
 
     Ball::Ball(const char* spritePath) : position({400, 300}), radius(6), color(PINK), lives(5), hitbox({400.0f, 300.0f}, 20, 20) {
-    sprite = LoadTexture( "hola/heartimage.png");
-    if(sprite.id==0){
+//    sprite = LoadTexture( spritePath);
+    Image imagen = LoadImage("C:\SeldaProject\Selda\hola\heartimage.png");
+
+    if(imagen.data==NULL){
         TraceLog(LOG_WARNING,"No se puedo cargar la textura: %s", spritePath);
 
+    }else{
+        cout<<"SIIIIIIIIIIIIIIIIIII"
+              "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
+
+        sprite = LoadTextureFromImage(imagen);
+        UnloadImage(imagen);
     }
         }
         Ball::~Ball(){

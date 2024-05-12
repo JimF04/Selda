@@ -17,12 +17,14 @@ Stack<Vector2> pathCopy;
 
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
-    ball = Ball("../assets/a.png");
+    ball = Ball("C:\SeldaProject\Selda\hola\heartimage.png");
     enemigo = Enemy();
     hitbox = Hitbox();
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
+
+
 
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
