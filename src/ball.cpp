@@ -36,24 +36,31 @@ void Ball::Draw() const
 
 void Ball::Move(int deltaX, int deltaY)
 {
-
     position.x += deltaX;
     position.y += deltaY;
 
-    // Actualizar la animación
-    frameCounter++;
-    if (frameCounter >= frameSpeed)
-    {
-        frameCounter = 0;
-        currentFrame++;
-        if (currentFrame > 2) // Si excede el número de frames de la animación
-        {
-            currentFrame = 0; // Reiniciar la animación
-        }
-        // Actualizar el rectángulo fuente de la textura para el siguiente frame
-        sourceRec.x = currentFrame * FRAME_WIDTH;
+    // Determina qué animación reproducir según el movimiento
+    if (deltaX > 0) {
+        // Movimiento hacia la derecha
+        sourceRec.y = FRAME_HEIGHT * 3; // Fila 4: Caminar de lado
+    } else if (deltaX < 0) {
+        // Movimiento hacia la izquierda
+        sourceRec.y = FRAME_HEIGHT * 4; // Fila 5: Caminar hacia atrás
+    } else if (deltaY > 0) {
+        // Movimiento hacia abajo
+        sourceRec.y = FRAME_HEIGHT * 2; // Fila 3: Caminar hacia adelante
+    } else if (deltaY < 0) {
+        // Movimiento hacia arriba
+        sourceRec.y = FRAME_HEIGHT *4; // Fila 2: Caminar hacia adelante (reutilizamos la fila 3)
+    } else {
+        // No hay movimiento, animación de estar quieto
+        sourceRec.y = 0; // Fila 1: Estar quieto
     }
 
+    // Actualiza la animación
+    UpdateAnimation();
+
+    // Actualiza las migas de pan
     GetCrumbs();
 
 
@@ -65,6 +72,8 @@ Vector2 Ball::GetPosition() const
 {
     return position;
 }
+
+
 
 int Ball::GetRadius() const
 {
@@ -90,6 +99,30 @@ void Ball::GetCrumbs(){
 
     crums.push_back(GetPosition());
 
+}
+
+
+void Ball::Atacar(){
+    std::cout<<"atacando"<<std::endl;
+    sourceRec.y = FRAME_HEIGHT *6;
+    UpdateAnimation();
+
 
 
 }
+
+void Ball::UpdateAnimation()
+{
+    // Actualiza el frame actual basado en el tiempo
+    frameCounter++;
+    if (frameCounter >= frameSpeed)
+    {
+        frameCounter = 0;
+        currentFrame++;
+        if (currentFrame > 2) // Si excede el número de frames de la animación
+        {
+            currentFrame = 0; // Reiniciar la animación
+        }
+        // Actualizar el rectángulo fuente de la textura para el siguiente frame
+        sourceRec.x = currentFrame * FRAME_WIDTH;
+    }}

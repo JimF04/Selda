@@ -51,6 +51,10 @@ void Nivel1::Update() {
         deltaX -= speed;
     if (IsKeyDown(KEY_D))
         deltaX += speed;
+    if (IsKeyDown(KEY_L))
+        ball.Atacar();
+
+
 
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");

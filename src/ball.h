@@ -23,6 +23,8 @@ public:
     bool safeRoom;
     std::vector<Vector2> crums;
     void GetCrumbs();
+    void UpdateAnimation();
+    void Atacar();
 
     int frameCounter;
     int currentFrame;
