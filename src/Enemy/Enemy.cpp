@@ -13,6 +13,8 @@ Enemy::Enemy()
     color = YELLOW;
     speed = 1;
     distanceToPlayer;
+    initial_position=position;
+
 }
 void Enemy::Draw() const
 {
@@ -62,10 +64,40 @@ void Enemy::Find_player(Stack<Vector2> stack, int tile) {
         // Mueve al enemigo en la dirección de la "crumb"
         position.x += directionX * 0.05;
         position.y += directionY * 0.05;
-        Move(directionX,directionY);
+        Move(directionX,0);
+        Move(0,directionY);
 
 
     }
+}
+
+
+void Enemy::Back_to_place(Stack<Vector2> stack, int tile){
+    while (!stack.empty()) {
+        Vector2 nextPoint = stack.top();
+        stack.pop();
+
+        // Ajusta las coordenadas multiplicándolas por el tamaño del tile
+        nextPoint.x *= tile;
+        nextPoint.y *= tile;
+
+        // Calcula la dirección hacia el siguiente punto
+        float directionX = nextPoint.x - position.x;
+        float directionY = nextPoint.y - position.y;
+        float length = sqrt(directionX * directionX + directionY * directionY);
+        directionX /= length;
+        directionY /= length;
+
+        // Mueve al enemigo en la dirección de la "crumb"
+        position.x += directionX * 0.05;
+        position.y += directionY * 0.05;
+        Move(directionX,0);
+        Move(0,directionY);
+
+
+    }
+
+
 }
 
 

@@ -20,6 +20,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     personaje_visto = false;
     enemigos[0].setPosition({368,385});
+    enemigos[0].initial_position={368,385};
 
 
 
@@ -73,12 +74,19 @@ void Nivel1::Update() {
     int enemy_y_grid = static_cast<int>( enemigos[0].GetPosition().y / TILE_SIZE);
 
 
+
     AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
 
 
+
     if(personaje_visto){
         enemigos[0].Find_player(path,TILE_SIZE);
+    }
+    else if(personaje_visto== false && enemigos[0].initial_position.x != enemigos[0].position.x && enemigos[0].initial_position.y != enemigos[0].position.y ){
+        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
+        enemigos[0].Back_to_place(path,TILE_SIZE);
+
     }
 
 
