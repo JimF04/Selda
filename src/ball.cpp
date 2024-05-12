@@ -4,7 +4,7 @@ const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
 
 
-Ball::Ball()
+Ball::Ball():vidas(5)
 {
     position = {400, 300};
     radius = 6;
@@ -142,15 +142,11 @@ void Ball::UpdateAnimation()
         return safeRoom;
     }
 
-   
 
-    void Ball::ResetLives() {
-        lives = INNITIAL_LIVES;
-    }
 
     void Ball::DecreaseLives() {
     lives--;
 }
-int Ball::GetLives()const  {
-    return lives;
+int Ball::GetRemainingLives() const {
+    return vidas.GetLives();
 }

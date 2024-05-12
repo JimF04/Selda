@@ -35,6 +35,8 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Nivel.cpp
         src/Hitbox.cpp
         src/Hitbox.h
+        src/Lives/Vidas.cpp
+        src/Lives/Vidas.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp)

@@ -11,6 +11,8 @@
 #include "../ball.h"
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
+#include "../Lives/Vidas.h"
+
 
 class Nivel4 : public Nivel {
 public:
@@ -35,6 +37,7 @@ private:
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
     double lastCollisionDetectionTime;
+    Vidas vidas;
 };
 
 

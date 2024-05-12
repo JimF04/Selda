@@ -8,6 +8,7 @@
     #include "raylib.h"
     #include <vector>
 
+#include "Lives/Vidas.h"
     #include "raymath.h"
     #include "Hitbox.h"
     #include "Enemy/Enemy.h"
@@ -43,6 +44,7 @@
         void DecreaseLives();
         bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
         void ResetLives();
+        int GetRemainingLives() const;
 
     private:
         Texture2D sprite;
@@ -51,6 +53,7 @@
         Color color;
         int lives;
         static const int INNITIAL_LIVES = 5;
+        Vidas vidas;
     };
 
 

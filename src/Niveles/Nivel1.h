@@ -13,6 +13,7 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
+#include "../Lives/Vidas.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -43,6 +44,7 @@ private:
     bool collisionDetected;
     double lastCollisionDetectionTime;
     Hitbox hitbox;
+    Vidas vidas;
 };
 
 

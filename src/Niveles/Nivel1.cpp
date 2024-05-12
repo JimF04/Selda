@@ -15,7 +15,7 @@ Stack<Vector2> pathCopy;
 
 
 
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5){
     InitAudioDevice();
     ball = Ball();
     enemigos;
@@ -137,22 +137,11 @@ void Nivel1::Update() {
     for(auto& enemy: enemigos){
         if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
             if (ball.CheckCollisionWithEnemy(enemy)) {
-                cout<<"HOLA";
-                // Si hay colisión, puedes hacer lo que necesites aquí
-                // Por ejemplo, decrementar vidas, mover la bola, etc.
-                ball.DecreaseLives(); // Disminuir contador de vidas
-                collisionDetected = true;
-
-                if (ball.GetLives() <=0) {
-                    // La bola ha perdido tdas sus vidas
-                    cout<<"Pene";
+               vidas.DecreaseLife();
+                if(!vidas.IsAlive()){
                     ResetLevel();
                 }
-
-
-                // Establece la bandera de colisión en true
-
-                // Actualiza el tiempo de la última detección de colisiones
+                collisionDetected = true;
                 lastCollisionDetectionTime = GetTime();
             }
         }
@@ -169,7 +158,7 @@ void Nivel1::ResetLevel() {
         enemy.setPosition({100, 300}); // Restablecer la posición de cada enemigo
     }
     collisionDetected = false;
-    ball.ResetLives();
+    vidas.ResetLives();
     lastCollisionDetectionTime = GetTime();
 }
 

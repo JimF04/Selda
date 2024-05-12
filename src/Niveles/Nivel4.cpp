@@ -6,7 +6,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
+Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 112, 672 });
@@ -59,15 +59,11 @@ void Nivel4::Update() {
     // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
     if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
         if (ball.CheckCollisionWithEnemy(enemigo)) {
-            // Si hay colisión, puedes hacer lo que necesites aquí
-            // Por ejemplo, decrementar vidas, mover la bola, etc.
-            ball.DecreaseLives(); // Disminuir contador de vidas
+           vidas.DecreaseLife();
+           if(!vidas.IsAlive()){
+               ResetLevel();
+           }
 
-            // Verifica si la bola se quedó sin vidas
-            if (ball.GetLives() <= 0) {
-                // La bola ha perdido todas sus vidas
-                ResetLevel();
-            }
 
             // Establece la bandera de colisión en true
             collisionDetected = true;
@@ -83,7 +79,7 @@ void Nivel4::ResetLevel() {
 
     enemigo.setPosition({100, 300});
 
-    ball.ResetLives();
+    vidas.ResetLives();
 
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();

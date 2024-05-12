@@ -6,7 +6,7 @@
 
 
 
-Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
+Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 592, 704 });
@@ -46,13 +46,10 @@ void Nivel5::Update() {
         if (ball.CheckCollisionWithEnemy(enemigo)) {
             // Si hay colisión, puedes hacer lo que necesites aquí
             // Por ejemplo, decrementar vidas, mover la bola, etc.
-            ball.DecreaseLives(); // Disminuir contador de vidas
-
-            // Verifica si la bola se quedó sin vidas
-            if (ball.GetLives() <= 0) {
-                // La bola ha perdido todas sus vidas
-                ResetLevel();
-            }
+          vidas.DecreaseLife();
+          if(!vidas.IsAlive()){
+              ResetLevel();
+          }
 
             // Establece la bandera de colisión en true
             collisionDetected = true;
@@ -68,7 +65,7 @@ void Nivel5::ResetLevel() {
 
     enemigo.setPosition({100, 300});
 
-    ball.ResetLives();
+    vidas.ResetLives();
 
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
