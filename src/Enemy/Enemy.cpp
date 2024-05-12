@@ -22,7 +22,7 @@ Enemy::Enemy()
     initial_position=position;
 
 
-    spritesheet = LoadTexture("/home/jose/Selda/assets/chara_slime.png");
+    spritesheet = LoadTexture("C:\\SeldaProject\\Selda\\assets\\chara_slime.png");
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -165,11 +165,9 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
 }
 
-void Enemy::UpdateAnimation()
-{
+void Enemy::UpdateAnimation() {
     frameCounter++;
-    if (frameCounter >= frameSpeed)
-    {
+    if (frameCounter >= frameSpeed) {
         frameCounter = 0;
         currentFrame++;
         if (currentFrame > 2) // Si excede el número de frames de la animación
@@ -178,18 +176,17 @@ void Enemy::UpdateAnimation()
         }
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }
- 
 
-
- bool Enemy::GetCollisionWithHitbox(const Hitbox& hitbox) const{
-     return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
 }
+        bool Enemy::GetCollisionWithHitbox(const Hitbox &hitbox) const {
+            return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
+        }
 
 
-void Enemy::SetEliminated(bool eliminated) {
-    this ->eliminated = eliminated;
-}
+        void Enemy::SetEliminated(bool eliminated) {
+            this->eliminated = eliminated;
+        }
 
-bool Enemy::IsEliminated() const {
-    return eliminated;
-}
+        bool Enemy::IsEliminated() const {
+            return eliminated;
+        }

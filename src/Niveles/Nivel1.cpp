@@ -63,7 +63,7 @@ void Nivel1::Update() {
         deltaX -= speed;
     if (IsKeyDown(KEY_D))
         deltaX += speed;
-    if (IsKeyDown(KEY_L))
+    if (IsKeyDown(KEY_P))
         ball.Atacar();
 
 
@@ -123,61 +123,56 @@ void Nivel1::Update() {
     }
 
 
-
-
-
-   
-
-    if (GetTime() - lastCollisionDetectionTime >= 2.0) {
-        collisionDetected = false; // Restablece la bandera de colisión
-    }
-    if(enemigo.GetCollisionWithHitbox(hitbox)){
-        enemigo.setPosition({-1000,1000});
-        enemigo.SetEliminated(true);
-
-        collisionDetected = true;
-
-        lastCollisionDetectionTime = GetTime();
-    }
-    float distance = Vector2Distance(ball.GetPosition(),enemigo.GetPosition());
-    if(distance<ball.GetRadius() + 15){
-        if(IsKeyDown(KEY_P)){
-            enemigo.setPosition({-1000,1000});
-        }
-    }
-    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
-    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-        if (ball.CheckCollisionWithEnemy(enemigo)) {
-            // Si hay colisión, puedes hacer lo que necesites aquí
-            // Por ejemplo, decrementar vidas, mover la bola, etc.
-            ball.DecreaseLives(); // Disminuir contador de vidas
-
-            // Verifica si la bola se quedó sin vidas
-            if (ball.GetLives() <= 0) {
-                // La bola ha perdido todas sus vidas
-                ResetLevel();
+    for(auto& enemy : enemigos) {
+        float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());
+        if (distance < ball.GetRadius() + 10) {
+            if (IsKeyDown(KEY_P)) {
+                ball.Atacar();
+                enemy.setPosition({-1000, 1000});
             }
-
-            // Establece la bandera de colisión en true
-            collisionDetected = true;
-
-            // Actualiza el tiempo de la última detección de colisiones
-            lastCollisionDetectionTime = GetTime();
         }
+    }
+
+    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    for(auto& enemy: enemigos){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+            if (ball.CheckCollisionWithEnemy(enemy)) {
+                cout<<"HOLA";
+                // Si hay colisión, puedes hacer lo que necesites aquí
+                // Por ejemplo, decrementar vidas, mover la bola, etc.
+                ball.DecreaseLives(); // Disminuir contador de vidas
+                collisionDetected = true;
+
+                if (ball.GetLives() <=0) {
+                    // La bola ha perdido tdas sus vidas
+                    cout<<"Pene";
+                    ResetLevel();
+                }
+
+
+                // Establece la bandera de colisión en true
+
+                // Actualiza el tiempo de la última detección de colisiones
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
     }
 
 }
 
 void Nivel1::ResetLevel() {
-    ball.setPosition({90,160});
+    ball.setPosition({90, 160});
 
-    enemigo.setPosition({100,300});
-
-    ball.ResetLives();
-
+    for (auto& enemy : enemigos) {
+        enemy.setPosition({100, 300}); // Restablecer la posición de cada enemigo
+    }
     collisionDetected = false;
+    ball.ResetLives();
     lastCollisionDetectionTime = GetTime();
 }
+
 void Nivel1::Draw() {
     BeginMode2D(camera);
     ClearBackground(BLACK);

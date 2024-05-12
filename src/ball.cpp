@@ -10,7 +10,7 @@ Ball::Ball()
     radius = 6;
     color = PINK;
     crums;
-    spritesheet = LoadTexture("/home/jose/Selda/assets/chara_hero.png");
+    spritesheet = LoadTexture("C:\\SeldaProject\\Selda\\assets\\chara_hero.png");
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -28,7 +28,6 @@ Ball::Ball()
 }
 
 void Ball::Draw() const
-
 {
 //    DrawCircleV(position, radius, color);
     DrawTextureRec(spritesheet, sourceRec, position, WHITE);
@@ -73,11 +72,6 @@ void Ball::Move(int deltaX, int deltaY)
 
 }
 
-    void Ball::Draw() const
-    {
-        DrawTexture(sprite,static_cast<int>(position.x-sprite.width/2),static_cast<int>(position.y - sprite.height/2),WHITE);
-        hitbox.Draw(color);
-    }
 
 
 
@@ -85,22 +79,13 @@ int Ball::GetRadius() const
 {
     return radius;
 }
-    void Ball::Move(int deltaX, int deltaY)
-    {
-        position.x += deltaX;
-        position.y += deltaY;
-        hitbox.SetRect ({position.x - 10, position.y - 10, static_cast<float>(3.5 * radius), static_cast<float>(3.5 * radius)});
-    }
 
     Vector2 Ball::GetPosition() const
     {
         return position;
     }
 
-    int Ball::GetRadius() const
-    {
-        return radius;
-    }
+
 
 void Ball::SetSafeRoom(bool safe)
 {
@@ -142,14 +127,14 @@ void Ball::UpdateAnimation()
     {
         position = pos;
 
-       hitbox.SetRect({position.x-radius,position.y-radius,static_cast<float>(radius * 2) , static_cast<float>(radius *2)});
+
     }
 
     bool Ball::CheckCollisionWithEnemy(const Enemy &enemy) const {
-    //    float distance = Vector2Distance(position, enemy.GetPosition());
-    //    return distance < radius + enemy.GetRadius();
+        float distance = Vector2Distance(position, enemy.GetPosition());
+        return distance < radius + enemy.GetRadius();
 
-        return hitbox.CheckCollision(enemy.GetPosition());
+
     }
 
     bool Ball::GetSafeRoom()
@@ -162,3 +147,10 @@ void Ball::UpdateAnimation()
     void Ball::ResetLives() {
         lives = INNITIAL_LIVES;
     }
+
+    void Ball::DecreaseLives() {
+    lives--;
+}
+int Ball::GetLives()const  {
+    return lives;
+}
