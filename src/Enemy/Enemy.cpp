@@ -1,3 +1,4 @@
+
 #include "Enemy.h"
 #include "../Algoritmos/AStar.h"
 #include <queue>
@@ -5,8 +6,11 @@
 #include <unistd.h>
 #include <chrono>
 #include <thread>
+#include "raymath.h"
+#include "../Hitbox.h"
 const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
+
 
 Enemy::Enemy()
 {
@@ -174,4 +178,18 @@ void Enemy::UpdateAnimation()
         }
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }
+ 
+
+
+ bool Enemy::GetCollisionWithHitbox(const Hitbox& hitbox) const{
+     return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
+}
+
+
+void Enemy::SetEliminated(bool eliminated) {
+    this ->eliminated = eliminated;
+}
+
+bool Enemy::IsEliminated() const {
+    return eliminated;
 }

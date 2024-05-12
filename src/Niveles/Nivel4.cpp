@@ -3,10 +3,12 @@
 //
 
 #include "Nivel4.h"
+#include "raylib.h"
+#include "raymath.h"
 
 Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
-    ball = Ball();
+    ball = Ball("../assets/Level1.png");
     ball.setPosition({ 112, 672 });
 
     LoadMap("../Level4.json", 0, floor);
@@ -47,8 +49,45 @@ void Nivel4::Update() {
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
+
+    float distance = Vector2Distance(ball.GetPosition(),enemigo.GetPosition());
+    if(distance<ball.GetRadius()){
+        if(IsKeyDown(KEY_P)){
+            enemigo.setPosition({-1000,1000});
+        }
+    }
+    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+        if (ball.CheckCollisionWithEnemy(enemigo)) {
+            // Si hay colisión, puedes hacer lo que necesites aquí
+            // Por ejemplo, decrementar vidas, mover la bola, etc.
+            ball.DecreaseLives(); // Disminuir contador de vidas
+
+            // Verifica si la bola se quedó sin vidas
+            if (ball.GetLives() <= 0) {
+                // La bola ha perdido todas sus vidas
+                ResetLevel();
+            }
+
+            // Establece la bandera de colisión en true
+            collisionDetected = true;
+
+            // Actualiza el tiempo de la última detección de colisiones
+            lastCollisionDetectionTime = GetTime();
+        }
+    }
 }
 
+void Nivel4::ResetLevel() {
+    ball.setPosition({90, 160});
+
+    enemigo.setPosition({100, 300});
+
+    ball.ResetLives();
+
+    collisionDetected = false;
+    lastCollisionDetectionTime = GetTime();
+}
 
 void Nivel4::Draw() {
     BeginMode2D(camera);

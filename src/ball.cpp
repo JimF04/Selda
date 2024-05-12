@@ -73,10 +73,11 @@ void Ball::Move(int deltaX, int deltaY)
 
 }
 
-Vector2 Ball::GetPosition() const
-{
-    return position;
-}
+    void Ball::Draw() const
+    {
+        DrawTexture(sprite,static_cast<int>(position.x-sprite.width/2),static_cast<int>(position.y - sprite.height/2),WHITE);
+        hitbox.Draw(color);
+    }
 
 
 
@@ -84,16 +85,22 @@ int Ball::GetRadius() const
 {
     return radius;
 }
+    void Ball::Move(int deltaX, int deltaY)
+    {
+        position.x += deltaX;
+        position.y += deltaY;
+        hitbox.SetRect ({position.x - 10, position.y - 10, static_cast<float>(3.5 * radius), static_cast<float>(3.5 * radius)});
+    }
 
-void Ball::setPosition(Vector2 pos)
-{
-    position = pos;
-}
+    Vector2 Ball::GetPosition() const
+    {
+        return position;
+    }
 
-bool Ball::GetSafeRoom()
-{
-    return safeRoom;
-}
+    int Ball::GetRadius() const
+    {
+        return radius;
+    }
 
 void Ball::SetSafeRoom(bool safe)
 {
@@ -131,3 +138,27 @@ void Ball::UpdateAnimation()
         // Actualizar el rectángulo fuente de la textura para el siguiente frame
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }}
+    void Ball::setPosition(Vector2 pos)
+    {
+        position = pos;
+
+       hitbox.SetRect({position.x-radius,position.y-radius,static_cast<float>(radius * 2) , static_cast<float>(radius *2)});
+    }
+
+    bool Ball::CheckCollisionWithEnemy(const Enemy &enemy) const {
+    //    float distance = Vector2Distance(position, enemy.GetPosition());
+    //    return distance < radius + enemy.GetRadius();
+
+        return hitbox.CheckCollision(enemy.GetPosition());
+    }
+
+    bool Ball::GetSafeRoom()
+    {
+        return safeRoom;
+    }
+
+   
+
+    void Ball::ResetLives() {
+        lives = INNITIAL_LIVES;
+    }

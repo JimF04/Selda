@@ -20,6 +20,8 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    Texture2D image;
+    void ResetLevel();
 
     virtual bool CheckWinCondition() override {
         if (onstairs){
@@ -38,6 +40,9 @@ private:
     std::vector<Enemy> enemigos;
 
     void DrawAStar(Stack<Vector2> path);
+    bool collisionDetected;
+    double lastCollisionDetectionTime;
+    Hitbox hitbox;
 };
 
 

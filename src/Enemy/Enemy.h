@@ -8,6 +8,7 @@
 #include "../ball.h"
 #include "raylib.h"
 #include "../DataStructures/Stack.h"
+#include "../Hitbox.h"
 
 class Enemy
 {
@@ -31,12 +32,17 @@ public:
     int frameSpeed;
     int currentFrame;
     void UpdateAnimation();
+    bool GetCollisionWithHitbox(const Hitbox& hitbox) const;
+    void SetEliminated(bool eliminated);
+    bool IsEliminated() const;
 
     Vector2 position;
 private:
     int radius;
     Color color;
     float speed;
+    
+    bool eliminated;
 };
 
 

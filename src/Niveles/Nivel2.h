@@ -11,6 +11,14 @@
 #include "../ball.h"
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
+#include <fstream>
+#include <iostream>
+#include "raylib.h"
+#include "../ball.h"
+#include "../Enemy/Enemy.h"
+#include "../Nivel.h"
+#include "../Algoritmos/AStar.h"
+#include "../DataStructures/Stack.h"
 
 class Nivel2 : public Nivel {
 public:
@@ -18,6 +26,8 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    void ResetLevel();
+
 
     virtual bool CheckWinCondition() override {
         if (onstairs){
@@ -31,6 +41,8 @@ public:
 
 private:
     Enemy enemigo;
+    bool collisionDetected;
+    double lastCollisionDetectionTime;
 };
 
 

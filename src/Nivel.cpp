@@ -114,6 +114,8 @@ void Nivel::DrawMiniMap() {
 }
 
 
+
+
 void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
     // Medir el ancho del texto para centrarlo
     int textWidth = MeasureText(text, fontSize);
