@@ -30,8 +30,8 @@ Ball::Ball()
 void Ball::Draw() const
 
 {
-    DrawCircleV(position, radius, color);
-    //DrawTextureRec(spritesheet, sourceRec, position, WHITE);
+//    DrawCircleV(position, radius, color);
+    DrawTextureRec(spritesheet, sourceRec, position, WHITE);
 }
 
 void Ball::Move(int deltaX, int deltaY)

@@ -24,11 +24,19 @@ public:
     void Back_to_place(Stack<Vector2> stack, int tile);
     Vector2 initial_position;
 
+
+    Texture2D spritesheet;
+    Rectangle sourceRec;
+    int frameCounter;
+    int frameSpeed;
+    int currentFrame;
+    void UpdateAnimation();
+
     Vector2 position;
 private:
     int radius;
     Color color;
-    int speed;
+    float speed;
 };
 
 

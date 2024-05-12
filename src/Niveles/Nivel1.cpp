@@ -80,6 +80,7 @@ void Nivel1::Update() {
 
 
 
+
     if(personaje_visto){
         enemigos[0].Find_player(path,TILE_SIZE);
     }
