@@ -17,7 +17,7 @@ public:
     void Move(int deltaX, int deltaY); // Declaración del método Move
     Vector2 GetPosition() const;
     int GetRadius() const;
-    bool FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs);
+    bool FollowBreadcrumb(Vector2& breadcrumbs);
     void setPosition(Vector2 pos);
     float distanceToPlayer;
     void Find_player(Stack<Vector2> stack, int i);

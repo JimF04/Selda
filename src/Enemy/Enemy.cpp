@@ -70,12 +70,12 @@ void Enemy::Find_player(Stack<Vector2> stack, int tile) {
 
 
 
-bool Enemy::FollowBreadcrumb(const std::vector<Vector2>& breadcrumbs) {
+bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
-    Vector2 target = breadcrumbs.back();
+    Vector2 target = breadcrumbs;
     distanceToPlayer = sqrt(pow(target.x - position.x, 2) + pow(target.y - position.y, 2));
 
-    if (breadcrumbs.empty() || distanceToPlayer>20) {
+    if (distanceToPlayer>20) {
         return false;
     }
 

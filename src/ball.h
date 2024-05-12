@@ -21,7 +21,7 @@ public:
     bool GetSafeRoom();
     void SetSafeRoom(bool safe);
     bool safeRoom;
-    std::vector<Vector2> crums;
+    Vector2 crums;
     void GetCrumbs();
     void UpdateAnimation();
     void Atacar();
@@ -31,6 +31,7 @@ public:
     int frameSpeed;
     Texture2D spritesheet;
     Rectangle sourceRec;
+    int time_for_crums;
 
 private:
     Vector2 position;

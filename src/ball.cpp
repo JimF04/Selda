@@ -11,10 +11,6 @@ Ball::Ball()
     color = PINK;
     crums;
     spritesheet = LoadTexture("/home/jose/Selda/assets/chara_hero.png");
-    if (spritesheet.id <= 0)
-    {
-        std::cerr << "Error cargando la textura del spritesheet" << std::endl;
-    }
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -24,18 +20,23 @@ Ball::Ball()
 
     frameSpeed = 8;
 
+    time_for_crums = 0;
+
 
 
 
 }
 
 void Ball::Draw() const
+
 {
-    DrawTextureRec(spritesheet, sourceRec, position, WHITE);
+    DrawCircleV(position, radius, color);
+    //DrawTextureRec(spritesheet, sourceRec, position, WHITE);
 }
 
 void Ball::Move(int deltaX, int deltaY)
 {
+    time_for_crums +=1;
     position.x += deltaX;
     position.y += deltaY;
 
@@ -60,8 +61,12 @@ void Ball::Move(int deltaX, int deltaY)
     // Actualiza la animación
     UpdateAnimation();
 
-    // Actualiza las migas de pan
-    GetCrumbs();
+    if(time_for_crums>10){
+        GetCrumbs();
+        time_for_crums =0;
+
+    }
+
 
 
 
@@ -97,7 +102,7 @@ void Ball::SetSafeRoom(bool safe)
 
 void Ball::GetCrumbs(){
 
-    crums.push_back(GetPosition());
+    crums=(GetPosition());
 
 }
 
