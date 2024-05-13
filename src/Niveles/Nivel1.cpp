@@ -25,7 +25,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
-    camera.zoom = 1.0f;
+//    camera.zoom = 1.0f;
 
 
 
@@ -171,7 +171,7 @@ void Nivel1::Draw() {
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
     ball.Draw();
-    vidas.Draw();
+    vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
         enemigo.Draw();
     }
@@ -190,6 +190,7 @@ void Nivel1::Draw() {
     DrawMiniMap();
     EndMode2D();
 }
+
 
 
 void Nivel1::DrawAStar(Stack<Vector2> path) {

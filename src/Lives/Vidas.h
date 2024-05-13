@@ -9,7 +9,7 @@ public:
     int GetLives() const;
     bool IsAlive() const;
     void ResetLives();
-    void Draw() const;
+    void Draw(Camera2D camera) const;
     Texture2D spriteshit;
     Rectangle surceRec;
 private:

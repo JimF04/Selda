@@ -1,11 +1,11 @@
 #include "Vidas.h"
 
 
-const int DESIRED_WIDTH = 48;  // Ancho deseado de la textura
-const int DESIRED_HEIGHT = 48; // Altura deseada de la textura
+const int DESIRED_WIDTH = 20;  // Ancho deseado de la textura
+const int DESIRED_HEIGHT = 10; // Altura deseada de la textura
 
 Vidas::Vidas(int initialLives) : lives(5), initialLives(5) {
-    position = {10,10};
+    position = {-90,-70};
     Image image = LoadImage("C:\\SeldaProject\\Selda\\assets\\heartimage.png");
     if (image.data == nullptr) {
         TraceLog(LOG_WARNING, "Error al cargar la imagen de las vidas");
@@ -36,6 +36,8 @@ bool Vidas::IsAlive() const {
 void Vidas::ResetLives() {
     lives = initialLives; // Restablecemos las vidas al valor inicial
 }
-void Vidas::Draw() const {
-    DrawTextureRec(spriteshit,surceRec,position,WHITE);
+void Vidas::Draw(Camera2D camera) const {
+    // Calcula la posición de dibujo ajustada con la posición de la cámara
+    Vector2 drawPosition = { position.x + camera.target.x, position.y + camera.target.y };
+    DrawTextureRec(spriteshit, surceRec, drawPosition, WHITE);
 }
