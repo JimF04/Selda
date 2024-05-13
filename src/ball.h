@@ -8,7 +8,7 @@
     #include "raylib.h"
     #include <vector>
 
-#include "Lives/Vidas.h"
+    #include "Lives/Vidas.h"
     #include "raymath.h"
     #include "Hitbox.h"
     #include "Enemy/Enemy.h"

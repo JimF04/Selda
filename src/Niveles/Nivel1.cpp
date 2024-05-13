@@ -25,6 +25,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
+    camera.zoom = 1.0f;
 
 
 
@@ -170,9 +171,11 @@ void Nivel1::Draw() {
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
     ball.Draw();
+    vidas.Draw();
     for (const auto& enemigo : enemigos) {
         enemigo.Draw();
     }
+
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
