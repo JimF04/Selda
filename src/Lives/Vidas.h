@@ -4,7 +4,7 @@
 #include "raylib.h"
 class Vidas {
 public:
-    Vidas(int initialLives);
+    Vidas(int initialLives,int totalHearts);
     void DecreaseLife();
     int GetLives() const;
     bool IsAlive() const;
@@ -15,7 +15,10 @@ public:
 private:
     int lives;
     int initialLives;
+    int totalHearts;
+    int heartsLeft;
     Vector2 position;
+
 };
 
 #endif // VIDAS_H

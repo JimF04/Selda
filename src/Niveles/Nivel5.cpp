@@ -6,7 +6,7 @@
 
 
 
-Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5){
+Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5,5){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 592, 704 });

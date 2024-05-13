@@ -4,7 +4,7 @@ const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
 
 
-Ball::Ball():vidas(5)
+Ball::Ball():vidas(5,5)
 {
     position = {400, 300};
     radius = 6;

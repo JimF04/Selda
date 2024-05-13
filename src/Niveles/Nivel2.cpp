@@ -7,7 +7,7 @@
 #include "raylib.h"
 
 
-Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5){
+Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5,5){
     // Iniciar clases
     ball = Ball();
     enemigo = Enemy();

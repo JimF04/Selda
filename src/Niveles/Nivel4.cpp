@@ -6,7 +6,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5){
+Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5,5){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 112, 672 });

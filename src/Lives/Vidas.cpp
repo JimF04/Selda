@@ -4,8 +4,8 @@
 const int DESIRED_WIDTH = 20;  // Ancho deseado de la textura
 const int DESIRED_HEIGHT = 10; // Altura deseada de la textura
 
-Vidas::Vidas(int initialLives) : lives(5), initialLives(5) {
-    position = {-90,-70};
+Vidas::Vidas(int initialLives,int totalHearts) : lives(5), initialLives(5),totalHearts(totalHearts),heartsLeft(totalHearts) {
+    position = {-120,-60};
     Image image = LoadImage("C:\\SeldaProject\\Selda\\assets\\heartimage.png");
     if (image.data == nullptr) {
         TraceLog(LOG_WARNING, "Error al cargar la imagen de las vidas");
@@ -22,6 +22,7 @@ Vidas::Vidas(int initialLives) : lives(5), initialLives(5) {
 void Vidas::DecreaseLife() {
     if (lives > 0) {
         lives--;
+        heartsLeft--;
     }
 }
 
@@ -35,9 +36,12 @@ bool Vidas::IsAlive() const {
 
 void Vidas::ResetLives() {
     lives = initialLives; // Restablecemos las vidas al valor inicial
+    heartsLeft = totalHearts;
 }
 void Vidas::Draw(Camera2D camera) const {
-    // Calcula la posición de dibujo ajustada con la posición de la cámara
-    Vector2 drawPosition = { position.x + camera.target.x, position.y + camera.target.y };
-    DrawTextureRec(spriteshit, surceRec, drawPosition, WHITE);
+    for (int i = 0; i < heartsLeft; i++) {
+        Vector2 drawPosition = {position.x + camera.target.x + i * (DESIRED_WIDTH + 5), position.y + camera.target.y};
+        DrawTextureRec(spriteshit, surceRec, drawPosition, WHITE);
+    }
 }
+
