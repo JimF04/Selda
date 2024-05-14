@@ -120,6 +120,14 @@ void Ball::Defender(){
 
 }
 
+void Ball::Dano(){
+    sourceRec.y = FRAME_HEIGHT *9;
+    UpdateAnimation();
+
+
+}
+
+
 void Ball::UpdateAnimation()
 {
     // Actualiza el frame actual basado en el tiempo

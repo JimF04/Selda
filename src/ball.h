@@ -34,6 +34,7 @@
         void UpdateAnimation();
         void Atacar();
         void Defender();
+        void Dano();
 
         Vector4 collisionBox;
 

@@ -22,7 +22,7 @@ Enemy::Enemy()
     initial_position=position;
 
 
-    spritesheet = LoadTexture("../assets/chara_slime.png");
+    spritesheet = LoadTexture("../assets/chara_goblin.png");
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -36,8 +36,8 @@ Enemy::Enemy()
 }
 void Enemy::Draw() const
 {
-    DrawTextureRec(spritesheet, sourceRec, position, WHITE);
-    DrawCircleV(position, radius, color);
+    DrawTextureRec(spritesheet, sourceRec, {position.x-25,position.y-25}, WHITE);
+//    DrawCircleV(position, radius, color);
 }
 
 void Enemy::Move(int deltaX, int deltaY)
@@ -94,10 +94,10 @@ void Enemy::Find_player(Stack<Vector2> stack, int tile) {
         directionY /= length;
 
         // Mueve al enemigo en la dirección de la "crumb"
-        position.x += directionX * 0.05;
-        position.y += directionY * 0.05;
+//        position.x += directionX * 0.05;
+//        position.y += directionY * 0.05;
 
-
+        Move(static_cast<int>(round(directionX *0.75)),static_cast<int>((directionY *0.75)));
 
 
 
@@ -140,14 +140,14 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
     Vector2 target = breadcrumbs;
     distanceToPlayer = sqrt(pow(target.x - position.x, 2) + pow(target.y - position.y, 2));
 
-    if (distanceToPlayer>30) {
+    if (distanceToPlayer>40) {
         return false;
     }
 
     // Obtiene la última "crumb" (últimas coordenadas del jugador)
 
     // Imprime la distancia
-    if(distanceToPlayer<30){
+    if(distanceToPlayer<40 && distanceToPlayer>20){
         // Calcula la dirección hacia la "crumb"
         float directionX = target.x - position.x;
         float directionY = target.y - position.y;
@@ -164,7 +164,21 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
         return true;
     }
 
+    if(distanceToPlayer<20){
+        Ataque();
 
+    }
+
+
+
+
+
+}
+
+
+void Enemy::Ataque(){
+    sourceRec.y = FRAME_HEIGHT*5;
+    UpdateAnimation();
 }
 
 void Enemy::UpdateAnimation() {
