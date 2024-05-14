@@ -33,6 +33,7 @@
         void GetCrumbs();
         void UpdateAnimation();
         void Atacar();
+        void Defender();
 
         Vector4 collisionBox;
 

@@ -14,7 +14,7 @@ const int FRAME_HEIGHT = 48;
 
 Enemy::Enemy()
 {
-    position = {75, 300};
+    position = {100, 300};
     radius = 7;
     color = YELLOW;
     speed = 1.25;
@@ -37,7 +37,7 @@ Enemy::Enemy()
 void Enemy::Draw() const
 {
     DrawTextureRec(spritesheet, sourceRec, position, WHITE);
-    //DrawCircleV(position, radius, color);
+    DrawCircleV(position, radius, color);
 }
 
 void Enemy::Move(int deltaX, int deltaY)
@@ -99,6 +99,9 @@ void Enemy::Find_player(Stack<Vector2> stack, int tile) {
 
 
 
+
+
+
     }
 }
 
@@ -122,8 +125,7 @@ void Enemy::Back_to_place(Stack<Vector2> stack, int tile){
         // Mueve al enemigo en la dirección de la "crumb"
         position.x += directionX * 0.05;
         position.y += directionY * 0.05;
-        Move(directionX,0);
-        Move(0,directionY);
+
 
 
     }

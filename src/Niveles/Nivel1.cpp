@@ -64,8 +64,10 @@ void Nivel1::Update() {
         deltaX -= speed;
     if (IsKeyDown(KEY_D))
         deltaX += speed;
-    if (IsKeyDown(KEY_P))
+    if (IsKeyDown(KEY_L))
         ball.Atacar();
+    if(IsKeyDown(KEY_K))
+        ball.Defender();
 
 
 
@@ -124,31 +126,22 @@ void Nivel1::Update() {
     }
 
 
-    for(auto& enemy : enemigos) {
-        float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());
-        if (distance < ball.GetRadius() + 10) {
-            if (IsKeyDown(KEY_P)) {
-                ball.Atacar();
-                enemy.setPosition({-1000, 1000});
-            }
-        }
-    }
 
     // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
-    for(auto& enemy: enemigos){
-        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-            if (ball.CheckCollisionWithEnemy(enemy)) {
-               vidas.DecreaseLife();
-                if(!vidas.IsAlive()){
-                    ResetLevel();
-                }
-                collisionDetected = true;
-                lastCollisionDetectionTime = GetTime();
-            }
-        }
-        collisionDetected = false;
-
-    }
+//    for(auto& enemy: enemigos){
+//        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+//            if (ball.CheckCollisionWithEnemy(enemy)) {
+//               vidas.DecreaseLife();
+//                if(!vidas.IsAlive()){
+//                    ResetLevel();
+//                }
+//                collisionDetected = true;
+//                lastCollisionDetectionTime = GetTime();
+//            }
+//        }
+//        collisionDetected = false;
+//
+//    }
 
 }
 
