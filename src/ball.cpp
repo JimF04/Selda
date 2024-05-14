@@ -7,10 +7,13 @@ const int FRAME_HEIGHT = 48;
 Ball::Ball():vidas(5,5)
 {
     position = {400, 300};
-    radius = 6;
+
+    collisionBox = {0, 0, 16, 16};
+
+    radius = 8;
     color = PINK;
     crums;
-    spritesheet = LoadTexture("C:\\SeldaProject\\Selda\\assets\\chara_hero.png");
+    spritesheet = LoadTexture("/home/jose/Selda/assets/chara_hero.png");
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -30,7 +33,11 @@ Ball::Ball():vidas(5,5)
 void Ball::Draw() const
 {
 //    DrawCircleV(position, radius, color);
-    DrawTextureRec(spritesheet, sourceRec, position, WHITE);
+
+
+    // Dibujar el sprite
+    DrawTextureRec(spritesheet, sourceRec, {position.x - FRAME_WIDTH / 2, position.y - FRAME_HEIGHT / 2}, WHITE);
+
 }
 
 void Ball::Move(int deltaX, int deltaY)

@@ -34,6 +34,8 @@
         void UpdateAnimation();
         void Atacar();
 
+        Vector4 collisionBox;
+
         int frameCounter;
         int currentFrame;
         int frameSpeed;
