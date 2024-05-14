@@ -22,7 +22,7 @@ Enemy::Enemy()
     initial_position=position;
 
 
-    spritesheet = LoadTexture("/home/jose/Selda/assets/chara_slime.png");
+    spritesheet = LoadTexture("../assets/chara_slime.png");
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 

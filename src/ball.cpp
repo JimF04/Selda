@@ -13,7 +13,7 @@ Ball::Ball():vidas(5,5)
     radius = 8;
     color = PINK;
     crums;
-    spritesheet = LoadTexture("/home/jose/Selda/assets/chara_hero.png");
+    spritesheet = LoadTexture("../assets/chara_hero.png");
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 

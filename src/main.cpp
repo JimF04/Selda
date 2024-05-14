@@ -5,9 +5,20 @@
 #include "Niveles/Nivel3.h"
 #include "Niveles/Nivel4.h"
 #include "Niveles/Nivel5.h"
+#include <glog/logging.h>
 
-int main()
-{
+int main(int argc, char* argv[]) {
+    // Inicialización de Glog
+    google::SetLogDestination(google::GLOG_INFO, "../logging/registro.log");
+    google::SetLogDestination(google::GLOG_WARNING, "../logging/registro.log");
+    google::SetLogDestination(google::GLOG_ERROR, "../logging/registro.log");
+    google::SetLogDestination(google::GLOG_FATAL, "../logging/registro.log");
+
+
+    google::InitGoogleLogging(argv[0]);
+
+    LOG(INFO) << "Inicio del juego";
+
     const int screenWidth = 1200;
     const int screenHeight = 800;
     InitWindow(screenWidth, screenHeight, "Selda");
@@ -57,6 +68,8 @@ int main()
 
         EndDrawing();
     }
+
+    LOG(INFO) << "Fin de la aplicación";
 
     CloseWindow();
 

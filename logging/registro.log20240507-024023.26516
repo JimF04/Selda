@@ -1,0 +1,8 @@
+Log file created at: 2024/05/07 02:40:23
+Running on machine: WINJIMMY
+Running duration (h:mm:ss): 0:00:00
+Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I20240507 02:40:23.330721     1 main.cpp:20] Inicio de la aplicación
+E20240507 02:40:23.331766     1 main.cpp:22] Error en la aplicación
+I20240507 02:40:23.608801     1 Mapa.cpp:5] Se cargo el mapa
+I20240507 02:40:25.059197     1 main.cpp:74] Fin de la aplicación

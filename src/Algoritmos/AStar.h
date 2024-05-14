@@ -12,6 +12,7 @@
 #include "raylib.h"
 #include "../Mapa.h"
 #include "../DataStructures/Stack.h"
+#include <glog/logging.h>
 
 // Estructura para representar un nodo en el algoritmo A*
 struct AStarNode {

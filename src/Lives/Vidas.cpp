@@ -6,7 +6,7 @@ const int DESIRED_HEIGHT = 10; // Altura deseada de la textura
 
 Vidas::Vidas(int initialLives,int totalHearts) : lives(5), initialLives(5),totalHearts(totalHearts),heartsLeft(totalHearts) {
     position = {-120,-60};
-    Image image = LoadImage("C:\\SeldaProject\\Selda\\assets\\heartimage.png");
+    Image image = LoadImage("../assets/heartimage.png");
     if (image.data == nullptr) {
         TraceLog(LOG_WARNING, "Error al cargar la imagen de las vidas");
     } else {

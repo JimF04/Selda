@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include <json/json.h>
+#include <glog/logging.h>
 
 #define TILE_SIZE 16
 
