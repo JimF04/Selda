@@ -14,6 +14,7 @@
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
 #include "../Lives/Vidas.h"
+#include "../Objects/Cofres.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -39,6 +40,7 @@ private:
     Enemy enemigo;
     Enemy enemigo2;
     std::vector<Enemy> enemigos;
+    Cofres cofre;
 
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;

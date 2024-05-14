@@ -7,7 +7,7 @@
 #include "../ball.h"
 #include "raymath.h"
 #include "../Enemy/Enemy.h"
-
+#include "../Objects/Cofres.h"
 
 
 Stack<Vector2> path;
@@ -18,6 +18,7 @@ Stack<Vector2> pathCopy;
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5){
     InitAudioDevice();
     ball = Ball();
+    cofre = Cofres();
     enemigos;
     enemigos.emplace_back();
     enemigos.emplace_back();
@@ -25,7 +26,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
-//    camera.zoom = 1.0f;
+
+    camera.zoom = 1.0f;
 
 
 
@@ -170,6 +172,7 @@ void Nivel1::Draw() {
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
+    cofre.Draw();
     ball.Draw();
     vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
