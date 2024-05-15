@@ -37,6 +37,9 @@ protected:
     int floor[MAP_WIDTH][MAP_HEIGHT];
     int wall[MAP_WIDTH][MAP_HEIGHT];
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
+    int traps[MAP_WIDTH][MAP_HEIGHT];
+    int falsefloor[MAP_WIDTH][MAP_HEIGHT];
+
     Ball ball;
     int stairs [4] = {158,159,183,184};
     bool onstairs = false;
