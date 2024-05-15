@@ -60,12 +60,14 @@ void Nivel1::Update() {
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    static bool keyKPressed = false;
+
     if (isShiftPressed) {
         speed *= 2.0f;
     }
 
     if (IsKeyDown(KEY_W))
-        deltaY -= speed;
+    deltaY -= speed;
     if (IsKeyDown(KEY_S))
         deltaY += speed;
     if (IsKeyDown(KEY_A))
@@ -74,9 +76,17 @@ void Nivel1::Update() {
         deltaX += speed;
     if (IsKeyDown(KEY_L))
         ball.Atacar();
-    if(IsKeyDown(KEY_K))
-        ball.Defender();
 
+
+    if(IsKeyDown(KEY_K) && !keyKPressed) {
+        ball.Defender();
+        keyKPressed = true;
+    }
+
+
+    if (IsKeyUp(KEY_K)) {
+        keyKPressed = false;
+    }
 
 
 
