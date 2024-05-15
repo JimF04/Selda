@@ -40,23 +40,37 @@ void Enemy::Draw() const
 //    DrawCircleV(position, radius, color);
 }
 
-void Enemy::Move(int deltaX, int deltaY)
-{
+void Enemy::Move(int deltaX, int deltaY) {
     position.x += deltaX;
     position.y += deltaY;
 
-    // Lógica de animación: determinar dirección y ajustar sourceRec.y para el sprite
+    // Determine which animation to play based on movement
     if (deltaX > 0) {
-        sourceRec.y = FRAME_HEIGHT * 3; // Animación hacia la derecha
+        // Moving right
+        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
+        // Reset any previous flips
+        sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaX < 0) {
-        sourceRec.y = FRAME_HEIGHT * 4; // Animación hacia la izquierda
+        // Moving left
+        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
+        // Flip the sprite horizontally
+        sourceRec.width = -FRAME_WIDTH; // Invert the width
     } else if (deltaY > 0) {
-        sourceRec.y = FRAME_HEIGHT * 2; // Animación hacia abajo
+        // Moving down
+        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+        sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
-        sourceRec.y = FRAME_HEIGHT * 4; // Animación hacia arriba
+        // Moving up
+        sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
+        sourceRec.width = FRAME_WIDTH; // Reset the width
+    } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
+        // No movement, idle animation
+        sourceRec.y = 0; // Row 1: Idle
+        sourceRec.width = FRAME_WIDTH; // Reset the width
     }
 
-    UpdateAnimation(); // Actualizar la animación
+    // Update the animation
+    UpdateAnimation();
 }
 
 Vector2 Enemy::GetPosition() const

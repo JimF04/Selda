@@ -42,41 +42,40 @@ void Ball::Draw() const
 
 void Ball::Move(int deltaX, int deltaY)
 {
-
     position.x += deltaX;
     position.y += deltaY;
 
-    // Determina qué animación reproducir según el movimiento
+    // Determine which animation to play based on movement
     if (deltaX > 0) {
-        // Movimiento hacia la derecha
-        sourceRec.y = FRAME_HEIGHT * 3; // Fila 4: Caminar de lado
+        // Moving right
+        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
+        // Reset any previous flips
+        sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaX < 0) {
-        // Movimiento hacia la izquierda
-        sourceRec.y = FRAME_HEIGHT * 4; // Fila 5: Caminar hacia atrás
+        // Moving left
+        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
+        // Flip the sprite horizontally
+        sourceRec.width = -FRAME_WIDTH; // Invert the width
     } else if (deltaY > 0) {
-        // Movimiento hacia abajo
-        sourceRec.y = FRAME_HEIGHT * 2; // Fila 3: Caminar hacia adelante
+        // Moving down
+        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+        sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
-        // Movimiento hacia arriba
-        sourceRec.y = FRAME_HEIGHT *4; // Fila 2: Caminar hacia adelante (reutilizamos la fila 3)
-    } else if(!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)){
-        // No hay movimiento, animación de estar quieto
-        sourceRec.y = 0; // Fila 1: Estar quieto
+        // Moving up
+        sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
+        sourceRec.width = FRAME_WIDTH; // Reset the width
+    } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
+        // No movement, idle animation
+        sourceRec.y = 0; // Row 1: Idle
+        sourceRec.width = FRAME_WIDTH; // Reset the width
     }
 
-    // Actualiza la animación
+    // Update the animation
     UpdateAnimation();
 
     GetCrumbs();
-
-
-
-
-
-
-
-
 }
+
 
 
 
