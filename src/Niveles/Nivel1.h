@@ -36,6 +36,11 @@ public:
     }
     bool personaje_visto;
 
+    int contadorCofres = 0;
+
+
+    void DrawCounter();
+
 private:
     Enemy enemigo;
     Enemy enemigo2;
@@ -48,7 +53,7 @@ private:
     double lastCollisionDetectionTime;
     Hitbox hitbox;
     Vidas vidas;
-    int contadorCofres = 0;
+
 };
 
 

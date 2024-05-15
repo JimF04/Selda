@@ -10,6 +10,7 @@
 #include "../Hitbox.h"
 const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
+#include <unistd.h> // Para la función Sleep()
 
 
 Enemy::Enemy()
@@ -88,65 +89,69 @@ int Enemy::GetRadius() const
     return radius;
 }
 
+void Enemy::moveToTile(int targetX, int targetY, float pixel) {
+    // Calculate the distance to the target tile
+    float deltaX = (targetX * 16) - position.x; // Assuming each tile is 16x16 pixels
+    float deltaY = (targetY * 16) - position.y;
 
+    // Calculate the normalized direction vector
+    float directionX = (deltaX != 0) ? (deltaX / abs(deltaX)) : 0;
+    float directionY = (deltaY != 0) ? (deltaY / abs(deltaY)) : 0;
 
+    // Move 'pixel' amount towards the target on each axis
+    position.x += directionX * pixel;
+    position.y += directionY * pixel;
 
-void Enemy::Find_player(Stack<Vector2> stack, int tile) {
-    while (!stack.empty()) {
-        Vector2 nextPoint = stack.top();
-        stack.pop();
+    // Determine which animation to play based on movement
+    if (deltaX > 0) {
+        // Moving right
+        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
+        // Reset any previous flips
+        sourceRec.width = FRAME_WIDTH; // Reset the width
+    } else if (deltaX < 0) {
+        // Moving left
+        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
+        // Flip the sprite horizontally
+        sourceRec.width = -FRAME_WIDTH; // Invert the width
+    } else if (deltaY > 0) {
+        // Moving down
+        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+        sourceRec.width = FRAME_WIDTH; // Reset the width
+    } else if (deltaY < 0) {
+        // Moving up
+        sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
+        sourceRec.width = FRAME_WIDTH; // Reset the width
+    } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
+        // No movement, idle animation
+        sourceRec.y = 0; // Row 1: Idle
+        sourceRec.width = FRAME_WIDTH; // Reset the width
+    }
 
-        // Ajusta las coordenadas multiplicándolas por el tamaño del tile
-        nextPoint.x *= tile;
-        nextPoint.y *= tile;
+    // Update the animation
+    UpdateAnimation();
 
-        // Calcula la dirección hacia el siguiente punto
-        float directionX = nextPoint.x - position.x;
-        float directionY = nextPoint.y - position.y;
-        float length = sqrt(directionX * directionX + directionY * directionY);
-        directionX /= length;
-        directionY /= length;
-
-        // Mueve al enemigo en la dirección de la "crumb"
-//        position.x += directionX * 0.05;
-//        position.y += directionY * 0.05;
-
-        Move(static_cast<int>(round(directionX *0.75)),static_cast<int>((directionY *0.75)));
-
-
-
-
+    // Ensure the enemy doesn't overshoot the target
+    if ((deltaX > 0 && position.x > targetX * 16) || (deltaX < 0 && position.x < targetX * 16)) {
+        position.x = targetX * 16;
+    }
+    if ((deltaY > 0 && position.y > targetY * 16) || (deltaY < 0 && position.y < targetY * 16)) {
+        position.y = targetY * 16;
     }
 }
 
 
-void Enemy::Back_to_place(Stack<Vector2> stack, int tile){
-    while (!stack.empty()) {
-        Vector2 nextPoint = stack.top();
-        stack.pop();
+void Enemy::FollowPath(Stack<Vector2>& path) {
+    if (!path.empty()) {
+        Vector2 target = path.top(); // Obtén el próximo destino sin quitarlo del camino
+        moveToTile(target.x, target.y, 1); // Ajusta el valor de 'pixel' según tu preferencia
 
-        // Ajusta las coordenadas multiplicándolas por el tamaño del tile
-        nextPoint.x *= tile;
-        nextPoint.y *= tile;
-
-        // Calcula la dirección hacia el siguiente punto
-        float directionX = nextPoint.x - position.x;
-        float directionY = nextPoint.y - position.y;
-        float length = sqrt(directionX * directionX + directionY * directionY);
-        directionX /= length;
-        directionY /= length;
-
-        // Mueve al enemigo en la dirección de la "crumb"
-        position.x += directionX * 0.05;
-        position.y += directionY * 0.05;
-
-
-
+        // Verifica si el enemigo ha llegado al centro del destino actual
+        if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {
+            // Si el enemigo está lo suficientemente cerca del centro del destino actual, quita el destino del camino
+            path.pop();
+        }
     }
-
-
 }
-
 
 
 bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
@@ -185,8 +190,6 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
 
 
-
-
 }
 
 
@@ -206,6 +209,8 @@ void Enemy::UpdateAnimation() {
         }
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }
+
+
 
 }
         bool Enemy::GetCollisionWithHitbox(const Hitbox &hitbox) const {
