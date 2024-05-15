@@ -96,7 +96,12 @@ Stack<Vector2> AStar::findPath(int startX, int startY, int endX, int endY) {
 
         for (int dx = -1; dx <= 1; ++dx) {
             for (int dy = -1; dy <= 1; ++dy) {
-                if (dx == 0 && dy == 0) continue;
+                // Verificar si estamos en una dirección diagonal
+                if (dx != 0 && dy != 0) continue; // Si ambos son diferentes de cero, es diagonal
+
+                // No permitir movimientos en diagonal
+                if (dx != 0 && dy != 0) continue;
+
                 int neighborX = currentNode->x + dx;
                 int neighborY = currentNode->y + dy;
                 if (isValid(neighborX, neighborY)) {
