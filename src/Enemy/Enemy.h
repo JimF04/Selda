@@ -24,6 +24,7 @@ public:
     void Find_player(Stack<Vector2> stack, int i);
     void Back_to_place(Stack<Vector2> stack, int tile);
     Vector2 initial_position;
+    void Ataque();
 
 
     Texture2D spritesheet;

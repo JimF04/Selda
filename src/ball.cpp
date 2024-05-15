@@ -21,7 +21,7 @@ Ball::Ball():vidas(5,5)
 
     currentFrame = 0;
 
-    frameSpeed = 8;
+    frameSpeed = 11;
 
     time_for_crums = 0;
 
@@ -42,7 +42,7 @@ void Ball::Draw() const
 
 void Ball::Move(int deltaX, int deltaY)
 {
-    time_for_crums +=1;
+
     position.x += deltaX;
     position.y += deltaY;
 
@@ -59,7 +59,7 @@ void Ball::Move(int deltaX, int deltaY)
     } else if (deltaY < 0) {
         // Movimiento hacia arriba
         sourceRec.y = FRAME_HEIGHT *4; // Fila 2: Caminar hacia adelante (reutilizamos la fila 3)
-    } else {
+    } else if(!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)){
         // No hay movimiento, animación de estar quieto
         sourceRec.y = 0; // Fila 1: Estar quieto
     }
@@ -67,11 +67,10 @@ void Ball::Move(int deltaX, int deltaY)
     // Actualiza la animación
     UpdateAnimation();
 
-    if(time_for_crums>10){
-        GetCrumbs();
-        time_for_crums =0;
+    GetCrumbs();
 
-    }
+
+
 
 
 
@@ -111,9 +110,23 @@ void Ball::Atacar(){
     sourceRec.y = FRAME_HEIGHT *6;
     UpdateAnimation();
 
+}
+
+void Ball::Defender(){
+    std::cout<<"atacando"<<std::endl;
+    sourceRec.y = FRAME_HEIGHT *1;
+    sourceRec.x = FRAME_WIDTH * 0;
+    UpdateAnimation();
+
+}
+
+void Ball::Dano(){
+    sourceRec.y = FRAME_HEIGHT *9;
+    UpdateAnimation();
 
 
 }
+
 
 void Ball::UpdateAnimation()
 {
