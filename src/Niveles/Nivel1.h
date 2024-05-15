@@ -41,6 +41,7 @@ private:
     Enemy enemigo2;
     std::vector<Enemy> enemigos;
     Cofres cofre;
+    std::vector<Cofres>cofres;
 
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;

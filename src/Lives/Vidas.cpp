@@ -2,7 +2,7 @@
 
 
 const int DESIRED_WIDTH = 20;  // Ancho deseado de la textura
-const int DESIRED_HEIGHT = 20; // Altura deseada de la textura
+const int DESIRED_HEIGHT = 15; // Altura deseada de la textura
 
 Vidas::Vidas(int initialLives,int totalHearts) : lives(5), initialLives(5),totalHearts(totalHearts),heartsLeft(totalHearts) {
     position = {-120,-80};

@@ -18,8 +18,9 @@ Stack<Vector2> pathCopy;
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5){
     InitAudioDevice();
     ball = Ball();
-    cofre = Cofres();
+   cofres.emplace_back();
     enemigos;
+    cofres;
     enemigos.emplace_back();
     enemigos.emplace_back();
     hitbox = Hitbox();
@@ -27,7 +28,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-//    camera.zoom = 1.0f;
+    camera.zoom = 1.0f;
 
 
 
@@ -140,12 +141,16 @@ void Nivel1::Update() {
             }
         }
     }
-    float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
-    if(distancian < ball.GetRadius() + 11){
-        if(IsKeyDown(KEY_O)){
-            cofre.Still();
+    for(auto& cofres : cofres){
+        float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
+        if(distancian < ball.GetRadius() + 11){
+            if(IsKeyDown(KEY_O)){
+                cofre.Still();
+                cout<<"HOlA";
+            }
         }
     }
+
 
 
     // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
@@ -184,7 +189,9 @@ void Nivel1::Draw() {
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
-    cofre.Draw();
+    for(const auto& cofre:cofres){
+        cofre.Draw();
+    }
     ball.Draw();
     vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
