@@ -26,6 +26,7 @@ public:
     int framespeed;
     int time_for_crums;
     Camera2D camera;
+    bool abierto;
 private:
     Vector2 position;
     Nivel1* nivelPtr;

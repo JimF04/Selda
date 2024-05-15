@@ -37,7 +37,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     cofre2.SetPosition({610, 600}); // Establecer posición del segundo cofre
     cofres.push_back(cofre2);
 
-    camera.zoom = 1.0f;
+//    camera.zoom = 1.0f;
 
 
 
@@ -153,13 +153,14 @@ void Nivel1::Update() {
     }
     for(auto& cofre : cofres){
         float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
-        if(distancian < ball.GetRadius() + 11){
+        if(distancian < ball.GetRadius() + 11 && !cofre.abierto){
             if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
                 cofre.Still();
                 cout<<"Cofre Abierto"<<endl;
                 contadorCofres++;
                 cout<<contadorCofres;
-                cofreDetectado = true; // Marcar el cofre como detectado para este fotograma
+                cofreDetectado = true;
+                cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
             }
             else if (!IsKeyDown(KEY_O)) {
                 cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
