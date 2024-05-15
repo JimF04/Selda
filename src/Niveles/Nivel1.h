@@ -15,6 +15,7 @@
 #include "../DataStructures/Stack.h"
 #include "../Lives/Vidas.h"
 #include "../Objects/Cofres.h"
+#include "../Objects/Jarrones.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -47,7 +48,8 @@ private:
     std::vector<Enemy> enemigos;
     Cofres cofre;
     std::vector<Cofres>cofres;
-
+    std::vector<Jarrones>jarrones;
+   Jarrones jarron;
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
     double lastCollisionDetectionTime;
