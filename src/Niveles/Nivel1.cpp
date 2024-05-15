@@ -8,6 +8,7 @@
 #include "raymath.h"
 #include "../Enemy/Enemy.h"
 #include "../Objects/Cofres.h"
+#include "../Objects/Jarrones.h"
 
 
 Stack<Vector2> path;
@@ -19,6 +20,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     InitAudioDevice();
     ball = Ball();
    cofres.emplace_back(this);
+   jarrones.emplace_back();
+
     enemigos;
     cofres;
     enemigos.emplace_back();
@@ -28,6 +31,9 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
+    Jarrones jarron1;
+    jarron1.SetPosition({520,40});
+    jarrones.push_back(jarron1);
 
     Cofres cofre1(this);
     cofre1.SetPosition({510,40});
@@ -38,7 +44,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     cofres.push_back(cofre2);
 
 
-//    camera.zoom = 1.0f;
+    camera.zoom = 1.0f;
 
 
 
@@ -219,6 +225,12 @@ void Nivel1::Draw() {
         cofre.Draw();
         cofre.DrawCounter(camera);
     }
+
+    for(const auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
+        jarron.Draw();
+    }
+
+
     ball.Draw();
     vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
