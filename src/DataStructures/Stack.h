@@ -68,5 +68,4 @@ template <class T> T Stack<T>::top() {
     return st[top_element];
 }
 
-
 #endif //SELDA_STACK_H

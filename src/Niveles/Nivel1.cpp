@@ -8,6 +8,7 @@
 #include "raymath.h"
 #include "../Enemy/Enemy.h"
 #include "../Objects/Cofres.h"
+#include "../Objects/Jarrones.h"
 
 
 Stack<Vector2> path;
@@ -15,10 +16,12 @@ Stack<Vector2> pathCopy;
 
 
 
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0),cofre(this){
     InitAudioDevice();
     ball = Ball();
-   cofres.emplace_back();
+   cofres.emplace_back(this);
+   jarrones.emplace_back();
+
     enemigos;
     cofres;
     enemigos.emplace_back();
@@ -28,13 +31,20 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-    Cofres cofre1;
+    Jarrones jarron1;
+    jarron1.SetPosition({520,40});
+    jarrones.push_back(jarron1);
+
+    Cofres cofre1(this);
     cofre1.SetPosition({510,40});
     cofres.push_back(cofre1);
 
-    Cofres cofre2;
+    Cofres cofre2(this);
     cofre2.SetPosition({610, 600}); // Establecer posición del segundo cofre
     cofres.push_back(cofre2);
+
+
+    camera.zoom = 1.0f;
 
 
 
@@ -63,12 +73,14 @@ void Nivel1::Update() {
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    static bool keyKPressed = false;
+
     if (isShiftPressed) {
         speed *= 2.0f;
     }
 
     if (IsKeyDown(KEY_W))
-        deltaY -= speed;
+    deltaY -= speed;
     if (IsKeyDown(KEY_S))
         deltaY += speed;
     if (IsKeyDown(KEY_A))
@@ -77,10 +89,17 @@ void Nivel1::Update() {
         deltaX += speed;
     if (IsKeyDown(KEY_L))
         ball.Atacar();
-    if(IsKeyDown(KEY_K))
+
+
+    if(IsKeyDown(KEY_K) && !keyKPressed) {
         ball.Defender();
+        keyKPressed = true;
+    }
 
 
+    if (IsKeyUp(KEY_K)) {
+        keyKPressed = false;
+    }
 
 
 
@@ -105,22 +124,17 @@ void Nivel1::Update() {
 
     AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
-
-
+    path.pop();
 
 
     if(personaje_visto){
-        enemigos[0].Find_player(path,TILE_SIZE);
+        enemigos[0].FollowPath(path);
     }
     else if(personaje_visto== false && enemigos[0].initial_position.x != enemigos[0].position.x && enemigos[0].initial_position.y != enemigos[0].position.y ){
-        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
-        enemigos[0].Back_to_place(path,TILE_SIZE);
+//        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
+//        enemigos[0].Back_to_place(path,TILE_SIZE);
 
     }
-
-
-
-
 
 
 
@@ -152,13 +166,14 @@ void Nivel1::Update() {
     }
     for(auto& cofre : cofres){
         float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
-        if(distancian < ball.GetRadius() + 11){
+        if(distancian < ball.GetRadius() + 11 && !cofre.abierto){
             if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
                 cofre.Still();
                 cout<<"Cofre Abierto"<<endl;
                 contadorCofres++;
                 cout<<contadorCofres;
-                cofreDetectado = true; // Marcar el cofre como detectado para este fotograma
+                cofreDetectado = true;
+                cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
             }
             else if (!IsKeyDown(KEY_O)) {
                 cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
@@ -207,13 +222,23 @@ void Nivel1::Draw() {
 
     for(const auto& cofre:cofres){
         cofre.Draw();
+        cofre.DrawCounter(camera);
     }
+
+    for(const auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
+        jarron.Draw();
+    }
+
+
     ball.Draw();
     vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
         enemigo.Draw();
     }
-
+//    int textPosX = GetScreenWidth() / 2 - MeasureText(FormatText("x: %d", contadorCofres), 20) / 2 + camera.target.x;
+//    int textPosY = 10 + camera.target.y; // Altura fija desde la parte superior de la pantalla
+//
+//    DrawText(FormatText("x: %d", contadorCofres), textPosX, textPosY, 20, WHITE);
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
