@@ -36,7 +36,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     cofre2.SetPosition({610, 600}); // Establecer posición del segundo cofre
     cofres.push_back(cofre2);
 
-    camera.zoom = 1.0f;
 
 
 
@@ -80,6 +79,7 @@ void Nivel1::Update() {
         ball.Atacar();
     if(IsKeyDown(KEY_K))
         ball.Defender();
+
 
 
 
