@@ -33,10 +33,12 @@ void Nivel2::ResetLevel() {
     lastCollisionDetectionTime = GetTime();
 }
 void Nivel2::Update() {
+    static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    static bool keyKPressed = false;
 
     if (isShiftPressed) {
         speed *= 2.0f;
@@ -50,6 +52,19 @@ void Nivel2::Update() {
         deltaX -= speed;
     if (IsKeyDown(KEY_D))
         deltaX += speed;
+    if (IsKeyDown(KEY_L))
+        ball.Atacar();
+
+
+    if(IsKeyDown(KEY_K) && !keyKPressed) {
+        ball.Defender();
+        keyKPressed = true;
+    }
+
+
+    if (IsKeyUp(KEY_K)) {
+        keyKPressed = false;
+    }
 
 
     LayerCollision(deltaX, deltaY, wall, "wall");
