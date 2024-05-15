@@ -11,7 +11,7 @@ Ball::Ball():vidas(5,5)
     collisionBox = {0, 0, 16, 16};
 
     radius = 8;
-    color = PINK;
+
     crums;
     spritesheet = LoadTexture("../assets/chara_hero.png");
 

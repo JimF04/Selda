@@ -7,7 +7,7 @@
 #include "../ball.h"
 #include "raymath.h"
 #include "../Enemy/Enemy.h"
-
+#include "../Objects/Cofres.h"
 
 
 Stack<Vector2> path;
@@ -18,6 +18,7 @@ Stack<Vector2> pathCopy;
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5){
     InitAudioDevice();
     ball = Ball();
+    cofre = Cofres();
     enemigos;
     enemigos.emplace_back();
     enemigos.emplace_back();
@@ -25,6 +26,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
+
 //    camera.zoom = 1.0f;
 
 
@@ -68,6 +70,8 @@ void Nivel1::Update() {
         ball.Atacar();
     if(IsKeyDown(KEY_K))
         ball.Defender();
+
+
 
 
 
@@ -127,6 +131,24 @@ void Nivel1::Update() {
 
 
 
+
+    for(auto& enemy : enemigos) {
+        float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());
+        if (distance < ball.GetRadius() + 10) {
+            if (IsKeyDown(KEY_P)) {
+                ball.Atacar();
+                enemy.setPosition({-1000, 1000});
+            }
+        }
+    }
+    float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
+    if(distancian < ball.GetRadius() + 11){
+        if(IsKeyDown(KEY_O)){
+            cofre.Still();
+        }
+    }
+
+
     // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
 //    for(auto& enemy: enemigos){
 //        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
@@ -163,6 +185,7 @@ void Nivel1::Draw() {
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
+    cofre.Draw();
     ball.Draw();
     vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
