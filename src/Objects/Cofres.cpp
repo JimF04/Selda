@@ -1,6 +1,9 @@
 #include "raymath.h"
 #include "Cofres.h"
 #include "raylib.h"
+#include "../Niveles/Nivel1.h"
+
+
 int sheetwidth = 97;
 int sheetheight = 129;
 int framesperow = 3;
@@ -9,7 +12,7 @@ int framespercolumn = 4;
 const float framewidth = sheetwidth / framesperow;
 const float frameheight = sheetheight / framespercolumn;
 
-Cofres::Cofres() {
+Cofres::Cofres(Nivel1* nivel):nivelPtr(nivel) {
 
     position = {1040,620};
     collisionBox = {0,0,16};
@@ -54,4 +57,8 @@ Vector2 Cofres::GetPosition() const {
 
 void Cofres::SetPosition(Vector2 newPosition) {
     position = newPosition;
+}
+
+void Cofres::DrawCounter() const {
+    DrawText(FormatText("Cofres Abiertos: %d", nivelPtr->contadorCofres), 200, 300, 20, WHITE);
 }

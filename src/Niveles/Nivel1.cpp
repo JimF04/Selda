@@ -15,10 +15,10 @@ Stack<Vector2> pathCopy;
 
 
 
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0),cofre(this){
     InitAudioDevice();
     ball = Ball();
-   cofres.emplace_back();
+   cofres.emplace_back(this);
     enemigos;
     cofres;
     enemigos.emplace_back();
@@ -28,11 +28,11 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-    Cofres cofre1;
+    Cofres cofre1(this);
     cofre1.SetPosition({510,40});
     cofres.push_back(cofre1);
 
-    Cofres cofre2;
+    Cofres cofre2(this);
     cofre2.SetPosition({610, 600}); // Establecer posición del segundo cofre
     cofres.push_back(cofre2);
 
@@ -207,13 +207,17 @@ void Nivel1::Draw() {
 
     for(const auto& cofre:cofres){
         cofre.Draw();
+        cofre.DrawCounter();
     }
     ball.Draw();
     vidas.Draw(camera);
     for (const auto& enemigo : enemigos) {
         enemigo.Draw();
     }
-
+//    int textPosX = GetScreenWidth() / 2 - MeasureText(FormatText("x: %d", contadorCofres), 20) / 2 + camera.target.x;
+//    int textPosY = 10 + camera.target.y; // Altura fija desde la parte superior de la pantalla
+//
+//    DrawText(FormatText("x: %d", contadorCofres), textPosX, textPosY, 20, WHITE);
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
