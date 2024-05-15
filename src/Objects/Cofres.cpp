@@ -59,6 +59,10 @@ void Cofres::SetPosition(Vector2 newPosition) {
     position = newPosition;
 }
 
-void Cofres::DrawCounter() const {
-    DrawText(FormatText("Cofres Abiertos: %d", nivelPtr->contadorCofres), 200, 300, 20, WHITE);
+void Cofres::DrawCounter(Camera2D camera2D) const {
+    Vector2 drawPosition = {20 + camera2D.target.x, 30 + camera2D.target.y};
+    DrawText(FormatText("Cofres Abiertos: %d", nivelPtr->contadorCofres), drawPosition.x, drawPosition.y, 20, WHITE);
 }
+
+
+

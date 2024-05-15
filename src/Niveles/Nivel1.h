@@ -38,6 +38,9 @@ public:
 
     int contadorCofres = 0;
 
+
+    void DrawCounter();
+
 private:
     Enemy enemigo;
     Enemy enemigo2;

@@ -16,7 +16,7 @@ public:
     void Still();
     Vector2 GetPosition() const;
     void SetPosition(Vector2 newPosition);
-    void DrawCounter() const;
+    void DrawCounter(Camera2D camera) const;
 
     Texture2D spritesheet;
     Rectangle sourcerec;
@@ -25,6 +25,7 @@ public:
     int currentframe;
     int framespeed;
     int time_for_crums;
+    Camera2D camera;
 private:
     Vector2 position;
     Nivel1* nivelPtr;

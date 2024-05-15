@@ -28,6 +28,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
+
     Cofres cofre1(this);
     cofre1.SetPosition({510,40});
     cofres.push_back(cofre1);
@@ -207,7 +208,7 @@ void Nivel1::Draw() {
 
     for(const auto& cofre:cofres){
         cofre.Draw();
-        cofre.DrawCounter();
+        cofre.DrawCounter(camera);
     }
     ball.Draw();
     vidas.Draw(camera);
