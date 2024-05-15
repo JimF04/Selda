@@ -15,7 +15,7 @@ Stack<Vector2> pathCopy;
 
 
 
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0){
     InitAudioDevice();
     ball = Ball();
    cofres.emplace_back();
@@ -27,6 +27,14 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
+
+    Cofres cofre1;
+    cofre1.SetPosition({510,40});
+    cofres.push_back(cofre1);
+
+    Cofres cofre2;
+    cofre2.SetPosition({610, 600}); // Establecer posición del segundo cofre
+    cofres.push_back(cofre2);
 
     camera.zoom = 1.0f;
 
@@ -51,6 +59,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 }
 
 void Nivel1::Update() {
+    static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
@@ -141,15 +150,22 @@ void Nivel1::Update() {
             }
         }
     }
-    for(auto& cofres : cofres){
+    for(auto& cofre : cofres){
         float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
         if(distancian < ball.GetRadius() + 11){
-            if(IsKeyDown(KEY_O)){
+            if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
                 cofre.Still();
-                cout<<"HOlA";
+                cout<<"Cofre Abierto"<<endl;
+                contadorCofres++;
+                cout<<contadorCofres;
+                cofreDetectado = true; // Marcar el cofre como detectado para este fotograma
+            }
+            else if (!IsKeyDown(KEY_O)) {
+                cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
             }
         }
     }
+
 
 
 

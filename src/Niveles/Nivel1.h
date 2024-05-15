@@ -48,6 +48,7 @@ private:
     double lastCollisionDetectionTime;
     Hitbox hitbox;
     Vidas vidas;
+    int contadorCofres = 0;
 };
 
 

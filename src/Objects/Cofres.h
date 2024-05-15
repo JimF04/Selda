@@ -11,6 +11,7 @@ public:
     void Draw() const;
     void Still();
     Vector2 GetPosition() const;
+    void SetPosition(Vector2 newPosition);
 
     Texture2D spritesheet;
     Rectangle sourcerec;

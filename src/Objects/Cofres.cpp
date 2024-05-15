@@ -11,7 +11,7 @@ const float frameheight = sheetheight / framespercolumn;
 
 Cofres::Cofres() {
 
-    position = {50,150};
+    position = {1040,620};
     collisionBox = {0,0,16};
     spritesheet = LoadTexture("/home/gabriel/Documents/SeldaProject/Selda/assets/Fantasy RPG (Toony) 32x32(1).png");
     sourcerec = {0,0,framewidth,frameheight};
@@ -52,3 +52,6 @@ Vector2 Cofres::GetPosition() const {
     return position;
 }
 
+void Cofres::SetPosition(Vector2 newPosition) {
+    position = newPosition;
+}
