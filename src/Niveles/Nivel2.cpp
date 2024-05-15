@@ -7,6 +7,7 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball = Ball();
     enemigo = Enemy();
     ball.setPosition({90, 416});
+    enemigo.setPosition({240, 416});
 
 
     LoadMap("../Level2.json", 0, floor);
@@ -20,7 +21,7 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 void Nivel2::ResetLevel() {
     ball.setPosition({90, 160});
 
-    enemigo.setPosition({100, 300});
+    enemigo.setPosition({90, 160});
 
     vidas.ResetLives();
 
@@ -29,10 +30,12 @@ void Nivel2::ResetLevel() {
 }
 
 void Nivel2::Update() {
+    static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    static bool keyKPressed = false;
 
     if (isShiftPressed) {
         speed *= 2.0f;
@@ -46,6 +49,19 @@ void Nivel2::Update() {
         deltaX -= speed;
     if (IsKeyDown(KEY_D))
         deltaX += speed;
+    if (IsKeyDown(KEY_L))
+        ball.Atacar();
+
+
+    if(IsKeyDown(KEY_K) && !keyKPressed) {
+        ball.Defender();
+        keyKPressed = true;
+    }
+
+
+    if (IsKeyUp(KEY_K)) {
+        keyKPressed = false;
+    }
 
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
@@ -99,22 +115,39 @@ void Nivel2::Draw() {
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
 
     // Dibujar un anillo semi-transparente alrededor del personaje con un área central transparente
-    Vector2 center = ball.GetPosition();
-    float innerRadius = ball.GetRadius() + 40;
-    float outerRadius = ball.GetRadius() + 200;
-    DrawRing(center, innerRadius, outerRadius, 0, 360, 0, Fade(BLACK, 0.99f));
-    DrawRing(center, 35, 100, 0, 360, 0, Fade(BLACK, 0.65f));
-    DrawRing(center, 32.5, 95, 0, 360, 0, Fade(BLACK, 0.55f));
-    DrawRing(center, 30, 90, 0, 360, 0, Fade(BLACK, 0.45f));
-    DrawRing(center, 27.5, 85, 0, 360, 0, Fade(BLACK, 0.35f));
-    DrawRing(center, 25, 80, 0, 360, 0, Fade(BLACK, 0.25f));
-    DrawRing(center, 22.5, 75, 0, 360, 0, Fade(BLACK, 0.15f));
-    DrawRing(center, 20, 70, 0, 360, 0, Fade(BLACK, 0.05f));
- //   DrawRing(center, 17.5, 65, 0, 360, 0, Fade(BLACK, 0.45f));
-   // DrawRing(center, 15, 60, 0, 360, 0, Fade(BLACK, 0.25f));
-    //DrawRing(center, 12.5, 55, 0, 360, 0, Fade(BLACK, 0.15f));
+    Vector2 ballCenter = ball.GetPosition();
+    float ballInnerRadius = ball.GetRadius() + 30;
+    float ballOuterRadius = ball.GetRadius() + 200;
 
+    // Dibujar el anillo del personaje principal
+    DrawRingGradient(ballCenter, ballInnerRadius, ballOuterRadius, 0, 360, 100, Fade(BLACK, 0.99f), Fade(BLACK, 0.0f));
 
+    // Dibujar el mapa alrededor del enemigo
+    Vector2 enemyCenter = enemigo.GetPosition();
+    float enemyInnerRadius = enemigo.GetRadius() + 50;  // Reducir el tamaño del área
+    float enemyOuterRadius = enemigo.GetRadius() + 50; // Reducir el tamaño del área
+
+    // Calcular la distancia entre el personaje y el enemigo
+    float distance = Vector2Distance(ballCenter, enemyCenter);
+
+    // Determinar si los círculos se superponen
+    bool circlesOverlap = (distance < (ballOuterRadius + enemyOuterRadius));
+
+    // Dibujar el mapa alrededor del enemigo si los círculos se superponen
+    if (circlesOverlap) {
+        // Calcular el área de superposición
+        float overlapRadius = ballOuterRadius + enemyOuterRadius - distance;
+
+        // Dibujar el mapa en el área alrededor del enemaaigo
+        Vector2 overlapCenter = enemyCenter;
+        float overlapInnerRadius = enemyInnerRadius - overlapRadius;
+        float overlapOuterRadius = enemyOuterRadius;
+
+        // Dibujar el mapa en el área alrededor del enemigo
+        mapa.DrawMapAtPosition(floor, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+        mapa.DrawMapAtPosition(saferoom, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+        mapa.DrawMapAtPosition(wall, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+    }
 
     // Dibujar personajes
     ball.Draw();
@@ -128,6 +161,4 @@ void Nivel2::Draw() {
 
     EndMode2D();
 }
-
-
 

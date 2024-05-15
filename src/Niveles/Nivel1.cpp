@@ -59,6 +59,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../Level1.json", 1, saferoom);
     LoadMap("../Level1.json", 2, wall);
 
+
     miniMapTexture = LoadTexture("../assets/Level1.png");
     levelMusic = LoadMusicStream("../assets/lvl1_music.mp3");
 
