@@ -101,8 +101,7 @@ void Nivel1::Update() {
     if (IsKeyUp(KEY_K)) {
         keyKPressed = false;
     }
-
-
+    
 
 
     LayerCollision(deltaX, deltaY, wall, "wall");
