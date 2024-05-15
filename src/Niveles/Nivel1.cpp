@@ -73,12 +73,14 @@ void Nivel1::Update() {
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    static bool keyKPressed = false;
+
     if (isShiftPressed) {
         speed *= 2.0f;
     }
 
     if (IsKeyDown(KEY_W))
-        deltaY -= speed;
+    deltaY -= speed;
     if (IsKeyDown(KEY_S))
         deltaY += speed;
     if (IsKeyDown(KEY_A))
@@ -87,9 +89,17 @@ void Nivel1::Update() {
         deltaX += speed;
     if (IsKeyDown(KEY_L))
         ball.Atacar();
-    if(IsKeyDown(KEY_K))
-        ball.Defender();
 
+
+    if(IsKeyDown(KEY_K) && !keyKPressed) {
+        ball.Defender();
+        keyKPressed = true;
+    }
+
+
+    if (IsKeyUp(KEY_K)) {
+        keyKPressed = false;
+    }
 
 
 
@@ -114,22 +124,17 @@ void Nivel1::Update() {
 
     AStar astar(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
-
-
+    path.pop();
 
 
     if(personaje_visto){
-        enemigos[0].Find_player(path,TILE_SIZE);
+        enemigos[0].FollowPath(path);
     }
     else if(personaje_visto== false && enemigos[0].initial_position.x != enemigos[0].position.x && enemigos[0].initial_position.y != enemigos[0].position.y ){
-        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
-        enemigos[0].Back_to_place(path,TILE_SIZE);
+//        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
+//        enemigos[0].Back_to_place(path,TILE_SIZE);
 
     }
-
-
-
-
 
 
 
