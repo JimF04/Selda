@@ -113,7 +113,7 @@ void Ball::Atacar(){
 }
 
 void Ball::Defender(){
-    std::cout<<"atacando"<<std::endl;
+    std::cout<<"defendiendo"<<std::endl;
     sourceRec.y = FRAME_HEIGHT *1;
     sourceRec.x = FRAME_WIDTH * 0;
     UpdateAnimation();

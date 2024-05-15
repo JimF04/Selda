@@ -131,11 +131,10 @@ void Nivel1::Update() {
 
 
 
-
     for(auto& enemy : enemigos) {
         float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());
         if (distance < ball.GetRadius() + 10) {
-            if (IsKeyDown(KEY_P)) {
+            if (IsKeyDown(KEY_L)) {
                 ball.Atacar();
                 enemy.setPosition({-1000, 1000});
             }

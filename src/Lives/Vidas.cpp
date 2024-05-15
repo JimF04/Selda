@@ -2,11 +2,11 @@
 
 
 const int DESIRED_WIDTH = 20;  // Ancho deseado de la textura
-const int DESIRED_HEIGHT = 10; // Altura deseada de la textura
+const int DESIRED_HEIGHT = 20; // Altura deseada de la textura
 
 Vidas::Vidas(int initialLives,int totalHearts) : lives(5), initialLives(5),totalHearts(totalHearts),heartsLeft(totalHearts) {
-    position = {-120,-60};
-    Image image = LoadImage("../assets/heartimage.png");
+    position = {-120,-80};
+    Image image = LoadImage("../assets/heart.png");
     if (image.data == nullptr) {
         TraceLog(LOG_WARNING, "Error al cargar la imagen de las vidas");
     } else {
@@ -39,9 +39,19 @@ void Vidas::ResetLives() {
     heartsLeft = totalHearts;
 }
 void Vidas::Draw(Camera2D camera) const {
+    // Calcula el ancho total ocupado por los corazones
+    int totalWidth = heartsLeft * DESIRED_WIDTH;
+
+    // Calcula el espacio adicional entre los corazones para hacerlos más pegados
+    int additionalSpace = (totalWidth > 0) ? ((totalHearts - 1) * 5) / heartsLeft : 0;
+
+    // Dibuja los corazones con la posición ajustada
     for (int i = 0; i < heartsLeft; i++) {
-        Vector2 drawPosition = {position.x + camera.target.x + i * (DESIRED_WIDTH + 5), position.y + camera.target.y};
+        Vector2 drawPosition = {position.x + camera.target.x + i * (DESIRED_WIDTH - additionalSpace), position.y + camera.target.y};
         DrawTextureRec(spriteshit, surceRec, drawPosition, WHITE);
     }
 }
+
+
+
 
