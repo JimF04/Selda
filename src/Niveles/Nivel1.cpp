@@ -27,7 +27,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-    camera.zoom = 1.0f;
+//    camera.zoom = 1.0f;
 
 
 
@@ -68,6 +68,8 @@ void Nivel1::Update() {
         deltaX += speed;
     if (IsKeyDown(KEY_P))
         ball.Atacar();
+
+
 
 
 
@@ -133,6 +135,12 @@ void Nivel1::Update() {
                 ball.Atacar();
                 enemy.setPosition({-1000, 1000});
             }
+        }
+    }
+    float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
+    if(distancian < ball.GetRadius() + 11){
+        if(IsKeyDown(KEY_K)){
+            cofre.Still();
         }
     }
 

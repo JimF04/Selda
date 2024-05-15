@@ -10,7 +10,7 @@ public:
     void UpdateAnimation();
     void Draw() const;
     void Still();
-
+    Vector2 GetPosition() const;
 
     Texture2D spritesheet;
     Rectangle sourcerec;

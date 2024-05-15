@@ -11,7 +11,7 @@ const float frameheight = sheetheight / framespercolumn;
 
 Cofres::Cofres() {
 
-    position = {400,300};
+    position = {50,150};
     collisionBox = {0,0,16};
     spritesheet = LoadTexture("/home/gabriel/Documents/SeldaProject/Selda/assets/Fantasy RPG (Toony) 32x32(1).png");
     sourcerec = {0,0,framewidth,frameheight};
@@ -27,17 +27,28 @@ void Cofres::Draw() const{
 }
 
 void Cofres::Still(){
-    sourcerec.y = frameheight*1 + frameheight*2 + frameheight*3;
+    sourcerec.y = frameheight*1 + frameheight*2 + frameheight*3+frameheight*5;
+    UpdateAnimation();
 }
 
-void Cofres::UpdateAnimation(){
+void Cofres::UpdateAnimation() {
     framecounter++;
-    if(framecounter>=framespeed){
+    if (framecounter >= framespeed) {
         framecounter = 0;
         currentframe++;
-        if(currentframe>2){
+        if (currentframe >= framesperow * framespercolumn) {
             currentframe = 0;
         }
-        sourcerec.x = currentframe * framewidth;
+        // Calcular la fila y columna actual
+        int currentrow = currentframe / framesperow;
+        int currentcolumn = currentframe % framesperow;
+        // Calcular la posición del sprite en el spritesheet
+        sourcerec.x = currentcolumn * framewidth;
+        sourcerec.y = currentrow * frameheight;
     }
 }
+
+Vector2 Cofres::GetPosition() const {
+    return position;
+}
+
