@@ -186,7 +186,7 @@ void Nivel1::Update() {
     for(auto& jarron: jarrones){
         float distancie = Vector2Distance(ball.GetPosition(), jarron.GetPosition());
         if(distancie < ball.GetRadius() + 20 && !jarron.abierto){
-            if(IsKeyDown(KEY_Q) && !jarronDetectado){
+            if(IsKeyDown(KEY_L) && !jarronDetectado){
                 jarron.Anim();
                 vidas.IncreaseLife();
                 cout << "Jarron abierto" << endl;
@@ -194,7 +194,7 @@ void Nivel1::Update() {
                 jarron.abierto = true;
             }
                 // Solo restablece jarronDetectado si el jarrón está abierto y la tecla Q está suelta
-            else if (!IsKeyDown(KEY_Q) && jarron.abierto) {
+            else if (!IsKeyDown(KEY_L) && jarron.abierto) {
                 jarronDetectado = false;
             }
         }
