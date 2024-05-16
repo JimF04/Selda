@@ -16,7 +16,7 @@ Cofres::Cofres(Nivel1* nivel):nivelPtr(nivel),abierto(false) {
 
     position = {1040,620};
     collisionBox = {0,0,16};
-    spritesheet = LoadTexture("/home/gabriel/Documents/SeldaProject/Selda/assets/Fantasy RPG (Toony) 32x32(1).png");
+    spritesheet = LoadTexture("../assets/cofre.png");
     sourcerec = {0,0,framewidth,frameheight};
 
     framecounter = 0;
