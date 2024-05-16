@@ -6,11 +6,11 @@
 
 int sheetwidth = 97;
 int sheetheight = 129;
-int framesperow = 3;
-int framespercolumn = 4;
+int framesrow = 3;
+int framescolumn = 4;
 
-const float framewidth = sheetwidth / framesperow;
-const float frameheight = sheetheight / framespercolumn;
+const float framewidth = sheetwidth / framesrow;
+const float frameheight = sheetheight / framescolumn;
 
 Cofres::Cofres(Nivel1* nivel):nivelPtr(nivel),abierto(false) {
 
@@ -39,12 +39,12 @@ void Cofres::UpdateAnimation() {
     if (framecounter >= framespeed) {
         framecounter = 0;
         currentframe++;
-        if (currentframe >= framesperow * framespercolumn) {
+        if (currentframe >= framesrow * framescolumn) {
             currentframe = 0;
         }
         // Calcular la fila y columna actual
-        int currentrow = currentframe / framesperow;
-        int currentcolumn = currentframe % framesperow;
+        int currentrow = currentframe / framesrow;
+        int currentcolumn = currentframe % framesrow;
         // Calcular la posición del sprite en el spritesheet
         sourcerec.x = currentcolumn * framewidth;
         sourcerec.y = currentrow * frameheight;

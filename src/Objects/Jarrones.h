@@ -8,13 +8,13 @@ class Jarrones{
 
 public:
     Jarrones();
-    void UpdateAnimation();
+    void Updateanimation();
     void Draw() const;
     Vector2 GetPosition() const;
     void SetPosition(Vector2 newposition);
     void Anim();
 //    void Draw() const override;
-    Texture2D spritesheet;
+    Texture2D spriteshet;
     Rectangle sourcerec;
     Vector4 collisionbox;
     int framecounter;

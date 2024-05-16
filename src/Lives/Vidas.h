@@ -6,6 +6,7 @@ class Vidas {
 public:
     Vidas(int initialLives,int totalHearts);
     void DecreaseLife();
+    void IncreaseLife();
     int GetLives() const;
     bool IsAlive() const;
     void ResetLives();

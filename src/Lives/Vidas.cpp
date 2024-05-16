@@ -26,6 +26,13 @@ void Vidas::DecreaseLife() {
     }
 }
 
+void Vidas::IncreaseLife() {
+    if (lives < 5) {
+        lives++;
+        heartsLeft++;
+    }
+}
+
 int Vidas::GetLives() const {
     return lives;
 }

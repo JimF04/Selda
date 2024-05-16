@@ -31,9 +31,9 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-    Jarrones jarron1;
-    jarron1.SetPosition({520,40});
-    jarrones.push_back(jarron1);
+    Jarrones jarron2;
+    jarron2.SetPosition({770,375});
+    jarrones.push_back(jarron2);
 
     Cofres cofre1(this);
     cofre1.SetPosition({510,40});
@@ -69,6 +69,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
 void Nivel1::Update() {
     static bool cofreDetectado = false;
+    static bool jarronDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
@@ -89,6 +90,7 @@ void Nivel1::Update() {
         deltaX += speed;
     if (IsKeyDown(KEY_L))
         ball.Atacar();
+
 
 
     if(IsKeyDown(KEY_K) && !keyKPressed) {
@@ -181,24 +183,44 @@ void Nivel1::Update() {
         }
     }
 
+    for(auto& jarron: jarrones){
+        float distancie = Vector2Distance(ball.GetPosition(), jarron.GetPosition());
+        if(distancie < ball.GetRadius() + 20 && !jarron.abierto){
+            if(IsKeyDown(KEY_Q) && !jarronDetectado){
+                jarron.Anim();
+                vidas.IncreaseLife();
+                cout << "Jarron abierto" << endl;
+                jarronDetectado = true;
+                jarron.abierto = true;
+            }
+                // Solo restablece jarronDetectado si el jarrón está abierto y la tecla Q está suelta
+            else if (!IsKeyDown(KEY_Q) && jarron.abierto) {
+                jarronDetectado = false;
+            }
+        }
+    }
 
 
 
-    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
-//    for(auto& enemy: enemigos){
-//        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-//            if (ball.CheckCollisionWithEnemy(enemy)) {
-//               vidas.DecreaseLife();
-//                if(!vidas.IsAlive()){
-//                    ResetLevel();
-//                }
-//                collisionDetected = true;
-//                lastCollisionDetectionTime = GetTime();
-//            }
-//        }
-//        collisionDetected = false;
-//
-//    }
+
+
+
+
+//   Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente  Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    for(auto& enemy: enemigos){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+            if (ball.CheckCollisionWithEnemy(enemy)) {
+               vidas.DecreaseLife();
+                if(!vidas.IsAlive()){
+                    ResetLevel();
+                }
+                collisionDetected = true;
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
+    }
 
 }
 

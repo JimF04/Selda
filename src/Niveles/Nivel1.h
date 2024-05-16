@@ -25,6 +25,7 @@ public:
     Music levelMusic;
     Texture2D image;
     void ResetLevel();
+    bool KeyQPressed = false;
 
     virtual bool CheckWinCondition() override {
         if (onstairs){

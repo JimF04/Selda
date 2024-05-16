@@ -1,52 +1,51 @@
+#include <iostream>
 #include "Jarrones.h"
 #include "raymath.h"
 #include "raylib.h"
 
- int sheetw = 31;
- int sheeth = 20;
- int framespero = 2;
- int framesperco = 1;
 
- const float framewidth = sheetw/ framespero;
- const float frameheight = sheeth / framesperco;
+int framesperow = 2;
+int framespercolumn = 1;
+ const float framewidth = 31.0f / 2.0f;
+ const float frameheight =20.0f;
 
- Jarrones::Jarrones() {
-    position = {1040,620};
-    collisionbox = {0,0,16};
-    spritesheet = LoadTexture("/home/gabriel/Documents/SeldaProject/Selda/assets/jarrones.png");
+Jarrones::Jarrones() {
+    position = {695, 200};
+    collisionbox = {0, 0, 16};
+    spriteshet = LoadTexture("/home/gabriel/Documents/SeldaProject/Selda/assets/jarrones.png");
+    sourcerec = {0,0,framewidth,frameheight};
+
+    // Verificar si la textura se cargó correctamente
+    if (spriteshet.id == 0) {
+        // Si el ID de la textura es cero, indica que la carga falló
+        std::cerr << "Error al cargar la textura de jarrones." << std::endl;
+    }else{
+        std::cerr<<"correcto"<<std::endl;
+    }
 
     framecounter = 0;
     currentframe = 0;
     framespeed = 8;
     time_for_crums = 0;
+}
 
- }
 
  void Jarrones::Draw() const {
-     DrawTextureRec(spritesheet,sourcerec,{position.x - framewidth / 2, position.y - frameheight / 2},WHITE);
+     DrawTextureRec(spriteshet,sourcerec,{position.x - framewidth / 2, position.y - frameheight / 2},WHITE);
  }
 
  void Jarrones::Anim(){
-     sourcerec.y = frameheight*1 + frameheight*2 ;
-     UpdateAnimation();
+     sourcerec.x = 0;
+     sourcerec.y = 0;
+     Updateanimation();
  }
 
- void Jarrones::UpdateAnimation() {
-     framecounter++;
-     if (framecounter >= framespeed) {
-         framecounter = 0;
-         currentframe++;
-         if (currentframe >= framespero * framesperco) {
-             currentframe = 0;
-         }
-         // Calcular la fila y columna actual
-         int currentrow = currentframe / framespero;
-         int currentcolumn = currentframe % framespero;
-         // Calcular la posición del sprite en el spritesheet
-         sourcerec.x = currentcolumn * framewidth;
-         sourcerec.y = currentrow * frameheight;
-     }
- }
+
+void Jarrones::Updateanimation() {
+
+        sourcerec.x = 200;
+        sourcerec.y = 0; // Mantener la coordenada y en 0 ya que solo tienes una fila de frames
+    }
 
 
 Vector2 Jarrones::GetPosition() const {
