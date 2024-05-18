@@ -19,13 +19,13 @@ Stack<Vector2> pathCopy;
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0),cofre(this){
     InitAudioDevice();
     ball = Ball();
-   cofres.emplace_back(this);
-   jarrones.emplace_back();
+    cofres.emplace_back(this);
+    jarrones.emplace_back();
 
-    enemigos;
-    cofres;
-    enemigos.emplace_back();
-    enemigos.emplace_back();
+    for (int i = 0; i < 2; i++){
+        enemigos.emplace_back();
+    }
+
     hitbox = Hitbox();
     ball.setPosition({90,160});
     collisionDetected = false;
@@ -52,6 +52,9 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     personaje_visto = false;
     enemigos[0].setPosition({368,385});
     enemigos[0].initial_position={368,385};
+
+    enemigos[1].setPosition({100,300});
+    enemigos[1].initial_position={100,300};
 
 
 
@@ -154,8 +157,6 @@ void Nivel1::Update() {
         }
 
     }
-
-
 
     for(auto& enemy : enemigos) {
         float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());

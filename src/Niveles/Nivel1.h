@@ -44,9 +44,12 @@ public:
     void DrawCounter();
 
 private:
-    Enemy enemigo;
-    Enemy enemigo2;
+//    Enemy enemigo;
+//    Enemy enemigo2;
+
     std::vector<Enemy> enemigos;
+
+
     Cofres cofre;
     std::vector<Cofres>cofres;
     std::vector<Jarrones>jarrones;

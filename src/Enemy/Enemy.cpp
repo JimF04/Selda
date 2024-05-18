@@ -15,13 +15,12 @@ const int FRAME_HEIGHT = 48;
 
 Enemy::Enemy()
 {
-    position = {100, 300};
     radius = 7;
     color = YELLOW;
     speed = 1.25;
     distanceToPlayer;
-    initial_position=position;
 
+    initial_position = position;
 
     spritesheet = LoadTexture("../assets/chara_goblin.png");
 
