@@ -7,10 +7,17 @@
 
 
 #include "Enemy.h"
+#include "../Mapa.h"
 
-class Ratones : public Enemy{
+
+class Ratones : public Enemy {
+public:
+    Ratones();
+
+private:
 
 };
+
 
 
 #endif //SELDA_RATONES_H

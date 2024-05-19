@@ -3,3 +3,10 @@
 //
 
 #include "Ratones.h"
+
+
+Ratones::Ratones() {
+    spritesheet = LoadTexture("../assets/enemyPack/rata.png");
+}
+
+

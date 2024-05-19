@@ -51,6 +51,13 @@ public:
         return data[index];
     }
 
+    const T& operator[](size_t index) const {
+        if (index >= size) {
+            throw std::out_of_range("Índice fuera de rango");
+        }
+        return data[index];
+    }
+
     // Función que devuelve el tamaño del vector
     size_t getSize() const {
         return size;
@@ -59,6 +66,11 @@ public:
     // Función que devuelve la capacidad del vector
     size_t getCapacity() const {
         return capacity;
+    }
+
+    // Método que devuelve si el vector está vacío
+    bool empty() const {
+        return size == 0;
     }
 
     T* begin() {

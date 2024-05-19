@@ -13,8 +13,7 @@
 const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
 
-Enemy::Enemy()
-{
+Enemy::Enemy(){
     radius = 7;
     color = YELLOW;
     speed = 1;
@@ -66,7 +65,6 @@ void Enemy::Move(int deltaX, int deltaY) {
         sourceRec.y = 0; // Row 1: Idle
         sourceRec.width = FRAME_WIDTH; // Reset the width
     }
-
     // Update the animation
     UpdateAnimation();
 }
@@ -149,6 +147,20 @@ void Enemy::FollowPath(Stack<Vector2>& path) {
         if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {
             // Si el enemigo está lo suficientemente cerca del centro del destino actual, quita el destino del camino
             path.pop();
+        }
+    }
+}
+
+void Enemy::LoopPath(queue<Vector2> &path) {
+    if (!path.empty()) {
+        Vector2 target = path.front(); // Obtén el próximo destino sin quitarlo del camino
+        moveToTile(target.x, target.y, 1); // Ajusta el valor de 'pixel' según tu preferencia
+
+        // Verifica si el enemigo ha llegado al centro del destino actual
+        if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {
+            // Si el enemigo está lo suficientemente cerca del centro del destino actual, mueve el destino al final del camino
+            path.pop();
+            path.push(target);
         }
     }
 }

@@ -9,6 +9,10 @@
 #include "Enemy.h"
 
 class Chocobos : public Enemy{
+public:
+    Chocobos(){
+        spritesheet = LoadTexture("../assets/enemyPack/chocobo.png");
+    };
 
 };
 

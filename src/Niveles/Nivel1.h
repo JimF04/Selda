@@ -19,6 +19,8 @@
 #include "../Objects/Jarrones.h"
 
 #include "../Enemy/Espectro.h"
+#include "../Enemy/Ratones.h"
+#include "../Enemy/Ojo_Espectral.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -48,11 +50,16 @@ public:
 private:
 
     Vector<Espectro> espectros;
+    queue<Vector2> route1;
+    queue<Vector2> route2;
+    queue<Vector2> route3;
 
+    Vector<Ratones> ratones;
+    Vector<Ojo_Espectral> ojos_espectrales;
 
     Cofres cofre;
-    std::vector<Cofres>cofres;
-    std::vector<Jarrones>jarrones;
+    std::vector<Cofres> cofres;
+    std::vector<Jarrones> jarrones;
     Jarrones jarron;
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
@@ -60,9 +67,6 @@ private:
     Hitbox hitbox;
 
     Vidas vidas;
-
-
-
 
 };
 

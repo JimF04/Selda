@@ -8,8 +8,11 @@
 #include "../ball.h"
 #include "raylib.h"
 #include "../DataStructures/Stack.h"
+#include "../DataStructures/Vector.h"
 #include "../Hitbox.h"
 #include <glog/logging.h>
+
+#include <queue>
 
 class Enemy
 {
@@ -27,6 +30,7 @@ public:
     virtual void Ataque();
     void moveToTile(int targetX, int targetY, float pixel);
     void FollowPath(Stack<Vector2>& path);
+    void LoopPath(queue<Vector2>& path);
 
     Texture2D spritesheet;
     Rectangle sourceRec;
@@ -39,6 +43,7 @@ public:
     bool IsEliminated() const;
 
     Vector2 position;
+
 
 protected:
     int radius;

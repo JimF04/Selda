@@ -9,7 +9,10 @@
 #include "Enemy.h"
 
 class Ojo_Espectral : public Enemy{
-
+public:
+    Ojo_Espectral(){
+        spritesheet = LoadTexture("../assets/enemyPack/Ojo_Espectral.png");
+    };
 
 };
 

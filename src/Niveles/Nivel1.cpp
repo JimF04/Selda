@@ -42,18 +42,47 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     personaje_visto = false;
 
-
-    espectros.push_back(Espectro("gris"));
-    espectros.push_back(Espectro("rojo"));
-    espectros.push_back(Espectro("rojo"));
-    espectros.push_back(Espectro("rojo"));
-
-    espectros[0].setPosition({41,39});
-    espectros[1].setPosition({7,27});
-    espectros[2].setPosition({31,24});
-    espectros[3].setPosition({20,35});
+//====================Enemigos==================
+    for ( int i = 0; i < 3; i++){
+        espectros.push_back(Espectro("gris"));
+    }
 
 
+    espectros[0].setPosition({17,36});
+    route1.push({23,36});
+    route1.push({23,44});
+    route1.push({17,44});
+    route1.push({17,36});
+    espectros[0].setRoute(route1);
+
+    espectros[1].setPosition({45,28});
+    route2.push({31,28});
+    route2.push({31,20});
+    route2.push({45,20});
+    route2.push({45,28});
+    espectros[1].setRoute(route2);
+
+
+    espectros[2].setPosition({32,11});
+    route3.push({42,11});
+    route3.push({42,6});
+    route3.push({32,6});
+    route3.push({31,11});
+    espectros[2].setRoute(route3);
+
+    for ( int i = 0; i < 2; i++){
+        ratones.push_back(Ratones());
+    }
+    ratones[0].setPosition({57,44});
+    ratones[1].setPosition({23,9});
+
+    for (int i = 0; i < 2; i++){
+        ojos_espectrales.push_back(Ojo_Espectral());
+    }
+    ojos_espectrales[0].setPosition({56,3});
+    ojos_espectrales[1].setPosition({68,39});
+
+//==========Matrices de colisiones================
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
     LoadMap("../Level1.json", 2, wall);
@@ -108,15 +137,15 @@ void Nivel1::Update() {
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
 
-    AStar astar(wall);
-
-    if (IsKeyDown(KEY_Z)) {
-        find_AStar = true;
-    } else if (IsKeyDown(KEY_X)) {
-        find_AStar = false;
-    }
 
     UpdateEspectros(espectros);
+
+    if (!personaje_visto){
+        espectros[0].LoopPath(route1);
+        espectros[1].LoopPath(route2);
+        espectros[2].LoopPath(route3);
+    }
+    
 
 
     for(auto& cofre : cofres){
@@ -208,6 +237,14 @@ void Nivel1::Draw() {
 
     for (auto& espectro : espectros) {
         espectro.Draw();
+    }
+
+    for (auto& raton : ratones) {
+        raton.Draw();
+    }
+
+    for (auto& ojo_espectral : ojos_espectrales) {
+        ojo_espectral.Draw();
     }
 
 //    int textPosX = GetScreenWidth() / 2 - MeasureText(FormatText("x: %d", contadorCofres), 20) / 2 + camera.target.x;

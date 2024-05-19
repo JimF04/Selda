@@ -16,10 +16,13 @@ public:
     Espectro() : Enemy(), type("default") {}
     Espectro(const string& type);
     //void Draw() const override;
+    void setRoute(queue<Vector2> route);
+    queue<Vector2> getRoute();
 
 private:
-
     string type;
+    queue<Vector2> route;
+    bool defaultRoute = true;
 
 };
 
