@@ -138,28 +138,28 @@ void Ball::UpdateAnimation()
         // Actualizar el rectángulo fuente de la textura para el siguiente frame
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }}
-    void Ball::setPosition(Vector2 pos)
+
+void Ball::setPosition(Vector2 pos)
     {
         position = pos;
 
 
     }
 
-    bool Ball::CheckCollisionWithEnemy(const Enemy &enemy) const {
+bool Ball::CheckCollisionWithEnemy(const Enemy &enemy) const {
         float distance = Vector2Distance(position, enemy.GetPosition());
         return distance < radius + enemy.GetRadius();
 
 
     }
 
-    bool Ball::GetSafeRoom()
+bool Ball::GetSafeRoom()
     {
         return safeRoom;
     }
 
 
-
-    void Ball::DecreaseLives() {
+void Ball::DecreaseLives() {
     lives--;
 }
 int Ball::GetRemainingLives() const {

@@ -13,9 +13,12 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
+#include "../DataStructures/Vector.h"
 #include "../Lives/Vidas.h"
 #include "../Objects/Cofres.h"
 #include "../Objects/Jarrones.h"
+
+#include "../Enemy/Espectro.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -40,15 +43,18 @@ public:
 
     int contadorCofres = 0;
 
-
     void DrawCounter();
 
+    void UpdateEspectros(Vector<Espectro>& espectros);
+
 private:
-//    Enemy enemigo;
-//    Enemy enemigo2;
 
-    std::vector<Enemy> enemigos;
+    Vector<Espectro> espectrosGris;
+    Vector<Espectro> espectrosRojo;
 
+    Vector<Espectro> espectros;
+
+    vector<Enemy> enemigos;
 
     Cofres cofre;
     std::vector<Cofres>cofres;
@@ -59,6 +65,9 @@ private:
     double lastCollisionDetectionTime;
     Hitbox hitbox;
     Vidas vidas;
+
+    bool find_AStar = false;
+
 
 };
 

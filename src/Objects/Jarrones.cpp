@@ -12,7 +12,7 @@ int framespercolumn = 1;
 Jarrones::Jarrones() {
     position = {695, 200};
     collisionbox = {0, 0, 16};
-    spriteshet = LoadTexture("/home/gabriel/Documents/SeldaProject/Selda/assets/jarrones.png");
+    spriteshet = LoadTexture("../assets/jarrones.png");
     sourcerec = {0,0,framewidth,frameheight};
 
     // Verificar si la textura se cargó correctamente

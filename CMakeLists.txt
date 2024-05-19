@@ -44,6 +44,15 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Objects/Jarrones.h
         src/Objects/Cofres.cpp
         src/Objects/Cofres.h
+        src/Enemy/Espectro.cpp
+        src/Enemy/Espectro.h
+        src/DataStructures/Vector.h
+        src/Enemy/Ojo_Espectral.cpp
+        src/Enemy/Ojo_Espectral.h
+        src/Enemy/Ratones.cpp
+        src/Enemy/Ratones.h
+        src/Enemy/Chocobos.cpp
+        src/Enemy/Chocobos.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp glog::glog)

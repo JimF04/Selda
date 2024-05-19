@@ -8,21 +8,16 @@
 #include <thread>
 #include "raymath.h"
 #include "../Hitbox.h"
+#include <unistd.h>
+
 const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
-#include <unistd.h> // Para la función Sleep()
-
 
 Enemy::Enemy()
 {
     radius = 7;
     color = YELLOW;
-    speed = 1.25;
-    distanceToPlayer;
-
-    initial_position = position;
-
-    spritesheet = LoadTexture("../assets/chara_goblin.png");
+    speed = 1;
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -32,12 +27,15 @@ Enemy::Enemy()
 
     frameSpeed = 8;
 
+    eliminated = false;
+
+
 
 }
 void Enemy::Draw() const
 {
-    DrawTextureRec(spritesheet, sourceRec, {position.x-25,position.y-25}, WHITE);
-//    DrawCircleV(position, radius, color);
+    DrawTextureRec(spritesheet, sourceRec, {position.x-20,position.y-20}, WHITE);
+
 }
 
 void Enemy::Move(int deltaX, int deltaY) {
@@ -80,7 +78,10 @@ Vector2 Enemy::GetPosition() const
 
 void Enemy::setPosition(Vector2 pos)
 {
-    position = pos;
+    position.x = pos.x * 16;
+    position.y = pos.y * 16;
+
+    initial_position = position;
 }
 
 int Enemy::GetRadius() const
@@ -186,9 +187,6 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
         Ataque();
 
     }
-
-
-
 }
 
 
@@ -208,19 +206,16 @@ void Enemy::UpdateAnimation() {
         }
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }
-
-
-
 }
-        bool Enemy::GetCollisionWithHitbox(const Hitbox &hitbox) const {
-            return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
-        }
+bool Enemy::GetCollisionWithHitbox(const Hitbox &hitbox) const {
+    return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
+}
 
 
-        void Enemy::SetEliminated(bool eliminated) {
-            this->eliminated = eliminated;
-        }
+void Enemy::SetEliminated(bool eliminated) {
+    this->eliminated = eliminated;
+}
 
-        bool Enemy::IsEliminated() const {
-            return eliminated;
-        }
+bool Enemy::IsEliminated() const {
+    return eliminated;
+}
