@@ -8,6 +8,7 @@
 #include "raymath.h"
 #include "../Enemy/Enemy.h"
 #include "../Objects/Cofres.h"
+#include "../Algoritmos/Backtrack.h"
 
 
 Stack<Vector2> path;
@@ -107,6 +108,7 @@ void Nivel1::Update() {
 
 
     AStar astar(wall);
+    Backtrack backtrack(wall);
     path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
     path.pop();
 
@@ -115,8 +117,11 @@ void Nivel1::Update() {
         enemigos[0].FollowPath(path);
     }
     else if(personaje_visto== false && enemigos[0].initial_position.x != enemigos[0].position.x && enemigos[0].initial_position.y != enemigos[0].position.y ){
-//        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
-//        enemigos[0].Back_to_place(path,TILE_SIZE);
+        path=backtrack.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
+        path.pop();
+        enemigos[0].FollowPath(path);
+
+
 
     }
 
@@ -227,6 +232,8 @@ void Nivel1::Draw() {
         // También puedes usar un emoji
         // DrawText("\xF0\x9F\x91\x81", screenWidth / 2 - MeasureText("\xF0\x9F\x91\x81", 30) / 2, screenHeight / 2, 30, RED);
     }
+
+    DrawAStar(path);
 
     DrawMiniMap();
     EndMode2D();
