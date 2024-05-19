@@ -64,10 +64,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     PlayMusicStream(levelMusic);
 
-
-
 }
-
 
 
 void Nivel1::Update() {
@@ -120,28 +117,6 @@ void Nivel1::Update() {
     }
 
     UpdateEspectros(espectros);
-
-
-//    if(personaje_visto){
-//        enemigos[0].FollowPath(path);
-//    }
-//    else if(personaje_visto== false && enemigos[0].initial_position.x != enemigos[0].position.x && enemigos[0].initial_position.y != enemigos[0].position.y ){
-//        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
-//        enemigos[0].Back_to_place(path,TILE_SIZE);
-//
-//    }
-
-
-//
-//    for(auto& enemy : enemigos) {
-//        float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());
-//        if (distance < ball.GetRadius() + 10) {
-//            if (IsKeyDown(KEY_L)) {
-//                ball.Atacar();
-//                enemy.setPosition({-1000, 1000});
-//            }
-//        }
-//    }
 
 
     for(auto& cofre : cofres){
@@ -197,42 +172,6 @@ void Nivel1::Update() {
 
     }
 
-}
-
-void Nivel1::UpdateEspectros(Vector<Espectro>& espectros) {
-
-    AStar astar(wall);
-
-    if (!ball.GetSafeRoom()){
-
-        for (auto& espectro : espectros) {
-            if (espectro.FollowBreadcrumb(ball.crums)) {
-                personaje_visto = true;
-                find_AStar = true;
-                break;
-            } else {
-                personaje_visto = false;
-                find_AStar = false;
-            }
-        }
-
-        if (find_AStar) {
-            for (auto& espectro : espectros) {
-                int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
-                int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
-
-                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
-                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
-
-                path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
-                path.pop();
-
-                espectro.FollowPath(path);
-            }
-        }
-    } else {
-        personaje_visto = false;
-    }
 }
 
 void Nivel1::ResetLevel() {

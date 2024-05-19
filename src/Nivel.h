@@ -9,7 +9,9 @@
 #include "Mapa.h"
 #include "raylib.h"
 #include "DataStructures/Stack.h"
+#include "DataStructures/Vector.h"
 #include "ball.h"
+#include "Enemy/Espectro.h"
 
 class Nivel {
 public:
@@ -25,6 +27,8 @@ public:
     void DrawHeart();
     Texture2D miniMapTexture;
     Texture2D imageTexture;
+
+    void UpdateEspectros(Vector<Espectro>& espectros);
 
 
 protected:
@@ -43,6 +47,10 @@ protected:
     Ball ball;
     int stairs [4] = {158,159,183,184};
     bool onstairs = false;
+
+    Stack<Vector2> path;
+    bool personaje_visto;
+    bool find_AStar = false;
 
 };
 

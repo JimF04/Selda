@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include "Nivel.h"
+#include "Algoritmos/AStar.h"
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
@@ -129,5 +130,41 @@ void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
     DrawText(text, static_cast<int>(textPosition.x), static_cast<int>(textPosition.y), fontSize, color);
 }
 
+
+void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
+
+    AStar astar(wall);
+
+    if (!ball.GetSafeRoom()){
+
+        for (auto& espectro : espectros) {
+            if (espectro.FollowBreadcrumb(ball.crums)) {
+                personaje_visto = true;
+                find_AStar = true;
+                break;
+            } else {
+                personaje_visto = false;
+                find_AStar = false;
+            }
+        }
+
+        if (find_AStar) {
+            for (auto& espectro : espectros) {
+                int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+                int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+
+                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+
+                path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+                path.pop();
+
+                espectro.FollowPath(path);
+            }
+        }
+    } else {
+        personaje_visto = false;
+    }
+}
 
 

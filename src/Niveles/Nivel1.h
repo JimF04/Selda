@@ -39,34 +39,29 @@ public:
         }
         return winCondition;
     }
-    bool personaje_visto;
 
     int contadorCofres = 0;
 
     void DrawCounter();
 
-    void UpdateEspectros(Vector<Espectro>& espectros);
 
 private:
 
-    Vector<Espectro> espectrosGris;
-    Vector<Espectro> espectrosRojo;
-
     Vector<Espectro> espectros;
 
-    vector<Enemy> enemigos;
 
     Cofres cofre;
     std::vector<Cofres>cofres;
     std::vector<Jarrones>jarrones;
-   Jarrones jarron;
+    Jarrones jarron;
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
     double lastCollisionDetectionTime;
     Hitbox hitbox;
+
     Vidas vidas;
 
-    bool find_AStar = false;
+
 
 
 };
