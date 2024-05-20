@@ -49,6 +49,7 @@ protected:
     bool onstairs = false;
 
     Stack<Vector2> path;
+    Stack<Vector2> pathback;
     bool personaje_visto;
     bool find_AStar = false;
 

@@ -141,11 +141,12 @@ void Nivel1::Update() {
     UpdateEspectros(espectros);
 
     if (!personaje_visto){
+
         espectros[0].LoopPath(route1);
         espectros[1].LoopPath(route2);
         espectros[2].LoopPath(route3);
     }
-    
+
 
 
     for(auto& cofre : cofres){

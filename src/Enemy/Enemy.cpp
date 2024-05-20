@@ -28,6 +28,14 @@ Enemy::Enemy(){
 
     eliminated = false;
 
+    initial_position = position;
+
+
+
+    looping = true;
+     llego = false;
+    const float PATROL_RADIUS = 2.0f * TILE_SIZE;
+
 
 
 }
@@ -152,7 +160,7 @@ void Enemy::FollowPath(Stack<Vector2>& path) {
 }
 
 void Enemy::LoopPath(queue<Vector2> &path) {
-    if (!path.empty()) {
+    if (!path.empty() && halegado()) {
         Vector2 target = path.front(); // Obtén el próximo destino sin quitarlo del camino
         moveToTile(target.x, target.y, 1); // Ajusta el valor de 'pixel' según tu preferencia
 
@@ -230,4 +238,19 @@ void Enemy::SetEliminated(bool eliminated) {
 
 bool Enemy::IsEliminated() const {
     return eliminated;
+}
+
+Vector2 Enemy::Get_inial_position(){
+    return initial_position;
+
+
+}
+
+bool Enemy::halegado(){
+    return llego;
+}
+
+void Enemy::set_llego(bool dime){
+    llego = dime;
+
 }

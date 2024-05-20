@@ -43,7 +43,12 @@ public:
     bool IsEliminated() const;
 
     Vector2 position;
+    Vector2 Get_inial_position();
+    bool looping;
+    bool llego;
+    bool halegado();
 
+    void set_llego(bool dime);
 
 protected:
     int radius;
@@ -51,6 +56,8 @@ protected:
     float speed;
 
     bool eliminated;
+
+
 };
 
 

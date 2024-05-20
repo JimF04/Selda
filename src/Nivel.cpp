@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Nivel.h"
 #include "Algoritmos/AStar.h"
+#include "Algoritmos/Backtrack.h"
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
@@ -132,11 +133,10 @@ void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
 
 
 void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
-
     AStar astar(wall);
+    Backtrack backtrack(wall);
 
-    if (!ball.GetSafeRoom()){
-
+    if (!ball.GetSafeRoom()) {
         for (auto& espectro : espectros) {
             if (espectro.FollowBreadcrumb(ball.crums)) {
                 personaje_visto = true;
@@ -156,15 +156,42 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
                 int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
                 int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
 
-                path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
-                path.pop();
-
+                Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+                path.pop();  // Eliminar el primer nodo del camino si es necesario
                 espectro.FollowPath(path);
+                espectro.set_llego(false);
+            }
+        } else {
+            for (auto& espectro : espectros) {
+                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+
+                int initial_x_grid = static_cast<int>(espectro.Get_inial_position().x / TILE_SIZE);
+                int initial_y_grid = static_cast<int>(espectro.Get_inial_position().y / TILE_SIZE);
+
+                if(enemy_x_grid == initial_x_grid && enemy_y_grid == initial_y_grid || espectro.halegado()){
+                    espectro.set_llego(true);
+
+                }
+                else{
+                    Stack<Vector2> pathback = backtrack.findPath(enemy_x_grid, enemy_y_grid, initial_x_grid, initial_y_grid);
+                    pathback.pop();  // Eliminar el primer nodo del camino si es necesario
+                    espectro.FollowPath(pathback);
+                }
+
+
+
+
+                // Verificar si el espectro ya llegó a su posición inicial alguna vez
+
             }
         }
     } else {
         personaje_visto = false;
     }
+
+    // Modo patrulla si no se ve al personaje
+
 }
 
 
