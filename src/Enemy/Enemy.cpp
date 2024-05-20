@@ -254,8 +254,11 @@ bool Enemy::halegado(){
 
 void Enemy::set_llego(bool dime){
     llego = dime;
-
 }
+
+
+
+
 
 void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
     // Posibles direcciones de movimiento (deltaX, deltaY)

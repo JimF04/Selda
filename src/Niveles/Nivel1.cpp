@@ -141,6 +141,8 @@ void Nivel1::Update() {
 
     UpdateEspectros(espectros);
     UpdateRatones(ratones);
+    UpdateOjos(ojos_espectrales, ball.GetPosition());
+
 
     if (!personaje_visto){
 

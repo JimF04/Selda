@@ -6,7 +6,9 @@
 #include "Nivel.h"
 #include "Algoritmos/AStar.h"
 #include "Algoritmos/Backtrack.h"
+#include "Enemy/Ojo_Espectral.h"
 #include <random>
+#include "math.h"
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
@@ -140,7 +142,7 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
     if (!ball.GetSafeRoom()) {
         for (auto& espectro : espectros) {
-            if (espectro.FollowBreadcrumb(ball.crums)) {
+            if (espectro.FollowBreadcrumb(ball.crums) || visto_por_ojo) {
                 personaje_visto = true;
                 find_AStar = true;
                 break;
@@ -201,15 +203,31 @@ void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
 
      AStar aestar(wall);
 
-
-
-
     for(auto& raton:ratones){
 
         raton.MoveRandomly(wall);
+    }
 
+}
+
+
+void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
+    for(auto& ojo:ojos){
+
+        float dis = std::sqrt(std::pow(ojo.GetPosition().x - posision_player.x, 2) + std::pow(ojo.GetPosition().y - posision_player.y, 2));
+        if(dis<30){
+            visto_por_ojo = true;
+            cout<<"visto"<<endl;
+            std::cout<<personaje_visto<<endl;
+            break;
+        }
+        else{
+            visto_por_ojo = false;
+        }
 
     }
+
+
 
 
 

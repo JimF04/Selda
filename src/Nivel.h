@@ -13,6 +13,7 @@
 #include "ball.h"
 #include "Enemy/Espectro.h"
 #include "Enemy/Ratones.h"
+#include "Enemy/Ojo_Espectral.h"
 
 class Nivel {
 public:
@@ -44,6 +45,7 @@ protected:
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
     int traps[MAP_WIDTH][MAP_HEIGHT];
     int falsefloor[MAP_WIDTH][MAP_HEIGHT];
+    void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
     Ball ball;
     int stairs [4] = {158,159,183,184};
@@ -57,6 +59,7 @@ protected:
     bool find_AStar = false;
     queue<Vector2> routa;
 
+    bool visto_por_ojo;
 };
 
 #endif //SELDA_NIVEL_H
