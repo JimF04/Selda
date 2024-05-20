@@ -256,7 +256,11 @@ void Enemy::set_llego(bool dime){
     llego = dime;
 }
 
+void Enemy::Animacion_random(){
 
+    sourceRec.y = FRAME_HEIGHT*4;
+    UpdateAnimation();
+}
 
 
 

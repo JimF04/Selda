@@ -51,6 +51,7 @@ public:
 
     void set_llego(bool dime);
     void MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]);
+    void Animacion_random();
 
 
 
@@ -64,6 +65,8 @@ protected:
 
     int previousDeltaX;
     int previousDeltaY;
+
+    void animacion_random();
 };
 
 

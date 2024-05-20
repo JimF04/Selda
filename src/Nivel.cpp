@@ -217,8 +217,7 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
         float dis = std::sqrt(std::pow(ojo.GetPosition().x - posision_player.x, 2) + std::pow(ojo.GetPosition().y - posision_player.y, 2));
         if(dis<30){
             visto_por_ojo = true;
-            cout<<"visto"<<endl;
-            std::cout<<personaje_visto<<endl;
+            ojo.Animacion_random();
             break;
         }
         else{
