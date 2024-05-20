@@ -42,6 +42,10 @@ private:
     bool collisionDetected;
     double lastCollisionDetectionTime;
     Vidas vidas;
+
+    Stack<Vector2> path2;
+
+    std::vector<Enemy> enemigos2;
 };
 
 

@@ -103,6 +103,9 @@ void Nivel1::Update() {
     if (IsKeyUp(KEY_K)) {
         keyKPressed = false;
     }
+    if (IsKeyDown(KEY_Y)) {
+        onstairs=true;
+    }
 
 
 
