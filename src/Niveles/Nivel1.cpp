@@ -15,7 +15,7 @@ Stack<Vector2> path;
 Stack<Vector2> pathCopy;
 
 
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0),cofre(this){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),contadorCofres(0),cofre(this){
     InitAudioDevice();
     ball = Ball();
     cofres.emplace_back(this);
@@ -87,6 +87,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
     LoadMap("../Level1.json", 2, wall);
+    LoadMap("../Level1.json", 3, traps);
+    LoadMap("../Level1.json", 4, falsefloor);
 
 
     miniMapTexture = LoadTexture("../assets/Level1.png");
@@ -133,9 +135,12 @@ void Nivel1::Update() {
         keyKPressed = false;
     }
 
+    LayerCollision(deltaX, deltaY, traps, "traps");
+    LayerCollision(deltaX, deltaY, saferoom, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+
     UpdateMusicStream(levelMusic);
 
 
@@ -176,7 +181,7 @@ void Nivel1::Update() {
         if(distancie < ball.GetRadius() + 20 && !jarron.abierto){
             if(IsKeyDown(KEY_L) && !jarronDetectado){
                 jarron.Anim();
-                vidas.IncreaseLife();
+                //vidas.IncreaseLife();
                 cout << "Jarron abierto" << endl;
                 jarronDetectado = true;
                 jarron.abierto = true;
@@ -194,11 +199,17 @@ void Nivel1::Update() {
    //Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
     for(auto& espectros: espectros){
         if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+
             if (ball.CheckCollisionWithEnemy(espectros)) {
-               vidas.DecreaseLife();
-                if(!vidas.IsAlive()){
-                    ResetLevel();
-                }
+               ball.DecreaseLives();
+               std::cout<<ball.lives << "\n";
+               if (ball.lives ==0){
+                   ResetLevel();
+
+               }
+
+
+
                 collisionDetected = true;
                 lastCollisionDetectionTime = GetTime();
             }
@@ -217,8 +228,9 @@ void Nivel1::ResetLevel() {
 //    }
 
     collisionDetected = false;
-    vidas.ResetLives();
-    lastCollisionDetectionTime = GetTime();
+    //vidas.ResetLives();
+    ball.ResetLives();
+
 }
 
 void Nivel1::Draw() {
@@ -227,6 +239,8 @@ void Nivel1::Draw() {
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
 
     for(const auto& cofre:cofres){
         cofre.Draw();
@@ -239,7 +253,7 @@ void Nivel1::Draw() {
 
 
     ball.Draw();
-    vidas.Draw(camera);
+    //vidas.Draw(camera);
 
     for (auto& espectro : espectros) {
         espectro.Draw();

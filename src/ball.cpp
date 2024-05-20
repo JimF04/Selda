@@ -4,8 +4,8 @@ const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
 
 
-Ball::Ball():vidas(5,5)
-{
+Ball::Ball() {
+    lives= 5;
     position = {400, 300};
 
     collisionBox = {0, 0, 16, 16};
@@ -26,9 +26,8 @@ Ball::Ball():vidas(5,5)
     time_for_crums = 0;
 
 
-
-
 }
+
 
 void Ball::Draw() const
 {
@@ -162,6 +161,12 @@ bool Ball::GetSafeRoom()
 void Ball::DecreaseLives() {
     lives--;
 }
-int Ball::GetRemainingLives() const {
-    return vidas.GetLives();
+int Ball::GetLives() const {
+    return lives;
+}
+
+
+int Ball::ResetLives() {
+     lives=5;
+
 }

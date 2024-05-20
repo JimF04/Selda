@@ -66,7 +66,7 @@ private:
     double lastCollisionDetectionTime;
     Hitbox hitbox;
 
-    Vidas vidas;
+
 
 };
 
