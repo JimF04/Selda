@@ -14,6 +14,8 @@ class Ratones : public Enemy {
 public:
     Ratones();
 
+   Vector2 target ={};
+
 private:
 
 };

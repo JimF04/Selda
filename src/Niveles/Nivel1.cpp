@@ -74,6 +74,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
         ratones.push_back(Ratones());
     }
     ratones[0].setPosition({57,44});
+
     ratones[1].setPosition({23,9});
 
     for (int i = 0; i < 2; i++){
@@ -139,12 +140,14 @@ void Nivel1::Update() {
 
 
     UpdateEspectros(espectros);
+    UpdateRatones(ratones);
 
     if (!personaje_visto){
 
         espectros[0].LoopPath(route1);
         espectros[1].LoopPath(route2);
         espectros[2].LoopPath(route3);
+
     }
 
 

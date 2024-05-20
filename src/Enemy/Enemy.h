@@ -10,6 +10,7 @@
 #include "../DataStructures/Stack.h"
 #include "../DataStructures/Vector.h"
 #include "../Hitbox.h"
+#include "../Mapa.h"
 #include <glog/logging.h>
 
 #include <queue>
@@ -49,6 +50,9 @@ public:
     bool halegado();
 
     void set_llego(bool dime);
+    void MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]);
+
+
 
 protected:
     int radius;
@@ -58,6 +62,8 @@ protected:
     bool eliminated;
 
 
+    int previousDeltaX;
+    int previousDeltaY;
 };
 
 

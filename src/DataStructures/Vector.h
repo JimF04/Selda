@@ -13,7 +13,7 @@ class Vector {
 private:
     T *data; // Puntero al array de elementos
     size_t capacity; // Capacidad actual del vector
-    size_t size; // Tamaño actual del vector
+    // Tamaño actual del vector
 
     void resize(size_t new_capacity) {
         T *new_data = new T[new_capacity];
@@ -81,6 +81,8 @@ public:
     T* end() {
         return data + size;
     }
+
+    size_t size;
 };
 
 

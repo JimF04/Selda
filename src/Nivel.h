@@ -12,6 +12,7 @@
 #include "DataStructures/Vector.h"
 #include "ball.h"
 #include "Enemy/Espectro.h"
+#include "Enemy/Ratones.h"
 
 class Nivel {
 public:
@@ -48,10 +49,13 @@ protected:
     int stairs [4] = {158,159,183,184};
     bool onstairs = false;
 
+    void UpdateRatones(Vector<Ratones>& ratones);
+
     Stack<Vector2> path;
     Stack<Vector2> pathback;
     bool personaje_visto;
     bool find_AStar = false;
+    queue<Vector2> routa;
 
 };
 

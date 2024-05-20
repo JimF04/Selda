@@ -9,6 +9,7 @@
 #include "raymath.h"
 #include "../Hitbox.h"
 #include <unistd.h>
+#include <random>
 
 const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
@@ -254,3 +255,44 @@ void Enemy::set_llego(bool dime){
     llego = dime;
 
 }
+
+void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(-1, 1);
+
+    int deltaX = 0;
+    int deltaY = 0;
+
+    // Si el enemigo no estaba en movimiento anteriormente, elige una nueva dirección aleatoria
+    if (previousDeltaX == 0 && previousDeltaY == 0) {
+        // Determina la dirección del movimiento aleatorio
+        if (dis(gen) < 0) {
+            deltaX = dis(gen);
+        } else {
+            deltaY = dis(gen);
+        }
+    } else {
+        // Continúa moviéndote en la misma dirección que antes
+        deltaX = previousDeltaX;
+        deltaY = previousDeltaY;
+    }
+
+    // Intenta mover al enemigo en la dirección determinada
+    int newX = position.x + deltaX * TILE_SIZE;
+    int newY = position.y + deltaY * TILE_SIZE;
+
+    // Verifica si el próximo movimiento está dentro de los límites del mapa y no choca con una pared
+    if (newX >= 0 && newX < MAP_WIDTH * TILE_SIZE && newY >= 0 && newY < MAP_HEIGHT * TILE_SIZE && wall[newX / TILE_SIZE][newY / TILE_SIZE] == 0) {
+        moveToTile((newX + deltaX) / TILE_SIZE, (newY + deltaY) / TILE_SIZE, 1.0f);
+        // Guarda la dirección del movimiento actual
+        previousDeltaX = deltaX;
+        previousDeltaY = deltaY;
+    } else {
+        // Si el próximo movimiento choca con una pared, reinicia la dirección de movimiento
+        previousDeltaX = 0;
+        previousDeltaY = 0;
+    }
+}
+
+

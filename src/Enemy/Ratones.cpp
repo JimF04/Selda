@@ -7,6 +7,10 @@
 
 Ratones::Ratones() {
     spritesheet = LoadTexture("../assets/enemyPack/rata.png");
+
+
+
+
 }
 
 

@@ -6,12 +6,14 @@
 #include "Nivel.h"
 #include "Algoritmos/AStar.h"
 #include "Algoritmos/Backtrack.h"
+#include <random>
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
     camera.zoom = 5.0f;
+
 
 }
 
@@ -194,4 +196,22 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
 }
 
+
+void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
+
+     AStar aestar(wall);
+
+
+
+
+    for(auto& raton:ratones){
+
+        raton.MoveRandomly(wall);
+
+
+    }
+
+
+
+}
 
