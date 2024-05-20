@@ -10,6 +10,7 @@
 #include "../Hitbox.h"
 #include <unistd.h>
 #include <random>
+#include <algorithm>
 
 const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
@@ -257,41 +258,72 @@ void Enemy::set_llego(bool dime){
 }
 
 void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(-1, 1);
+    // Posibles direcciones de movimiento (deltaX, deltaY)
+    const std::vector<std::pair<int, int>> directions = {
+            {1, 0},  // Derecha
+            {0, 1},  // Abajo
+            {-1, 0}, // Izquierda
+            {0, -1}  // Arriba
+    };
 
-    int deltaX = 0;
-    int deltaY = 0;
-
-    // Si el enemigo no estaba en movimiento anteriormente, elige una nueva dirección aleatoria
+    // Elegir dirección actual si no hay una dirección previa
     if (previousDeltaX == 0 && previousDeltaY == 0) {
-        // Determina la dirección del movimiento aleatorio
-        if (dis(gen) < 0) {
-            deltaX = dis(gen);
-        } else {
-            deltaY = dis(gen);
-        }
-    } else {
-        // Continúa moviéndote en la misma dirección que antes
-        deltaX = previousDeltaX;
-        deltaY = previousDeltaY;
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, directions.size() - 1);
+        auto dir = directions[dis(gen)];
+        previousDeltaX = dir.first;
+        previousDeltaY = dir.second;
     }
 
-    // Intenta mover al enemigo en la dirección determinada
-    int newX = position.x + deltaX * TILE_SIZE;
-    int newY = position.y + deltaY * TILE_SIZE;
+    // Calcular nueva posición en la dirección actual
+    int newX = position.x + previousDeltaX * TILE_SIZE;
+    int newY = position.y + previousDeltaY * TILE_SIZE;
 
-    // Verifica si el próximo movimiento está dentro de los límites del mapa y no choca con una pared
+    // Verificar si puede moverse en la dirección actual
     if (newX >= 0 && newX < MAP_WIDTH * TILE_SIZE && newY >= 0 && newY < MAP_HEIGHT * TILE_SIZE && wall[newX / TILE_SIZE][newY / TILE_SIZE] == 0) {
-        moveToTile((newX + deltaX) / TILE_SIZE, (newY + deltaY) / TILE_SIZE, 1.0f);
-        // Guarda la dirección del movimiento actual
-        previousDeltaX = deltaX;
-        previousDeltaY = deltaY;
+        moveToTile(newX / TILE_SIZE, newY / TILE_SIZE, 1.0f);
     } else {
-        // Si el próximo movimiento choca con una pared, reinicia la dirección de movimiento
-        previousDeltaX = 0;
-        previousDeltaY = 0;
+        // Si no puede moverse en la dirección actual, intentar girar a la derecha o izquierda
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 1);
+
+        bool moved = false;
+        for (int i = 0; i < 2; ++i) {
+            int direction = dis(gen) == 0 ? 1 : -1; // Elegir girar a la derecha o izquierda aleatoriamente
+            int currentIndex = (std::find(directions.begin(), directions.end(), std::make_pair(previousDeltaX, previousDeltaY)) - directions.begin());
+            int newDirIndex = (currentIndex + direction) % directions.size();
+            if (newDirIndex < 0) newDirIndex += directions.size();
+            auto newDir = directions[newDirIndex];
+
+            int tryX = position.x + newDir.first * TILE_SIZE;
+            int tryY = position.y + newDir.second * TILE_SIZE;
+
+            if (tryX >= 0 && tryX < MAP_WIDTH * TILE_SIZE && tryY >= 0 && tryY < MAP_HEIGHT * TILE_SIZE && wall[tryX / TILE_SIZE][tryY / TILE_SIZE] == 0) {
+                previousDeltaX = newDir.first;
+                previousDeltaY = newDir.second;
+                moveToTile(tryX / TILE_SIZE, tryY / TILE_SIZE, 1.0f);
+                moved = true;
+                break;
+            }
+        }
+
+        // Si no pudo girar a la derecha o izquierda, intentar moverse en cualquier dirección
+        if (!moved) {
+            std::vector<std::pair<int, int>> mutableDirections = directions;
+            std::shuffle(mutableDirections.begin(), mutableDirections.end(), gen);
+            for (const auto& dir : mutableDirections) {
+                int tryX = position.x + dir.first * TILE_SIZE;
+                int tryY = position.y + dir.second * TILE_SIZE;
+                if (tryX >= 0 && tryX < MAP_WIDTH * TILE_SIZE && tryY >= 0 && tryY < MAP_HEIGHT * TILE_SIZE && wall[tryX / TILE_SIZE][tryY / TILE_SIZE] == 0) {
+                    previousDeltaX = dir.first;
+                    previousDeltaY = dir.second;
+                    moveToTile(tryX / TILE_SIZE, tryY / TILE_SIZE, 1.0f);
+                    break;
+                }
+            }
+        }
     }
 }
 

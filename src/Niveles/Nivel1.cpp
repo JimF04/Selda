@@ -73,9 +73,9 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());
     }
-    ratones[0].setPosition({57,44});
+    ratones[0].setPosition({42, 28});
 
-    ratones[1].setPosition({23,9});
+    ratones[1].setPosition({32, 11});
 
     for (int i = 0; i < 2; i++){
         ojos_espectrales.push_back(Ojo_Espectral());
