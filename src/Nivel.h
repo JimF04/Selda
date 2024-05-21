@@ -14,9 +14,19 @@
 #include "Enemy/Espectro.h"
 #include "Enemy/Ratones.h"
 #include "Enemy/Ojo_Espectral.h"
+#include "Objects/Cofres.h"
 
 class Nivel {
 public:
+
+    // Variables de la clase
+
+    Texture2D miniMapTexture;
+    Texture2D imageTexture;
+    int contadorCofres = 0;
+
+    // Metodos de la clase
+
     Nivel(int screenWidth, int screenHeight);
 
     virtual void Update() = 0;
@@ -33,6 +43,9 @@ public:
 
     void UpdateEspectros(Vector<Espectro>& espectros);
 
+    void DrawChestCounter();
+
+    void UpdateRatones(Vector<Ratones>& ratones);
 
 protected:
     // Variables comunes a todos los niveles
@@ -54,8 +67,6 @@ protected:
     int stairs [4] = {158,159,183,184};
     bool onstairs = false;
 
-    void UpdateRatones(Vector<Ratones>& ratones);
-
     Stack<Vector2> path;
     Stack<Vector2> pathback;
     bool personaje_visto;
@@ -63,6 +74,7 @@ protected:
     queue<Vector2> routa;
 
     bool visto_por_ojo;
+
 };
 
 #endif //SELDA_NIVEL_H

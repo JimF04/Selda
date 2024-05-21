@@ -248,3 +248,11 @@ void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.ResetLives();
 }
 
+void Nivel::DrawChestCounter() {
+    Vector2 drawPosition = {-115 + camera.target.x, -60 + camera.target.y};
+    DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
+}
+
+
+
+
