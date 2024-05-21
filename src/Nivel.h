@@ -43,6 +43,7 @@ public:
     void DrawChestCounter();
 
     void UpdateRatones(Vector<Ratones>& ratones);
+    void UpdatesAZules(Vector<Espectro> &azules, Vector2 vector2);
 
 protected:
     // Variables comunes a todos los niveles

@@ -9,6 +9,7 @@ Espectro::Espectro(const string& type) : Enemy(), type(type){
     if (type == "gris"){
         spritesheet = LoadTexture("../assets/enemyPack/espectro_Gris.png");
 
+
     } else if(type == "rojo") {
         spritesheet = LoadTexture("../assets/enemyPack/espectro_Rojo.png");
 

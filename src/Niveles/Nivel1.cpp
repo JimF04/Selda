@@ -23,6 +23,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
+    camera.zoom = 1.0f;
 
 
 
@@ -43,7 +44,10 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 //====================Enemigos==================
     for ( int i = 0; i < 3; i++){
         espectros.push_back(Espectro("gris"));
+
     }
+
+    espectros.push_back(Espectro("azul"));
 
 
     espectros[0].setPosition({17,36});
@@ -52,6 +56,11 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route1.push({17,44});
     route1.push({17,36});
     espectros[0].setRoute(route1);
+
+
+    espectros[3].setPosition({17,36});
+
+
 
     espectros[1].setPosition({45,28});
     route2.push({31,28});
@@ -67,6 +76,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route3.push({32,6});
     route3.push({31,11});
     espectros[2].setRoute(route3);
+
+
 
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());
@@ -149,6 +160,7 @@ void Nivel1::Update() {
     UpdateEspectros(espectros);
     UpdateRatones(ratones);
     UpdateOjos(ojos_espectrales, ball.GetPosition());
+    UpdatesAZules(espectros, ball.GetPosition());
 
 
     if (!personaje_visto){

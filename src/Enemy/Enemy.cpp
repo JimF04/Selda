@@ -34,6 +34,7 @@ Enemy::Enemy(){
 
 
 
+
     looping = true;
      llego = false;
     const float PATROL_RADIUS = 2.0f * TILE_SIZE;

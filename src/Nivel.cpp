@@ -168,35 +168,43 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
         }
 
         if (find_AStar) {
+
             for (auto& espectro : espectros) {
-                int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
-                int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+                if(espectro.type != "azul"){
+                    int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+                    int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
 
-                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
-                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+                    int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                    int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
 
-                Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
-                path.pop();  // Eliminar el primer nodo del camino si es necesario
-                espectro.FollowPath(path);
-                espectro.set_llego(false);
+                    Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+                    path.pop();  // Eliminar el primer nodo del camino si es necesario
+                    espectro.FollowPath(path);
+                    espectro.set_llego(false);
+                }
+
             }
         } else {
             for (auto& espectro : espectros) {
-                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
-                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+                if(espectro.type != "azul"){
+                    int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                    int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
 
-                int initial_x_grid = static_cast<int>(espectro.Get_inial_position().x / TILE_SIZE);
-                int initial_y_grid = static_cast<int>(espectro.Get_inial_position().y / TILE_SIZE);
+                    int initial_x_grid = static_cast<int>(espectro.Get_inial_position().x / TILE_SIZE);
+                    int initial_y_grid = static_cast<int>(espectro.Get_inial_position().y / TILE_SIZE);
 
-                if(enemy_x_grid == initial_x_grid && enemy_y_grid == initial_y_grid || espectro.halegado()){
-                    espectro.set_llego(true);
+                    if(enemy_x_grid == initial_x_grid && enemy_y_grid == initial_y_grid || espectro.halegado()){
+                        espectro.set_llego(true);
+
+                    }
+                    else{
+                        Stack<Vector2> pathback = backtrack.findPath(enemy_x_grid, enemy_y_grid, initial_x_grid, initial_y_grid);
+                        pathback.pop();  // Eliminar el primer nodo del camino si es necesario
+                        espectro.FollowPath(pathback);
+                    }
 
                 }
-                else{
-                    Stack<Vector2> pathback = backtrack.findPath(enemy_x_grid, enemy_y_grid, initial_x_grid, initial_y_grid);
-                    pathback.pop();  // Eliminar el primer nodo del camino si es necesario
-                    espectro.FollowPath(pathback);
-                }
+
 
 
 
@@ -243,6 +251,25 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
 }
 
 
+void Nivel::UpdatesAZules(Vector<Espectro> &espectros, Vector2 posisicon_player) {
+    for(auto& espectro: espectros){
+        if(espectro.type == "azul"){
+
+            if(visto_por_ojo && !espectro.halegado()){
+                espectro.setPosition({(posisicon_player.x/TILE_SIZE)+2,(posisicon_player.y/TILE_SIZE)-2});
+                espectro.set_llego(true);
+
+            }
+            else{
+                espectro.MoveRandomly(wall);
+                espectro.set_llego(false);
+            }
+        std::cout<<"x:"<<espectro.GetPosition().x<<"y:"<<espectro.GetPosition().y<<endl;
+        }
+    }
+}
+
+
 void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.setPosition({BallXPos, BallYPos});
     ball.ResetLives();
@@ -252,6 +279,9 @@ void Nivel::DrawChestCounter() {
     Vector2 drawPosition = {-115 + camera.target.x, -60 + camera.target.y};
     DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
 }
+
+
+
 
 
 
