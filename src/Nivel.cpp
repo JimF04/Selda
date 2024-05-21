@@ -20,8 +20,6 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
     camera.zoom = 5.0f;
-
-
 }
 
 void Nivel::LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MAP_HEIGHT]) {

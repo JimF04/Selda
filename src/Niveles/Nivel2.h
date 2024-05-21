@@ -14,7 +14,7 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
-
+#include "../Objects/torch.h"
 
 class Nivel2 : public Nivel {
 public:
@@ -37,11 +37,16 @@ public:
         return winCondition;
     }
 
+    void Draw_Fog();
+
 private:
     Enemy enemigo;
     bool collisionDetected;
     double lastCollisionDetectionTime;
 
+    Vector<Torch> torch;
+
+    Vector<Espectro> espectroRojo;
 };
 
 

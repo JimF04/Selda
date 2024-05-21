@@ -6,8 +6,6 @@
 #define SELDA_BACKTRACK_H
 
 #include <iostream>
-#include <vector>
-#include <stack>
 #include "raylib.h"
 #include "../Mapa.h"
 #include "../DataStructures/Stack.h"

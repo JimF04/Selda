@@ -8,7 +8,6 @@ Mapa::Mapa() {
     UnloadImage(image);
 }
 
-// Método para dibujar un tile
 void Mapa::DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture){
     Rectangle sourceRec = {(float)TILE_SIZE * tile_x, (float)TILE_SIZE * tile_y, (float)TILE_SIZE, (float)TILE_SIZE };
     Rectangle destRec = {(float)pos_x, (float)pos_y, (float)TILE_SIZE, (float)TILE_SIZE};
@@ -17,7 +16,6 @@ void Mapa::DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset
 
 }
 
-// Método para dibujar un sólo mapa
 void Mapa::DrawMap(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture) {
     for (int y = 0; y < MAP_HEIGHT; y++){
         for (int x = 0; x < MAP_WIDTH; x++){
