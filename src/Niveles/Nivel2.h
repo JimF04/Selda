@@ -14,7 +14,6 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
-#include "../Lives/Vidas.h"
 #include "../Objects/torch.h"
 
 class Nivel2 : public Nivel {
@@ -37,6 +36,8 @@ public:
         }
         return winCondition;
     }
+
+    void Draw_Fog();
 
 private:
     Enemy enemigo;
