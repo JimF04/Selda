@@ -160,7 +160,6 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
             if (ball.CheckCollisionWithEnemy(espectros)) {
                 ball.DecreaseLives(espectros.getDamage());
-                std::cout<<ball.lives << "\n";
 
                 collisionDetected = true;
                 lastCollisionDetectionTime = GetTime();
@@ -221,9 +220,6 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
                 }
 
 
-
-
-
                 // Verificar si el espectro ya llegó a su posición inicial alguna vez
 
             }
@@ -236,8 +232,8 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
 }
 
-void Nivel::UpdatesAZules(Vector<Espectro> &espectros, Vector2 player_pos) {
-    for(auto& espectro: espectros){
+void Nivel::UpdatesAzules(Vector<Espectro> &azules, Vector2 player_pos) {
+    for(auto& espectro: azules){
         if(espectro.type == "azul"){
 
             if(visto_por_ojo && !espectro.halegado()){
@@ -279,26 +275,6 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
 
     }
 }
-
-
-void Nivel::UpdatesAZules(Vector<Espectro> &espectros, Vector2 posisicon_player) {
-    for(auto& espectro: espectros){
-        if(espectro.type == "azul"){
-
-            if(visto_por_ojo && !espectro.halegado()){
-                espectro.setPosition({(posisicon_player.x/TILE_SIZE)+2,(posisicon_player.y/TILE_SIZE)-2});
-                espectro.set_llego(true);
-
-            }
-            else{
-                espectro.MoveRandomly(wall);
-                espectro.set_llego(false);
-            }
-        std::cout<<"x:"<<espectro.GetPosition().x<<"y:"<<espectro.GetPosition().y<<endl;
-        }
-    }
-}
-
 
 void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.setPosition({BallXPos, BallYPos});

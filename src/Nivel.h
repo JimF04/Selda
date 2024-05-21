@@ -44,12 +44,11 @@ public:
     void DrawChestCounter();
 
     void UpdateRatones(Vector<Ratones>& ratones);
-    void UpdatesAZules(Vector<Espectro> &azules, Vector2 vector2);
+    void UpdatesAzules(Vector<Espectro> &azules, Vector2 vector2);
 
     void UpdateChests(Vector<Cofres>& cofres);
     void UpdateJars(Vector<Jarrones>& jarrones);
-
-    void UpdatesAZules(Vector<Espectro> &espectros, Vector2 player_pos);
+    void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
 protected:
     // Variables comunes a todos los niveles
@@ -64,8 +63,6 @@ protected:
 
     int traps[MAP_WIDTH][MAP_HEIGHT];
     int falsefloor[MAP_WIDTH][MAP_HEIGHT];
-
-    void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
     Ball ball;
     int stairs [4] = {158,159,183,184};
