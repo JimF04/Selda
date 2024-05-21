@@ -93,5 +93,12 @@ void Nivel5::Draw() {
     ball.DrawHearts(camera);
 
 
+    //===========Objetos================
+    for(const auto& cofre:cofres){
+        cofre.Draw();
+    }
+    DrawChestCounter();
+
+
     EndMode2D();
 }

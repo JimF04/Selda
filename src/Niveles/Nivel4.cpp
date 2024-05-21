@@ -109,6 +109,13 @@ void Nivel4::Draw() {
     ball.Draw();
     ball.DrawHearts(camera);
 
+    //===========Objetos================
+    for(const auto& cofre:cofres){
+        cofre.Draw();
+    }
+    DrawChestCounter();
+
+
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
     }

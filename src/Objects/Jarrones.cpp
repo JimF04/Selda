@@ -15,14 +15,6 @@ Jarrones::Jarrones() {
     spriteshet = LoadTexture("../assets/jarrones.png");
     sourcerec = {0,0,framewidth,frameheight};
 
-    // Verificar si la textura se cargó correctamente
-    if (spriteshet.id == 0) {
-        // Si el ID de la textura es cero, indica que la carga falló
-        std::cerr << "Error al cargar la textura de jarrones." << std::endl;
-    }else{
-        std::cerr<<"correcto"<<std::endl;
-    }
-
     framecounter = 0;
     currentframe = 0;
     framespeed = 8;

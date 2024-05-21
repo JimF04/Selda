@@ -36,6 +36,7 @@ private:
     bool collisionDetected;
     double lastCollisionDetectionTime;
 
+    Vector<Cofres> cofres;
 
 };
 

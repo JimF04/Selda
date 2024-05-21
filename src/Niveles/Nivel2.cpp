@@ -125,6 +125,11 @@ void Nivel2::Draw() {
         objeto.drawTile();
     }
 
+    for(const auto& cofre:cofres){
+        cofre.Draw();
+    }
+    DrawChestCounter();
+
     // Dibujar personajes
     ball.Draw();
     ball.DrawHearts(camera);

@@ -105,6 +105,12 @@ void Nivel3::Draw() {
     mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
 
+    //=============Objetos================
+    for(const auto& cofre:cofres){
+        cofre.Draw();
+    }
+    DrawChestCounter();
+
     DrawMiniMap();
     ball.Draw();
     ball.DrawHearts(camera);

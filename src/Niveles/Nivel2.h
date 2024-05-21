@@ -47,6 +47,8 @@ private:
 
     Vector<Espectro> espectroRojo;
 
+    Vector<Cofres> cofres;
+
 };
 
 
