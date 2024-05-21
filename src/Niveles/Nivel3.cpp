@@ -75,14 +75,13 @@ void Nivel3::Update() {
     UpdateMusicStream(levelMusic);
 
 
-    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-        if (ball.CheckCollisionWithEnemy(enemigo)) {
+    //==============Update de los enemigos===============
 
 
-            collisionDetected = true;
-            lastCollisionDetectionTime = GetTime();
-        }
-    }
+    //==============Update de los objetos===============
+    UpdateChests(cofres);
+    UpdateJars(jarrones);
+
 }
 
 void Nivel3::ResetLevel() {
@@ -106,10 +105,14 @@ void Nivel3::Draw() {
     mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
 
     //=============Objetos================
-    for(const auto& cofre:cofres){
-        cofre.Draw();
+    for(auto& cofre:cofres){
+        cofre.drawTile();
     }
     DrawChestCounter();
+
+    for(auto& jarron:jarrones){
+        jarron.drawTile();
+    }
 
     DrawMiniMap();
     ball.Draw();

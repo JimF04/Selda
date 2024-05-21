@@ -6,7 +6,7 @@
 #include "Hitbox.h"
 
 Hitbox::Hitbox() {
-    rect = {0, 0, 0, 0}; // Inicializa el rectángulo con valores por defecto
+    rect = {0, 0, 1, 1}; // Inicializa el rectángulo con valores por defecto
 }
 Hitbox::Hitbox(Vector2 position, int width, int height) {
     // Ajustamos el tamaño del rectángulo del hitbox

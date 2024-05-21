@@ -155,6 +155,22 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
     AStar astar(wall);
     Backtrack backtrack(wall);
 
+    //Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    for(auto& espectros: espectros){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+
+            if (ball.CheckCollisionWithEnemy(espectros)) {
+                ball.DecreaseLives();
+                std::cout<<ball.lives << "\n";
+
+                collisionDetected = true;
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
+    }
+
     if (!ball.GetSafeRoom()) {
         for (auto& espectro : espectros) {
             if (espectro.FollowBreadcrumb(ball.crums) || visto_por_ojo) {
@@ -252,6 +268,47 @@ void Nivel::DrawChestCounter() {
     Vector2 drawPosition = {-115 + camera.target.x, -60 + camera.target.y};
     DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
 }
+
+void Nivel::UpdateChests(Vector<Cofres>& cofres) {
+    for(auto& cofre : cofres){
+        bool cofreDetectado = false;
+        float distancia = Vector2Distance(ball.GetPosition(),cofre.getPosition());
+        if(distancia < ball.GetRadius() + 11 && !cofre.abierto){
+            if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
+                cofre.UpdateAnimation();
+                cofre.drawTile();
+                contadorCofres++;
+                cout<<contadorCofres;
+                cofreDetectado = true;
+                cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
+            }
+            else if (!IsKeyDown(KEY_O)) {
+                cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
+            }
+        }
+    }
+}
+
+void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
+    for(auto& jarron: jarrones){
+        bool jarronDetectado = false;
+        float distancia = Vector2Distance(ball.GetPosition(), jarron.getPosition());
+        if(distancia < ball.GetRadius() + 20 && !jarron.abierto){
+            if(IsKeyDown(KEY_L) && !jarronDetectado){
+                jarron.UpdateAnimation();
+                jarron.drawTile();
+                ball.IncreaseLives();
+                jarronDetectado = true;
+                jarron.abierto = true;
+            }
+                // Solo restablece jarronDetectado si el jarrón está abierto y la tecla Q está suelta
+            else if (!IsKeyDown(KEY_L) && jarron.abierto) {
+                jarronDetectado = false;
+            }
+        }
+    }
+}
+
 
 
 
