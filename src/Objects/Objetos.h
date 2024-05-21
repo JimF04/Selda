@@ -8,6 +8,7 @@ class Objetos{
 public:
     Objetos();
     void drawTile();
+    virtual void Draw() = 0;
 
     void setSize(int newSize);
     int getSize();

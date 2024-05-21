@@ -1,11 +1,21 @@
 #include "AStar.h"
 
-// Función de comparación para el QuickSort
+/**
+ * @brief compara dos nodos de A* para ordenarlos
+ * @param a
+ * @param b
+ * @return
+ */
 bool compareNodes(const AStarNode* a, const AStarNode* b) {
     return a->f < b->f;
 }
 
-// Función de partición del QuickSort sin usar std::swap
+/**
+ * @brief Particiona el arreglo de nodos
+ * @param arr
+ * @param low
+ * @param high
+ */
 int partition(AStarNode** arr, int low, int high) {
     AStarNode* pivot = arr[high];
     int i = low - 1;
@@ -27,7 +37,15 @@ int partition(AStarNode** arr, int low, int high) {
     return (i + 1);
 }
 
-// Función de ordenamiento QuickSort específica para Node*
+/**
+ * @brief Algotirmo Quicksort
+ *
+ * Ordena un arreglo de nodos
+ *
+ * @param arr
+ * @param low
+ * @param high
+ */
 void quickSort(AStarNode** arr, int low, int high) {
     if (low < high) {
         int pi = partition(arr, low, high);
@@ -45,18 +63,30 @@ void AStar::printPath(Stack<Vector2> path) const {
     }
 }
 
+// Constructor de A*
 AStar::AStar(int wall[][50]) :
        wall(wall){}
 
+/**
+ * @brief Calcula la heurística de Manhattan
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
 float AStar::heuristic(int x1, int y1, int x2, int y2) {
     return abs(x1 - x2) + abs(y1 - y2);
 }
 
+/**
+ * @brief Verifica si una posición es válida
+ * @param x
+ * @param y
+ * @return
+ */
 bool AStar::isValid(int x, int y) {
     return (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT && wall[x][y] == 0);
 }
-
-
 
 Stack<Vector2> AStar::findPath(int startX, int startY, int endX, int endY) {
     Stack<Vector2> path;
