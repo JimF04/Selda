@@ -41,8 +41,6 @@ public:
         return winCondition;
     }
 
-    int contadorCofres = 0;
-
     void DrawCounter();
 
 
@@ -56,17 +54,13 @@ private:
     Vector<Ratones> ratones;
     Vector<Ojo_Espectral> ojos_espectrales;
 
-    Cofres cofre;
-    std::vector<Cofres> cofres;
-    std::vector<Jarrones> jarrones;
-    Jarrones jarron;
+    Vector<Jarrones> jarrones;
+    Vector<Cofres> cofres;
+
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
     double lastCollisionDetectionTime;
     Hitbox hitbox;
-
-
-
 };
 
 

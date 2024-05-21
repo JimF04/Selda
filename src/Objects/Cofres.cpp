@@ -12,9 +12,8 @@ int framescolumn = 4;
 const float framewidth = sheetwidth / framesrow;
 const float frameheight = sheetheight / framescolumn;
 
-Cofres::Cofres(Nivel1* nivel):nivelPtr(nivel),abierto(false) {
+Cofres::Cofres(){
 
-    position = {1040,620};
     collisionBox = {0,0,16};
     spritesheet = LoadTexture("../assets/cofre.png");
     sourcerec = {0,0,framewidth,frameheight};
@@ -61,7 +60,7 @@ void Cofres::SetPosition(Vector2 newPosition) {
 
 void Cofres::DrawCounter(Camera2D camera2D) const {
     Vector2 drawPosition = {-115 + camera2D.target.x, -60 + camera2D.target.y};
-    DrawText(FormatText("x: %d", nivelPtr->contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
+    //DrawText(FormatText("x: %d", nivelPtr->contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
 }
 
 

@@ -231,10 +231,13 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
         }
 
     }
-
-
-
-
-
 }
+
+void Nivel::DrawChestCounter() {
+    Vector2 drawPosition = {-115 + camera.target.x, -60 + camera.target.y};
+    DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
+}
+
+
+
 

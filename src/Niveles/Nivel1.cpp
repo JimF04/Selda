@@ -15,31 +15,30 @@ Stack<Vector2> path;
 Stack<Vector2> pathCopy;
 
 
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),contadorCofres(0),cofre(this){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
     ball = Ball();
-    cofres.emplace_back(this);
-    jarrones.emplace_back();
+    personaje_visto = false;
     hitbox = Hitbox();
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-    Jarrones jarron2;
-    jarron2.SetPosition({770,375});
-    jarrones.push_back(jarron2);
-
-    Cofres cofre1(this);
-    cofre1.SetPosition({510,40});
-    cofres.push_back(cofre1);
-
-    Cofres cofre2(this);
-    cofre2.SetPosition({610, 600}); // Establecer posición del segundo cofre
-    cofres.push_back(cofre2);
 
 
+//==================Objetos==================
+    for (int i = 0; i < 2; i++){
+        cofres.push_back(Cofres());
+    }
+    cofres[0].SetPosition({510,40});
+    cofres[1].SetPosition({610,600});
 
-    personaje_visto = false;
+    for (int i = 0; i < 2; i++){
+        jarrones.push_back(Jarrones());
+    }
+    jarrones[0].SetPosition({770,375});
+    jarrones[1].SetPosition({770,375});
+
 
 //====================Enemigos==================
     for ( int i = 0; i < 3; i++){
@@ -89,7 +88,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../Level1.json", 3, traps);
     LoadMap("../Level1.json", 4, falsefloor);
 
-
     miniMapTexture = LoadTexture("../assets/Level1.png");
     levelMusic = LoadMusicStream("../assets/lvl1_music.mp3");
 
@@ -99,7 +97,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
 
 void Nivel1::Update() {
-    static bool cofreDetectado = false;
+
     static bool jarronDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
@@ -156,8 +154,7 @@ void Nivel1::Update() {
 
     }
 
-
-
+    static bool cofreDetectado = false;
     for(auto& cofre : cofres){
         float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
         if(distancian < ball.GetRadius() + 11 && !cofre.abierto){
@@ -242,8 +239,8 @@ void Nivel1::Draw() {
 
     for(const auto& cofre:cofres){
         cofre.Draw();
-        cofre.DrawCounter(camera);
     }
+    DrawChestCounter();
 
     for(const auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
         jarron.Draw();

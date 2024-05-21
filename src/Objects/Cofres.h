@@ -1,16 +1,15 @@
+#ifndef SELDA_COFRES_H
+#define SELDA_COFRES_H
+
+
 #include "Objetos.h"
 #include "raylib.h"
 #include "raymath.h"
-
-
-
-#ifndef SELDA_COFRES_H
-#define SELDA_COFRES_H
-class Nivel1;
+#include "../Nivel.h"
 
 class Cofres{
 public:
-    Cofres(Nivel1* nivel1);
+    Cofres();
     void UpdateAnimation();
     void Draw() const;
     void Still();
@@ -26,10 +25,9 @@ public:
     int framespeed;
     int time_for_crums;
     Camera2D camera;
-    bool abierto;
+    bool abierto = false;
 private:
     Vector2 position;
-    Nivel1* nivelPtr;
 
 };
 #endif //SELDA_COFRES_H
