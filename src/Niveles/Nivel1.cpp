@@ -203,7 +203,7 @@ void Nivel1::Update() {
             if (ball.CheckCollisionWithEnemy(espectros)) {
                ball.DecreaseLives();
                std::cout<<ball.lives << "\n";
-               if (ball.lives ==0){
+               if (ball.lives <=0){
                    ResetLevel();
 
                }
