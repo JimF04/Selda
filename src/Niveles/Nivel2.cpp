@@ -2,7 +2,7 @@
 #include "raymath.h"
 #include "raylib.h"
 
-Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5, 5) {
+Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight) {
     // Iniciar clases
     ball.setPosition({90, 416});
 
@@ -43,7 +43,7 @@ void Nivel2::ResetLevel() {
 
     enemigo.setPosition({100, 160});
 
-    vidas.ResetLives();
+
 
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
@@ -102,10 +102,8 @@ void Nivel2::Update() {
     // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
     if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
         if (ball.CheckCollisionWithEnemy(enemigo)) {
-            vidas.DecreaseLife();
-            if (!vidas.IsAlive()) {
-                ResetLevel();
-            }
+
+
             collisionDetected = true;
             lastCollisionDetectionTime = GetTime();
         }

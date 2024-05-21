@@ -7,7 +7,7 @@
 #include "raymath.h"
 
 
-Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5){
+Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 368, 80 });
@@ -64,10 +64,7 @@ void Nivel3::Update() {
 
     if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
         if (ball.CheckCollisionWithEnemy(enemigo)) {
-           vidas.DecreaseLife();
-           if(!vidas.IsAlive()){
-               ResetLevel();
-           }
+
 
             collisionDetected = true;
             lastCollisionDetectionTime = GetTime();
@@ -80,7 +77,7 @@ void Nivel3::ResetLevel() {
 
     enemigo.setPosition({100, 300});
 
-    vidas.ResetLives();
+
 
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();

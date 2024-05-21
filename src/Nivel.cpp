@@ -10,6 +10,7 @@
 #include <random>
 #include "math.h"
 
+
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
@@ -74,10 +75,17 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
                                 if (tileType == stairs[i]){
                                     onstairs=true;
                                 }
-
-
                             }
                         }
+
+                        else if (type == "falsefloor"){
+
+                        }
+                        else if (type == "traps"){
+                            ball.DecreaseLives();
+                            std::cout<<ball.GetLives();
+                        }
+
                     }
                 }
             }

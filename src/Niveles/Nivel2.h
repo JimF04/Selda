@@ -5,7 +5,7 @@
 #include <iostream>
 #include "raylib.h"
 #include "../ball.h"
-#include "../Enemy/Espectro.h"
+#include "../Enemy/Enemy.h"
 #include "../Nivel.h"
 #include <fstream>
 #include <iostream>
@@ -38,13 +38,10 @@ public:
         return winCondition;
     }
 
-    void Draw_Fog();
-
 private:
     Enemy enemigo;
     bool collisionDetected;
     double lastCollisionDetectionTime;
-    Vidas vidas;
 
     Vector<Torch> torch;
 

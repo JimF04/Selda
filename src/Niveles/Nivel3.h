@@ -11,7 +11,6 @@
 #include "../ball.h"
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
-#include "../Lives/Vidas.h"
 
 
 class Nivel3 : public Nivel {
@@ -36,7 +35,7 @@ private:
     Enemy enemigo;
     bool collisionDetected;
     double lastCollisionDetectionTime;
-    Vidas vidas;
+
 
 };
 

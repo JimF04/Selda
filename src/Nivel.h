@@ -43,8 +43,10 @@ protected:
     int floor[MAP_WIDTH][MAP_HEIGHT];
     int wall[MAP_WIDTH][MAP_HEIGHT];
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
+
     int traps[MAP_WIDTH][MAP_HEIGHT];
     int falsefloor[MAP_WIDTH][MAP_HEIGHT];
+
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
     Ball ball;
