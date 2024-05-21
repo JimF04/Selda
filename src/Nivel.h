@@ -38,9 +38,6 @@ public:
     void DrawMiniMap();
     void ResetLevel(float BallXPos, float BallYPos);
 
-    Texture2D miniMapTexture;
-    Texture2D imageTexture;
-
     void UpdateEspectros(Vector<Espectro>& espectros);
 
     void DrawChestCounter();

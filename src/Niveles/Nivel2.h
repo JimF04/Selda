@@ -14,6 +14,7 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
+#include "../Objects/torch.h"
 
 
 class Nivel2 : public Nivel {
@@ -23,6 +24,7 @@ public:
     virtual void Draw() override;
     Music levelMusic;
     void ResetLevel();
+    void Draw_Fog();
 
     // Declaración de la función para dibujar las sombras
     void DrawShadowMap();
@@ -38,9 +40,12 @@ public:
     }
 
 private:
-    Enemy enemigo;
     bool collisionDetected;
     double lastCollisionDetectionTime;
+
+    Vector<Torch> torch;
+
+    Vector<Espectro> espectroRojo;
 
 };
 

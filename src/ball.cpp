@@ -169,6 +169,7 @@ int Ball::GetLives() const {
 }
 
 void Ball::IncreaseLives() {
+    if (lives<5)
      lives++;
 }
 
