@@ -14,7 +14,7 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
-#include "../Lives/Vidas.h"
+
 
 class Nivel2 : public Nivel {
 public:
@@ -41,7 +41,7 @@ private:
     Enemy enemigo;
     bool collisionDetected;
     double lastCollisionDetectionTime;
-    Vidas vidas;
+
 };
 
 

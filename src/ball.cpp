@@ -5,6 +5,9 @@ const int FRAME_HEIGHT = 48;
 
 
 Ball::Ball() {
+
+    heartTexture = LoadTexture("../assets/heart.png");
+
     lives= 5;
     position = {400, 300};
 
@@ -169,4 +172,19 @@ int Ball::GetLives() const {
 int Ball::ResetLives() {
      lives=5;
 
+}
+
+void Ball::DrawHearts(Camera2D camera) const {
+    const int heartSize = 15;
+
+
+    // Calcula la posición inicial de los corazones
+    Vector2 heartPosition = {position.x-117 , position.y-78};
+
+    for (int i = 0; i < lives; ++i) {
+        // Dibuja el corazón en la posición actual
+        DrawTextureEx(heartTexture, heartPosition, 0.0f, static_cast<float>(heartSize) / heartTexture.width, WHITE);
+        // Avanza la posición para el próximo corazón
+        heartPosition.x += heartSize -5;
+    }
 }

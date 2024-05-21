@@ -38,7 +38,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     cofres.push_back(cofre2);
 
 
-    camera.zoom = 1.0f;
 
     personaje_visto = false;
 
@@ -228,7 +227,6 @@ void Nivel1::ResetLevel() {
 //    }
 
     collisionDetected = false;
-    //vidas.ResetLives();
     ball.ResetLives();
 
 }
@@ -254,6 +252,7 @@ void Nivel1::Draw() {
 
     ball.Draw();
     //vidas.Draw(camera);
+    ball.DrawHearts(camera);
 
     for (auto& espectro : espectros) {
         espectro.Draw();

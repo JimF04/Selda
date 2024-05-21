@@ -7,8 +7,6 @@
 
     #include "raylib.h"
     #include <vector>
-
-    #include "Lives/Vidas.h"
     #include "raymath.h"
     #include "Hitbox.h"
     #include "Enemy/Enemy.h"
@@ -50,6 +48,8 @@
         bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
         bool CheckDeath();
         int ResetLives();
+        void DrawHearts(Camera2D camera) const;
+        Texture2D heartTexture;
 
 
 

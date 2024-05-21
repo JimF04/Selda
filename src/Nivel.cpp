@@ -9,7 +9,7 @@
 #include "Enemy/Ojo_Espectral.h"
 #include <random>
 #include "math.h"
-#include "Lives/Vidas.h"
+
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };

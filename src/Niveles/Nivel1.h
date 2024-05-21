@@ -14,7 +14,6 @@
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
 #include "../DataStructures/Vector.h"
-#include "../Lives/Vidas.h"
 #include "../Objects/Cofres.h"
 #include "../Objects/Jarrones.h"
 
