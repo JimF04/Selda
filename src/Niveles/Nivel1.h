@@ -54,12 +54,8 @@ private:
     Vector<Ratones> ratones;
     Vector<Ojo_Espectral> ojos_espectrales;
 
-    Vector<Jarrones> jarrones;
-    Vector<Cofres> cofres;
-
     void DrawAStar(Stack<Vector2> path);
-    bool collisionDetected;
-    double lastCollisionDetectionTime;
+
     Hitbox hitbox;
 };
 

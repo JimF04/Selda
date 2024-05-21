@@ -74,25 +74,14 @@ void Nivel4::Update() {
 
     UpdateMusicStream(levelMusic);
 
-    float distance = Vector2Distance(ball.GetPosition(),enemigo.GetPosition());
-    if(distance<ball.GetRadius()){
-        if(IsKeyDown(KEY_P)){
-            enemigo.setPosition({-1000,1000});
-        }
-    }
-    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
-    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-        if (ball.CheckCollisionWithEnemy(enemigo)) {
+
+    //==============Update de los enemigos===============
 
 
+    //==============Update de los objetos===============
+    UpdateChests(cofres);
+    UpdateJars(jarrones);
 
-            // Establece la bandera de colisión en true
-            collisionDetected = true;
-
-            // Actualiza el tiempo de la última detección de colisiones
-            lastCollisionDetectionTime = GetTime();
-        }
-    }
 }
 
 
@@ -110,10 +99,14 @@ void Nivel4::Draw() {
     ball.DrawHearts(camera);
 
     //===========Objetos================
-    for(const auto& cofre:cofres){
-        cofre.Draw();
+    for(auto& cofre:cofres){
+        cofre.drawTile();
     }
     DrawChestCounter();
+
+    for(auto& jarron:jarrones){
+        jarron.drawTile();
+    }
 
 
     if (ball.GetSafeRoom()){

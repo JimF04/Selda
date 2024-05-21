@@ -33,3 +33,4 @@ void Objetos::setPosition(Vector2 newPos) {
 Vector2 Objetos::getPosition() {
     return pos;
 }
+
