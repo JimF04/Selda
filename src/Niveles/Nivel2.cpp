@@ -4,10 +4,7 @@
 
 Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight) {
     // Iniciar clases
-    ball = Ball();
-    enemigo = Enemy();
     ball.setPosition({90, 416});
-
 
     LoadMap("../Level2.json", 0, floor);
     LoadMap("../Level2.json", 1, saferoom);
@@ -15,12 +12,21 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     miniMapTexture = LoadTexture("../assets/Level2.png");
     levelMusic = LoadMusicStream("../assets/lvl2_music.mp3");
     PlayMusicStream(levelMusic);
+
+
+    for (int i = 0; i < 2; i++){
+        espectroRojo.push_back(Espectro("rojo"));
+    }
+    espectroRojo[0].setPosition({6, 36});
+    espectroRojo[1].setPosition({16, 25});
+
+    
 }
 
 void Nivel2::ResetLevel() {
     ball.setPosition({90, 160});
 
-    enemigo.setPosition({100, 300});
+    enemigo.setPosition({100, 160});
 
 
 
@@ -67,6 +73,8 @@ void Nivel2::Update() {
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
 
+    UpdateEspectros(espectroRojo);
+
     if (GetTime() - lastCollisionDetectionTime >= 2.0) {
         collisionDetected = false; // Restablece la bandera de colisión
     }
@@ -86,6 +94,41 @@ void Nivel2::Update() {
         }
     }
 }
+
+void Nivel2::Draw() {
+    BeginMode2D(camera);
+
+    ClearBackground(BLACK);
+
+    // Dibujar mapa y otros elementos
+    mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+
+    Draw_Fog();
+
+    for (auto&enemigo : espectroRojo){
+        enemigo.Draw();
+    }
+
+    // Dibujar personajes
+    ball.Draw();
+
+    if (ball.GetSafeRoom()){
+        DrawCenteredText("SAFE ROOM", 10, GREEN);
+    }
+
+    if (personaje_visto) {
+        DrawCenteredText("En vista",10, RED);
+        // También puedes usar un emoji
+        // DrawText("\xF0\x9F\x91\x81", screenWidth / 2 - MeasureText("\xF0\x9F\x91\x81", 30) / 2, screenHeight / 2, 30, RED);
+    }
+
+    DrawMiniMap(); // Dibujar el minimapa al final
+
+    EndMode2D();
+}
+
 void DrawRingGradient(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color innerColor, Color outerColor) {
     const float stepLength = (endAngle - startAngle) / segments;
 
@@ -101,46 +144,49 @@ void DrawRingGradient(Vector2 center, float innerRadius, float outerRadius, floa
         DrawTriangle(innerEnd, outerEnd, outerStart, innerColor);
     }
 }
-void Nivel2::Draw() {
-    BeginMode2D(camera);
 
-    ClearBackground(BLACK);
 
-    // Dibujar mapa y otros elementos
-    mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
-    mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
-    mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
-
+void Nivel2::Draw_Fog(){
     // Dibujar un anillo semi-transparente alrededor del personaje con un área central transparente
-    Vector2 center = ball.GetPosition();
-    float innerRadius = ball.GetRadius() + 40;
-    float outerRadius = ball.GetRadius() + 200;
-    DrawRing(center, innerRadius, outerRadius, 0, 360, 0, Fade(BLACK, 0.99f));
-    DrawRing(center, 35, 100, 0, 360, 0, Fade(BLACK, 0.65f));
-    DrawRing(center, 32.5, 95, 0, 360, 0, Fade(BLACK, 0.55f));
-    DrawRing(center, 30, 90, 0, 360, 0, Fade(BLACK, 0.45f));
-    DrawRing(center, 27.5, 85, 0, 360, 0, Fade(BLACK, 0.35f));
-    DrawRing(center, 25, 80, 0, 360, 0, Fade(BLACK, 0.25f));
-    DrawRing(center, 22.5, 75, 0, 360, 0, Fade(BLACK, 0.15f));
-    DrawRing(center, 20, 70, 0, 360, 0, Fade(BLACK, 0.05f));
- //   DrawRing(center, 17.5, 65, 0, 360, 0, Fade(BLACK, 0.45f));
-   // DrawRing(center, 15, 60, 0, 360, 0, Fade(BLACK, 0.25f));
-    //DrawRing(center, 12.5, 55, 0, 360, 0, Fade(BLACK, 0.15f));
+    Vector2 ballCenter = ball.GetPosition();
+    float ballInnerRadius = ball.GetRadius() + 30;
+    float ballOuterRadius = ball.GetRadius() + 200;
+
+    // Dibujar el anillo del personaje principal
+    DrawRingGradient(ballCenter, ballInnerRadius, ballOuterRadius, 0, 360, 100, Fade(BLACK, 0.99f), Fade(BLACK, 0.0f));
 
 
+    for (auto&enemigo : espectroRojo){
 
-    // Dibujar personajes
-    ball.Draw();
-    enemigo.Draw();
+        // Dibujar el mapa alrededor del enemigo
+        Vector2 enemyCenter = enemigo.GetPosition();
+        float enemyInnerRadius = enemigo.GetRadius() + 50;  // Reducir el tamaño del área
+        float enemyOuterRadius = enemigo.GetRadius() + 50; // Reducir el tamaño del área
 
-    if (ball.GetSafeRoom()){
-        DrawCenteredText("SAFE ROOM", 10, GREEN);
+        // Calcular la distancia entre el personaje y el enemigo
+        float distance = Vector2Distance(ballCenter, enemyCenter);
+
+        // Determinar si los círculos se superponen
+        bool circlesOverlap = (distance < (ballOuterRadius + enemyOuterRadius));
+
+        // Dibujar el mapa alrededor del enemigo si los círculos se superponen
+        if (circlesOverlap) {
+            // Calcular el área de superposición
+            float overlapRadius = ballOuterRadius + enemyOuterRadius - distance;
+
+            // Dibujar el mapa en el área alrededor del enemaaigo
+            Vector2 overlapCenter = enemyCenter;
+            float overlapInnerRadius = enemyInnerRadius - overlapRadius;
+            float overlapOuterRadius = enemyOuterRadius;
+
+            // Dibujar el mapa en el área alrededor del enemigo
+            mapa.DrawMapAtPosition(floor, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+            mapa.DrawMapAtPosition(saferoom, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+            mapa.DrawMapAtPosition(wall, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+        }
     }
-
-    DrawMiniMap(); // Dibujar el minimapa al final
-
-    EndMode2D();
 }
+
 
 
 
