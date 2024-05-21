@@ -9,6 +9,10 @@
 #include "Enemy/Ojo_Espectral.h"
 #include <random>
 #include "math.h"
+#include <chrono>
+#include <ctime>
+
+std::chrono::time_point<std::chrono::system_clock> lastTrapCollisionTime;
 
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
@@ -43,6 +47,10 @@ void Nivel::LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MA
 void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIGHT], std::string type) {
 
     bool safeRoom = false;
+    auto currentTime = std::chrono::system_clock::now();
+
+
+    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTrapCollisionTime).count();
 
     // Calcula la posición proyectada de la bola
     Vector2 projectedPosition = { ball.GetPosition().x + deltaX, ball.GetPosition().y + deltaY };
@@ -79,13 +87,12 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
                         }
 
                         else if (type == "falsefloor"){
-
+                            ball.lives=0;
                         }
-                        else if (type == "traps"){
+                        else if (type == "traps" && elapsedTime >= 2600){
                             ball.DecreaseLives();
-                            std::cout<<ball.GetLives();
+                            lastTrapCollisionTime = currentTime;
                         }
-
                     }
                 }
             }
@@ -233,10 +240,11 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
         }
 
     }
+}
 
 
-
-
-
+void Nivel::ResetLevel(float BallXPos, float BallYPos) {
+    ball.setPosition({BallXPos, BallYPos});
+    ball.ResetLives();
 }
 

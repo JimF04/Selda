@@ -107,6 +107,11 @@ void Nivel1::Update() {
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
 
+    if (ball.lives <=0){
+        Nivel::ResetLevel(90,160);
+
+    }
+
     if (isShiftPressed) {
         speed *= 2.0f;
     }
@@ -135,7 +140,7 @@ void Nivel1::Update() {
     }
 
     LayerCollision(deltaX, deltaY, traps, "traps");
-    LayerCollision(deltaX, deltaY, saferoom, "falsefloor");
+    LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
@@ -180,7 +185,8 @@ void Nivel1::Update() {
         if(distancie < ball.GetRadius() + 20 && !jarron.abierto){
             if(IsKeyDown(KEY_L) && !jarronDetectado){
                 jarron.Anim();
-                //vidas.IncreaseLife();
+                ball.IncreaseLives();
+
                 cout << "Jarron abierto" << endl;
                 jarronDetectado = true;
                 jarron.abierto = true;
@@ -202,12 +208,6 @@ void Nivel1::Update() {
             if (ball.CheckCollisionWithEnemy(espectros)) {
                ball.DecreaseLives();
                std::cout<<ball.lives << "\n";
-               if (ball.lives <=0){
-                   ResetLevel();
-
-               }
-
-
 
                 collisionDetected = true;
                 lastCollisionDetectionTime = GetTime();
@@ -219,17 +219,6 @@ void Nivel1::Update() {
 
 }
 
-void Nivel1::ResetLevel() {
-    ball.setPosition({90, 160});
-
-//    for (auto& enemy : enemigos) {
-//        enemy.setPosition({100, 300}); // Restablecer la posición de cada enemigo
-//    }
-
-    collisionDetected = false;
-    ball.ResetLives();
-
-}
 
 void Nivel1::Draw() {
     BeginMode2D(camera);
@@ -251,7 +240,6 @@ void Nivel1::Draw() {
 
 
     ball.Draw();
-    //vidas.Draw(camera);
     ball.DrawHearts(camera);
 
     for (auto& espectro : espectros) {

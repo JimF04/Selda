@@ -49,6 +49,7 @@
         bool CheckDeath();
         int ResetLives();
         void DrawHearts(Camera2D camera) const;
+        void IncreaseLives();
         Texture2D heartTexture;
 
 

@@ -168,6 +168,9 @@ int Ball::GetLives() const {
     return lives;
 }
 
+void Ball::IncreaseLives() {
+     lives++;
+}
 
 int Ball::ResetLives() {
      lives=5;

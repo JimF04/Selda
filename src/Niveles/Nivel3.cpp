@@ -18,6 +18,9 @@ Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../Level3.json", 0, floor);
     LoadMap("../Level3.json", 1, saferoom);
     LoadMap("../Level3.json", 2, wall);
+    LoadMap("../Level3.json", 3, traps);
+    LoadMap("../Level3.json", 4, falsefloor);
+
     miniMapTexture = LoadTexture("../assets/Level3.png");
     levelMusic = LoadMusicStream("../assets/lvl3_music.mp3");
     PlayMusicStream(levelMusic);
@@ -30,6 +33,13 @@ void Nivel3::Update() {
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
+
+
+    if (ball.lives <=0){
+        Nivel::ResetLevel(368,80);
+
+    }
+
 
     if (isShiftPressed) {
         speed *= 2.0f;
@@ -56,9 +66,12 @@ void Nivel3::Update() {
     }
 
 
+    LayerCollision(deltaX, deltaY, traps, "traps");
+    LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+
     UpdateMusicStream(levelMusic);
 
 
@@ -89,8 +102,12 @@ void Nivel3::Draw() {
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
+
     DrawMiniMap();
     ball.Draw();
+    ball.DrawHearts(camera);
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
