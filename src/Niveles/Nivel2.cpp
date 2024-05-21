@@ -23,19 +23,27 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     //=============Objects================
 
     // Antorchas
-    for( int i = 0; i < 10; i++){
+    for( int i = 0; i < 16; i++){
         torch.push_back(Torch());
     }
-    torch[0].setPosition({4, 28});
-    torch[1].setPosition({7, 28});
-    torch[2].setPosition({9, 24});
-    torch[3].setPosition({9, 27});
+    torch[0].setPosition({4, 27});
+    torch[1].setPosition({7, 27});
+    torch[2].setPosition({7, 24});
+    torch[3].setPosition({4, 24});
     torch[4].setPosition({47, 8});
     torch[5].setPosition({50, 8});
     torch[6].setPosition({45, 5});
-    torch[7].setPosition({29, 42});
-    torch[8].setPosition({32, 42});
-    
+    torch[7].setPosition({52, 5});
+
+    torch[8].setPosition({29, 43});
+    torch[9].setPosition({32, 43});
+    torch[10].setPosition({29, 46});
+    torch[11].setPosition({32, 46});
+    torch[12].setPosition({64, 34});
+    torch[13].setPosition({67, 34});
+    torch[14].setPosition({64, 37});
+    torch[15].setPosition({67, 37});
+
 }
 
 void Nivel2::ResetLevel() {
