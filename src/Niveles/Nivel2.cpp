@@ -86,6 +86,7 @@ void Nivel2::Update() {
         }
     }
 }
+//lolazo
 
 void Nivel2::Draw() {
     BeginMode2D(camera);
