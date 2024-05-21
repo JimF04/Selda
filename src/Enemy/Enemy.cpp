@@ -18,7 +18,6 @@ const int FRAME_HEIGHT = 48;
 Enemy::Enemy(){
     radius = 7;
     color = YELLOW;
-    speed = 1;
 
     sourceRec = {0, 0, FRAME_WIDTH, FRAME_HEIGHT};
 
@@ -151,7 +150,7 @@ void Enemy::moveToTile(int targetX, int targetY, float pixel) {
 void Enemy::FollowPath(Stack<Vector2>& path) {
     if (!path.empty()) {
         Vector2 target = path.top(); // Obtén el próximo destino sin quitarlo del camino
-        moveToTile(target.x, target.y, 1); // Ajusta el valor de 'pixel' según tu preferencia
+        moveToTile(target.x, target.y, speed); // Ajusta el valor de 'pixel' según tu preferencia
 
         // Verifica si el enemigo ha llegado al centro del destino actual
         if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {
@@ -164,7 +163,7 @@ void Enemy::FollowPath(Stack<Vector2>& path) {
 void Enemy::LoopPath(queue<Vector2> &path) {
     if (!path.empty() && halegado()) {
         Vector2 target = path.front(); // Obtén el próximo destino sin quitarlo del camino
-        moveToTile(target.x, target.y, 1); // Ajusta el valor de 'pixel' según tu preferencia
+        moveToTile(target.x, target.y, speed); // Ajusta el valor de 'pixel' según tu preferencia
 
         // Verifica si el enemigo ha llegado al centro del destino actual
         if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {

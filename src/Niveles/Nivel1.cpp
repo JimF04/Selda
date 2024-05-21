@@ -40,6 +40,11 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
         espectros.push_back(Espectro("gris"));
     }
 
+    espectros.push_back(Espectro("azul"));
+    espectros[3].setPosition({17,36});
+
+    camera.zoom = 1.0f;
+
     espectros[0].setPosition({17,36});
     route1.push({23,36});
     route1.push({23,44});
@@ -54,13 +59,14 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route2.push({45,28});
     espectros[1].setRoute(route2);
 
-
     espectros[2].setPosition({32,11});
     route3.push({42,11});
     route3.push({42,6});
     route3.push({32,6});
     route3.push({31,11});
     espectros[2].setRoute(route3);
+
+
 
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());
@@ -144,6 +150,7 @@ void Nivel1::Update() {
     UpdateEspectros(espectros);
     UpdateRatones(ratones);
     UpdateOjos(ojos_espectrales, ball.GetPosition());
+    UpdatesAZules(espectros, ball.GetPosition());
 
     //==========Updates de los objetos================
 

@@ -18,9 +18,10 @@ public:
     //void Draw() const override;
     void setRoute(queue<Vector2> route);
     queue<Vector2> getRoute();
+    string type;
 
 private:
-    string type;
+
     queue<Vector2> route;
     bool defaultRoute = true;
 

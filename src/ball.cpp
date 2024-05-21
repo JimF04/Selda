@@ -159,8 +159,8 @@ bool Ball::GetSafeRoom()
     }
 
 
-void Ball::DecreaseLives() {
-    lives--;
+void Ball::DecreaseLives(int damageDealt) {
+    lives -= damageDealt;
 }
 int Ball::GetLives() const {
     return lives;

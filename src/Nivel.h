@@ -48,6 +48,8 @@ public:
     void UpdateChests(Vector<Cofres>& cofres);
     void UpdateJars(Vector<Jarrones>& jarrones);
 
+    void UpdatesAZules(Vector<Espectro> &espectros, Vector2 player_pos);
+
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;

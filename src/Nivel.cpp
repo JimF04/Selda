@@ -90,7 +90,7 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
                             ball.lives=0;
                         }
                         else if (type == "traps" && elapsedTime >= 2600){
-                            ball.DecreaseLives();
+                            ball.DecreaseLives(1);
                             lastTrapCollisionTime = currentTime;
                         }
                     }
@@ -155,12 +155,11 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
     AStar astar(wall);
     Backtrack backtrack(wall);
 
-    //Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
     for(auto& espectros: espectros){
         if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
 
             if (ball.CheckCollisionWithEnemy(espectros)) {
-                ball.DecreaseLives();
+                ball.DecreaseLives(espectros.getDamage());
                 std::cout<<ball.lives << "\n";
 
                 collisionDetected = true;
@@ -184,35 +183,43 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
         }
 
         if (find_AStar) {
+
             for (auto& espectro : espectros) {
-                int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
-                int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+                if(espectro.type != "azul"){
+                    int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+                    int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
 
-                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
-                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+                    int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                    int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
 
-                Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
-                path.pop();  // Eliminar el primer nodo del camino si es necesario
-                espectro.FollowPath(path);
-                espectro.set_llego(false);
+                    Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+                    path.pop();  // Eliminar el primer nodo del camino si es necesario
+                    espectro.FollowPath(path);
+                    espectro.set_llego(false);
+                }
+
             }
         } else {
             for (auto& espectro : espectros) {
-                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
-                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+                if(espectro.type != "azul"){
+                    int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                    int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
 
-                int initial_x_grid = static_cast<int>(espectro.Get_inial_position().x / TILE_SIZE);
-                int initial_y_grid = static_cast<int>(espectro.Get_inial_position().y / TILE_SIZE);
+                    int initial_x_grid = static_cast<int>(espectro.Get_inial_position().x / TILE_SIZE);
+                    int initial_y_grid = static_cast<int>(espectro.Get_inial_position().y / TILE_SIZE);
 
-                if(enemy_x_grid == initial_x_grid && enemy_y_grid == initial_y_grid || espectro.halegado()){
-                    espectro.set_llego(true);
+                    if(enemy_x_grid == initial_x_grid && enemy_y_grid == initial_y_grid || espectro.halegado()){
+                        espectro.set_llego(true);
+
+                    }
+                    else{
+                        Stack<Vector2> pathback = backtrack.findPath(enemy_x_grid, enemy_y_grid, initial_x_grid, initial_y_grid);
+                        pathback.pop();  // Eliminar el primer nodo del camino si es necesario
+                        espectro.FollowPath(pathback);
+                    }
 
                 }
-                else{
-                    Stack<Vector2> pathback = backtrack.findPath(enemy_x_grid, enemy_y_grid, initial_x_grid, initial_y_grid);
-                    pathback.pop();  // Eliminar el primer nodo del camino si es necesario
-                    espectro.FollowPath(pathback);
-                }
+
 
 
 
@@ -229,6 +236,21 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
 }
 
+void Nivel::UpdatesAZules(Vector<Espectro> &espectros, Vector2 player_pos) {
+    for(auto& espectro: espectros){
+        if(espectro.type == "azul"){
+
+            if(visto_por_ojo && !espectro.halegado()){
+                espectro.setPosition({(player_pos.x/TILE_SIZE)+2,(player_pos.y/TILE_SIZE)-2});
+                espectro.set_llego(true);
+            }
+            else{
+                espectro.MoveRandomly(wall);
+                espectro.set_llego(false);
+            }
+        }
+    }
+}
 
 void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
 
