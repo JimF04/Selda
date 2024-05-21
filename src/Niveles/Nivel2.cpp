@@ -20,6 +20,21 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     espectroRojo[0].setPosition({6, 36});
     espectroRojo[1].setPosition({16, 25});
 
+    //=============Objects================
+
+    // Antorchas
+    for( int i = 0; i < 10; i++){
+        torch.push_back(Torch());
+    }
+    torch[0].setPosition({4, 28});
+    torch[1].setPosition({7, 28});
+    torch[2].setPosition({9, 24});
+    torch[3].setPosition({9, 27});
+    torch[4].setPosition({47, 8});
+    torch[5].setPosition({50, 8});
+    torch[6].setPosition({45, 5});
+    torch[7].setPosition({29, 42});
+    torch[8].setPosition({32, 42});
     
 }
 
@@ -109,8 +124,14 @@ void Nivel2::Draw() {
 
     Draw_Fog();
 
+    //==============Enemigos================
     for (auto&enemigo : espectroRojo){
         enemigo.Draw();
+    }
+
+    //============Objetos================
+    for (auto&objeto : torch){
+        objeto.drawTile();
     }
 
     // Dibujar personajes
@@ -125,6 +146,7 @@ void Nivel2::Draw() {
         // También puedes usar un emoji
         // DrawText("\xF0\x9F\x91\x81", screenWidth / 2 - MeasureText("\xF0\x9F\x91\x81", 30) / 2, screenHeight / 2, 30, RED);
     }
+
 
     DrawMiniMap(); // Dibujar el minimapa al final
 
@@ -182,6 +204,28 @@ void Nivel2::Draw_Fog(){
             float overlapOuterRadius = enemyOuterRadius;
 
             // Dibujar el mapa en el área alrededor del enemigo
+            mapa.DrawMapAtPosition(floor, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+            mapa.DrawMapAtPosition(saferoom, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+            mapa.DrawMapAtPosition(wall, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
+        }
+    }
+
+    for (auto& antorcha : torch) {
+        Vector2 torchCenter = {antorcha.getPosition().x * 16 + 8, antorcha.getPosition().y * 16 + 8};
+        float torchInnerRadius = antorcha.getSize() + 35;
+        float torchOuterRadius = antorcha.getSize() + 35;
+
+        float distance = Vector2Distance(ballCenter, torchCenter);
+
+        bool circlesOverlap = (distance < (ballOuterRadius + torchOuterRadius));
+
+        if (circlesOverlap) {
+            float overlapRadius = ballOuterRadius + torchOuterRadius - distance;
+
+            Vector2 overlapCenter = torchCenter;
+            float overlapInnerRadius = torchInnerRadius - overlapRadius;
+            float overlapOuterRadius = torchOuterRadius;
+
             mapa.DrawMapAtPosition(floor, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
             mapa.DrawMapAtPosition(saferoom, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);
             mapa.DrawMapAtPosition(wall, 25, TEXTURE_TILEMAP, overlapCenter, overlapInnerRadius, overlapOuterRadius);

@@ -15,6 +15,7 @@
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
 #include "../Lives/Vidas.h"
+#include "../Objects/torch.h"
 
 class Nivel2 : public Nivel {
 public:
@@ -44,6 +45,8 @@ private:
     bool collisionDetected;
     double lastCollisionDetectionTime;
     Vidas vidas;
+
+    Vector<Torch> torch;
 
     Vector<Espectro> espectroRojo;
 };
