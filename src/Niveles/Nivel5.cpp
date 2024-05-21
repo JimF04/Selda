@@ -63,19 +63,13 @@ void Nivel5::Update() {
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
 
-    if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-        if (ball.CheckCollisionWithEnemy(enemigo)) {
-            // Si hay colisión, puedes hacer lo que necesites aquí
-            // Por ejemplo, decrementar vidas, mover la bola, etc.
+
+    //==============Update de los enemigos===============
 
 
-            // Establece la bandera de colisión en true
-            collisionDetected = true;
-
-            // Actualiza el tiempo de la última detección de colisiones
-            lastCollisionDetectionTime = GetTime();
-        }
-    }
+    //==============Update de los objetos===============
+    UpdateChests(cofres);
+    UpdateJars(jarrones);
 }
 
 
@@ -94,10 +88,14 @@ void Nivel5::Draw() {
 
 
     //===========Objetos================
-    for(const auto& cofre:cofres){
-        cofre.Draw();
+    for(auto& cofre:cofres){
+        cofre.drawTile();
     }
     DrawChestCounter();
+
+    for(auto& jarron:jarrones){
+        jarron.drawTile();
+    }
 
 
     EndMode2D();

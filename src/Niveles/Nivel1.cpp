@@ -10,35 +10,30 @@
 #include "../Objects/Cofres.h"
 #include "../Objects/Jarrones.h"
 
-
-Stack<Vector2> path;
-Stack<Vector2> pathCopy;
-
-
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
     ball = Ball();
     personaje_visto = false;
     hitbox = Hitbox();
     ball.setPosition({90,160});
-    collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
     camera.zoom = 1.0f;
 
-
+//camera.zoom = 1.0f;
 
 //==================Objetos==================
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < 3; i++){
         cofres.push_back(Cofres());
     }
-    cofres[0].SetPosition({510,40});
-    cofres[1].SetPosition({610,600});
+    cofres[0].setPosition({31,2});
+    cofres[1].setPosition({68,42});
+    cofres[2].setPosition({38, 20});
 
     for (int i = 0; i < 2; i++){
         jarrones.push_back(Jarrones());
     }
-    jarrones[0].SetPosition({770,375});
-    jarrones[1].SetPosition({770,375});
+    jarrones[0].setPosition({43, 12});
+    jarrones[1].setPosition({43, 2});
 
 
 //====================Enemigos==================
@@ -48,6 +43,10 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     }
 
     espectros.push_back(Espectro("azul"));
+
+    espectros[3].setPosition({17,36});
+
+    camera.zoom = 1.0f;
 
 
     espectros[0].setPosition({17,36});
@@ -68,7 +67,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route2.push({45,20});
     route2.push({45,28});
     espectros[1].setRoute(route2);
-
 
     espectros[2].setPosition({32,11});
     route3.push({42,11});
@@ -109,7 +107,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
 void Nivel1::Update() {
 
-    static bool jarronDetectado = false;
+
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
@@ -156,76 +154,23 @@ void Nivel1::Update() {
 
     UpdateMusicStream(levelMusic);
 
+    //==========Updates de los enemigos================
 
     UpdateEspectros(espectros);
     UpdateRatones(ratones);
     UpdateOjos(ojos_espectrales, ball.GetPosition());
     UpdatesAZules(espectros, ball.GetPosition());
 
+    //==========Updates de los objetos================
+
+    UpdateChests(cofres);
+    UpdateJars(jarrones);
 
     if (!personaje_visto){
-
         espectros[0].LoopPath(route1);
         espectros[1].LoopPath(route2);
         espectros[2].LoopPath(route3);
-
     }
-
-    static bool cofreDetectado = false;
-    for(auto& cofre : cofres){
-        float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
-        if(distancian < ball.GetRadius() + 11 && !cofre.abierto){
-            if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
-                cofre.Still();
-                cout<<"Cofre Abierto"<<endl;
-                contadorCofres++;
-                cout<<contadorCofres;
-                cofreDetectado = true;
-                cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
-            }
-            else if (!IsKeyDown(KEY_O)) {
-                cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
-            }
-        }
-    }
-
-    for(auto& jarron: jarrones){
-        float distancie = Vector2Distance(ball.GetPosition(), jarron.GetPosition());
-        if(distancie < ball.GetRadius() + 20 && !jarron.abierto){
-            if(IsKeyDown(KEY_L) && !jarronDetectado){
-                jarron.Anim();
-                ball.IncreaseLives();
-
-                cout << "Jarron abierto" << endl;
-                jarronDetectado = true;
-                jarron.abierto = true;
-            }
-                // Solo restablece jarronDetectado si el jarrón está abierto y la tecla Q está suelta
-            else if (!IsKeyDown(KEY_L) && jarron.abierto) {
-                jarronDetectado = false;
-            }
-        }
-    }
-
-
-
-
-   //Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
-    for(auto& espectros: espectros){
-        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-
-            if (ball.CheckCollisionWithEnemy(espectros)) {
-               ball.DecreaseLives();
-               std::cout<<ball.lives << "\n";
-
-                collisionDetected = true;
-                lastCollisionDetectionTime = GetTime();
-            }
-        }
-        collisionDetected = false;
-
-    }
-
 }
 
 
@@ -238,18 +183,18 @@ void Nivel1::Draw() {
     mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
 
-    for(const auto& cofre:cofres){
-        cofre.Draw();
+    //=======================Objetos=========================
+
+    for(auto& cofre:cofres){
+        cofre.drawTile();
     }
     DrawChestCounter();
 
-    for(const auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
-        jarron.Draw();
+    for(auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
+        jarron.drawTile();
     }
 
-
-    ball.Draw();
-    ball.DrawHearts(camera);
+    //========================Enemigos========================
 
     for (auto& espectro : espectros) {
         espectro.Draw();
@@ -263,10 +208,9 @@ void Nivel1::Draw() {
         ojo_espectral.Draw();
     }
 
-//    int textPosX = GetScreenWidth() / 2 - MeasureText(FormatText("x: %d", contadorCofres), 20) / 2 + camera.target.x;
-//    int textPosY = 10 + camera.target.y; // Altura fija desde la parte superior de la pantalla
-//
-//    DrawText(FormatText("x: %d", contadorCofres), textPosX, textPosY, 20, WHITE);
+    //========================Otros========================
+    ball.Draw();
+    ball.DrawHearts(camera);
 
     if (ball.GetSafeRoom()){
         DrawCenteredText("SAFE ROOM", 10, GREEN);
@@ -274,8 +218,6 @@ void Nivel1::Draw() {
 
     if (personaje_visto) {
         DrawCenteredText("En vista",10, RED);
-        // También puedes usar un emoji
-        // DrawText("\xF0\x9F\x91\x81", screenWidth / 2 - MeasureText("\xF0\x9F\x91\x81", 30) / 2, screenHeight / 2, 30, RED);
     }
 
     DrawMiniMap();

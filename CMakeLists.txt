@@ -38,9 +38,7 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Hitbox.h
         src/Objects/Objetos.cpp
         src/Objects/Objetos.h
-        src/Objects/Jarrones.cpp
         src/Objects/Jarrones.h
-        src/Objects/Cofres.cpp
         src/Objects/Cofres.h
         src/Enemy/Espectro.cpp
         src/Enemy/Espectro.h

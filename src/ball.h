@@ -44,7 +44,7 @@
         Rectangle sourceRec;
         int time_for_crums;
         int GetLives() const;
-        void DecreaseLives();
+        void DecreaseLives(int damageDealt);
         bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
         bool CheckDeath();
         int ResetLives();

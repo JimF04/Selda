@@ -15,6 +15,7 @@
 #include "Enemy/Ratones.h"
 #include "Enemy/Ojo_Espectral.h"
 #include "Objects/Cofres.h"
+#include "Objects/Jarrones.h"
 
 class Nivel {
 public:
@@ -45,6 +46,11 @@ public:
     void UpdateRatones(Vector<Ratones>& ratones);
     void UpdatesAZules(Vector<Espectro> &azules, Vector2 vector2);
 
+    void UpdateChests(Vector<Cofres>& cofres);
+    void UpdateJars(Vector<Jarrones>& jarrones);
+
+    void UpdatesAZules(Vector<Espectro> &espectros, Vector2 player_pos);
+
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;
@@ -72,6 +78,12 @@ protected:
     queue<Vector2> routa;
 
     bool visto_por_ojo;
+
+    bool collisionDetected = false;
+    double lastCollisionDetectionTime;
+
+    Vector<Jarrones> jarrones;
+    Vector<Cofres> cofres;
 
 };
 

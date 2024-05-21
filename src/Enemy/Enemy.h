@@ -53,16 +53,32 @@ public:
     void MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]);
     void Animacion_random();
 
+    float speed = 1.0f;
+    int lives = 1;
+    int damage = 1;
 
+    int getDamage(){
+        return damage;
+    };
+
+    void setSpeed(float speed){
+        this->speed = speed;
+    };
+
+    void setLives(int lives){
+        this->lives = lives;
+    };
+
+    void setDamage(int damage){
+        this->damage = damage;
+    };
 
 
 protected:
     int radius;
     Color color;
-    float speed;
 
     bool eliminated;
-
 
     int previousDeltaX;
     int previousDeltaY;

@@ -90,7 +90,7 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
                             ball.lives=0;
                         }
                         else if (type == "traps" && elapsedTime >= 2600){
-                            ball.DecreaseLives();
+                            ball.DecreaseLives(1);
                             lastTrapCollisionTime = currentTime;
                         }
                     }
@@ -154,6 +154,21 @@ void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
 void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
     AStar astar(wall);
     Backtrack backtrack(wall);
+
+    for(auto& espectros: espectros){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+
+            if (ball.CheckCollisionWithEnemy(espectros)) {
+                ball.DecreaseLives(espectros.getDamage());
+                std::cout<<ball.lives << "\n";
+
+                collisionDetected = true;
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
+    }
 
     if (!ball.GetSafeRoom()) {
         for (auto& espectro : espectros) {
@@ -221,6 +236,21 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
 }
 
+void Nivel::UpdatesAZules(Vector<Espectro> &espectros, Vector2 player_pos) {
+    for(auto& espectro: espectros){
+        if(espectro.type == "azul"){
+
+            if(visto_por_ojo && !espectro.halegado()){
+                espectro.setPosition({(player_pos.x/TILE_SIZE)+2,(player_pos.y/TILE_SIZE)-2});
+                espectro.set_llego(true);
+            }
+            else{
+                espectro.MoveRandomly(wall);
+                espectro.set_llego(false);
+            }
+        }
+    }
+}
 
 void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
 
@@ -279,6 +309,47 @@ void Nivel::DrawChestCounter() {
     Vector2 drawPosition = {-115 + camera.target.x, -60 + camera.target.y};
     DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
 }
+
+void Nivel::UpdateChests(Vector<Cofres>& cofres) {
+    for(auto& cofre : cofres){
+        bool cofreDetectado = false;
+        float distancia = Vector2Distance(ball.GetPosition(),cofre.getPosition());
+        if(distancia < ball.GetRadius() + 11 && !cofre.abierto){
+            if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
+                cofre.UpdateAnimation();
+                cofre.drawTile();
+                contadorCofres++;
+                cout<<contadorCofres;
+                cofreDetectado = true;
+                cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
+            }
+            else if (!IsKeyDown(KEY_O)) {
+                cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
+            }
+        }
+    }
+}
+
+void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
+    for(auto& jarron: jarrones){
+        bool jarronDetectado = false;
+        float distancia = Vector2Distance(ball.GetPosition(), jarron.getPosition());
+        if(distancia < ball.GetRadius() + 20 && !jarron.abierto){
+            if(IsKeyDown(KEY_L) && !jarronDetectado){
+                jarron.UpdateAnimation();
+                jarron.drawTile();
+                ball.IncreaseLives();
+                jarronDetectado = true;
+                jarron.abierto = true;
+            }
+                // Solo restablece jarronDetectado si el jarrón está abierto y la tecla Q está suelta
+            else if (!IsKeyDown(KEY_L) && jarron.abierto) {
+                jarronDetectado = false;
+            }
+        }
+    }
+}
+
 
 
 

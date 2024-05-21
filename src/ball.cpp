@@ -107,13 +107,11 @@ void Ball::GetCrumbs(){
 
 
 void Ball::Atacar(){
-    std::cout<<"atacando"<<std::endl;
     sourceRec.y = FRAME_HEIGHT *6;
     UpdateAnimation();
 }
 
 void Ball::Defender(){
-    std::cout<<"defendiendo"<<std::endl;
     sourceRec.y = FRAME_HEIGHT *1;
 }
 
@@ -161,8 +159,8 @@ bool Ball::GetSafeRoom()
     }
 
 
-void Ball::DecreaseLives() {
-    lives--;
+void Ball::DecreaseLives(int damageDealt) {
+    lives -= damageDealt;
 }
 int Ball::GetLives() const {
     return lives;

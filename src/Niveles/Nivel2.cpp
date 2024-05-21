@@ -15,7 +15,7 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     levelMusic = LoadMusicStream("../assets/lvl2_music.mp3");
     PlayMusicStream(levelMusic);
 
-
+    //==============Enemigos================
     for (int i = 0; i < 2; i++){
         espectroRojo.push_back(Espectro("rojo"));
     }
@@ -23,7 +23,6 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     espectroRojo[1].setPosition({16, 25});
 
     //=============Objects================
-
     // Antorchas
     for( int i = 0; i < 16; i++){
         torch.push_back(Torch());
@@ -36,7 +35,6 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     torch[5].setPosition({50, 8});
     torch[6].setPosition({45, 5});
     torch[7].setPosition({52, 5});
-
     torch[8].setPosition({29, 43});
     torch[9].setPosition({32, 43});
     torch[10].setPosition({29, 46});
@@ -95,8 +93,12 @@ void Nivel2::Update() {
 
     UpdateMusicStream(levelMusic);
 
-
+    //==============Update de los enemigos===============
     UpdateEspectros(espectroRojo);
+
+    //==============Update de los objetos===============
+    UpdateChests(cofres);
+    UpdateJars(jarrones);
 
 
 }
@@ -125,10 +127,14 @@ void Nivel2::Draw() {
         objeto.drawTile();
     }
 
-    for(const auto& cofre:cofres){
-        cofre.Draw();
+    for(auto& cofre:cofres){
+        cofre.drawTile();
     }
     DrawChestCounter();
+
+    for(auto& jarron : jarrones){
+        jarron.drawTile();
+    }
 
     // Dibujar personajes
     ball.Draw();
@@ -140,12 +146,10 @@ void Nivel2::Draw() {
 
     if (personaje_visto) {
         DrawCenteredText("En vista",10, RED);
-        // También puedes usar un emoji
-        // DrawText("\xF0\x9F\x91\x81", screenWidth / 2 - MeasureText("\xF0\x9F\x91\x81", 30) / 2, screenHeight / 2, 30, RED);
     }
 
 
-    DrawMiniMap(); // Dibujar el minimapa al final
+    DrawMiniMap();
 
     EndMode2D();
 }

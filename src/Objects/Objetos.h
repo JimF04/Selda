@@ -13,8 +13,7 @@ public:
     int getSize();
 
     void setPosition(Vector2 newPos);
-    Vector2 getPosition();
-
+    virtual Vector2 getPosition();
 
 protected:
     Texture2D spritesheet;

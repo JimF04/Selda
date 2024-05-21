@@ -5,29 +5,28 @@
 #include "Objetos.h"
 #include "raylib.h"
 #include "raymath.h"
-#include "../Nivel.h"
 
-class Cofres{
+class Cofres : public Objetos{
 public:
-    Cofres();
-    void UpdateAnimation();
-    void Draw() const;
-    void Still();
-    Vector2 GetPosition() const;
-    void SetPosition(Vector2 newPosition);
-    void DrawCounter(Camera2D camera) const;
+    Cofres(){
+        collisionBox = {0,0,16};
+        spritesheet = LoadTexture("../assets/enemyPack/tiles_dungeon_v1.1.png");
+        tilepos = {16,14};
+    };
 
-    Texture2D spritesheet;
-    Rectangle sourcerec;
     Vector4 collisionBox;
-    int framecounter;
-    int currentframe;
-    int framespeed;
-    int time_for_crums;
-    Camera2D camera;
     bool abierto = false;
+
+    virtual Vector2 getPosition() override {
+        Vector2 Newpos = {pos.x * 16,pos.y * 16};
+        return Newpos;
+    };
+
+    void UpdateAnimation(){
+        tilepos = {16, 15};
+    };
+
 private:
-    Vector2 position;
 
 };
 #endif //SELDA_COFRES_H
