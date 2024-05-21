@@ -7,4 +7,3 @@ build/
 out/
 CMakeSettings.json
 /logging
-/Documentation/

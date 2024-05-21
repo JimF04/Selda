@@ -17,66 +17,21 @@
 
 class Nivel {
 public:
-
-    // Variables de la clase
-
-    Texture2D miniMapTexture;
-    Texture2D imageTexture;
-
-    // Metodos de la clase
-
     Nivel(int screenWidth, int screenHeight);
 
     virtual void Update() = 0;
     virtual void Draw() = 0;
     virtual bool CheckWinCondition() = 0;
-
-/**
- * @brief Resetea el nivel
- * @param mapJson path del json con el mapa
- * @param layerIndex indice de la capa del json
- * @param layer matriz de la capa
- */
     virtual void LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MAP_HEIGHT]);
-
-/**
- * @brief Verifica si hay colision con la capa
- *
- * @param deltaX posicion de la bola x
- * @param deltaY posicion de la bola y
- * @param layer matriz de la capa
- * @param type el tipo de la capa (floor, wall, saferoom, etc)
- */
     virtual void LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIGHT], std::string type);
-
-/**
- * @brief Dibuja un texto centrado
- * @param text
- * @param fontSize
- * @param color
- */
     void DrawCenteredText(const char* text, int fontSize, Color color);
-
-/**
- * @brief Dibuja el minimapa de cada nivel
- */
     void DrawMiniMap();
     void ResetLevel(float BallXPos, float BallYPos);
 
     Texture2D miniMapTexture;
     Texture2D imageTexture;
-    void DrawHeart();
 
-/**
- * @brief Verifica el estado de los espectros
- *
- * Se verifica si los espectros han visto al jugador y se actualiza su estado
- * Por ejemplo, habilitar A* para seguir al jugador
- *
- * @param espectros lista de espectros
- */
     void UpdateEspectros(Vector<Espectro>& espectros);
-
 
 
 protected:

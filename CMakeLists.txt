@@ -53,7 +53,6 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Enemy/Chocobos.h
         src/Algoritmos/Backtrack.cpp
         src/Algoritmos/Backtrack.h
-        src/Objects/torch.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp glog::glog)
