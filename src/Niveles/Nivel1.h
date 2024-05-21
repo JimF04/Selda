@@ -13,9 +13,13 @@
 #include "../Nivel.h"
 #include "../Algoritmos/AStar.h"
 #include "../DataStructures/Stack.h"
-#include "../Lives/Vidas.h"
+#include "../DataStructures/Vector.h"
 #include "../Objects/Cofres.h"
 #include "../Objects/Jarrones.h"
+
+#include "../Enemy/Espectro.h"
+#include "../Enemy/Ratones.h"
+#include "../Enemy/Ojo_Espectral.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -25,6 +29,7 @@ public:
     Music levelMusic;
     Texture2D image;
     void ResetLevel();
+    bool KeyQPressed = false;
 
     virtual bool CheckWinCondition() override {
         if (onstairs){
@@ -35,26 +40,32 @@ public:
         }
         return winCondition;
     }
-    bool personaje_visto;
 
     int contadorCofres = 0;
 
-
     void DrawCounter();
 
+
 private:
-    Enemy enemigo;
-    Enemy enemigo2;
-    std::vector<Enemy> enemigos;
+
+    Vector<Espectro> espectros;
+    queue<Vector2> route1;
+    queue<Vector2> route2;
+    queue<Vector2> route3;
+
+    Vector<Ratones> ratones;
+    Vector<Ojo_Espectral> ojos_espectrales;
+
     Cofres cofre;
-    std::vector<Cofres>cofres;
-    std::vector<Jarrones>jarrones;
-   Jarrones jarron;
+    std::vector<Cofres> cofres;
+    std::vector<Jarrones> jarrones;
+    Jarrones jarron;
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
     double lastCollisionDetectionTime;
     Hitbox hitbox;
-    Vidas vidas;
+
+
 
 };
 

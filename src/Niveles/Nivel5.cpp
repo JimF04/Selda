@@ -6,7 +6,7 @@
 
 
 
-Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight), vidas(5,5){
+Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 592, 704 });
@@ -14,6 +14,8 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     LoadMap("../BossLevel.json", 0, floor);
     LoadMap("../BossLevel.json", 1, saferoom);
     LoadMap("../BossLevel.json", 2, wall);
+    LoadMap("../BossLevel.json", 3, traps);
+
     miniMapTexture = LoadTexture("../assets/BossLevel.png");
     levelMusic = LoadMusicStream("../assets/boss_music.mp3");
     PlayMusicStream(levelMusic);
@@ -26,6 +28,11 @@ void Nivel5::Update() {
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
+
+    if (ball.lives <=0){
+        Nivel::ResetLevel(592,704);
+
+    }
 
     if (isShiftPressed) {
         speed *= 2.0f;
@@ -51,6 +58,7 @@ void Nivel5::Update() {
         keyKPressed = false;
     }
 
+    LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
@@ -59,10 +67,7 @@ void Nivel5::Update() {
         if (ball.CheckCollisionWithEnemy(enemigo)) {
             // Si hay colisión, puedes hacer lo que necesites aquí
             // Por ejemplo, decrementar vidas, mover la bola, etc.
-          vidas.DecreaseLife();
-          if(!vidas.IsAlive()){
-              ResetLevel();
-          }
+
 
             // Establece la bandera de colisión en true
             collisionDetected = true;
@@ -73,16 +78,6 @@ void Nivel5::Update() {
     }
 }
 
-void Nivel5::ResetLevel() {
-    ball.setPosition({90, 160});
-
-    enemigo.setPosition({100, 300});
-
-    vidas.ResetLives();
-
-    collisionDetected = false;
-    lastCollisionDetectionTime = GetTime();
-}
 
 
 void Nivel5::Draw() {
@@ -92,8 +87,10 @@ void Nivel5::Draw() {
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
     DrawMiniMap();
     ball.Draw();
+    ball.DrawHearts(camera);
 
 
     EndMode2D();

@@ -4,8 +4,11 @@ const int FRAME_WIDTH = 48;
 const int FRAME_HEIGHT = 48;
 
 
-Ball::Ball():vidas(5,5)
-{
+Ball::Ball() {
+
+    heartTexture = LoadTexture("../assets/heart.png");
+
+    lives= 5;
     position = {400, 300};
 
     collisionBox = {0, 0, 16, 16};
@@ -26,9 +29,8 @@ Ball::Ball():vidas(5,5)
     time_for_crums = 0;
 
 
-
-
 }
+
 
 void Ball::Draw() const
 {
@@ -138,30 +140,54 @@ void Ball::UpdateAnimation()
         // Actualizar el rectángulo fuente de la textura para el siguiente frame
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }}
-    void Ball::setPosition(Vector2 pos)
+
+void Ball::setPosition(Vector2 pos)
     {
         position = pos;
 
 
     }
 
-    bool Ball::CheckCollisionWithEnemy(const Enemy &enemy) const {
+bool Ball::CheckCollisionWithEnemy(const Enemy &enemy) const {
         float distance = Vector2Distance(position, enemy.GetPosition());
         return distance < radius + enemy.GetRadius();
 
 
     }
 
-    bool Ball::GetSafeRoom()
+bool Ball::GetSafeRoom()
     {
         return safeRoom;
     }
 
 
-
-    void Ball::DecreaseLives() {
+void Ball::DecreaseLives() {
     lives--;
 }
-int Ball::GetRemainingLives() const {
-    return vidas.GetLives();
+int Ball::GetLives() const {
+    return lives;
+}
+
+void Ball::IncreaseLives() {
+     lives++;
+}
+
+int Ball::ResetLives() {
+     lives=5;
+
+}
+
+void Ball::DrawHearts(Camera2D camera) const {
+    const int heartSize = 15;
+
+
+    // Calcula la posición inicial de los corazones
+    Vector2 heartPosition = {position.x-117 , position.y-78};
+
+    for (int i = 0; i < lives; ++i) {
+        // Dibuja el corazón en la posición actual
+        DrawTextureEx(heartTexture, heartPosition, 0.0f, static_cast<float>(heartSize) / heartTexture.width, WHITE);
+        // Avanza la posición para el próximo corazón
+        heartPosition.x += heartSize -5;
+    }
 }

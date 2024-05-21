@@ -15,25 +15,19 @@ Stack<Vector2> path;
 Stack<Vector2> pathCopy;
 
 
-
-Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),vidas(5,5),contadorCofres(0),cofre(this){
+Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight),contadorCofres(0),cofre(this){
     InitAudioDevice();
     ball = Ball();
-   cofres.emplace_back(this);
-   jarrones.emplace_back();
-
-    enemigos;
-    cofres;
-    enemigos.emplace_back();
-    enemigos.emplace_back();
+    cofres.emplace_back(this);
+    jarrones.emplace_back();
     hitbox = Hitbox();
     ball.setPosition({90,160});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
-    Jarrones jarron1;
-    jarron1.SetPosition({520,40});
-    jarrones.push_back(jarron1);
+    Jarrones jarron2;
+    jarron2.SetPosition({770,375});
+    jarrones.push_back(jarron2);
 
     Cofres cofre1(this);
     cofre1.SetPosition({510,40});
@@ -44,20 +38,56 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     cofres.push_back(cofre2);
 
 
-    camera.zoom = 1.0f;
-
-
-
 
     personaje_visto = false;
-    enemigos[0].setPosition({368,385});
-    enemigos[0].initial_position={368,385};
+
+//====================Enemigos==================
+    for ( int i = 0; i < 3; i++){
+        espectros.push_back(Espectro("gris"));
+    }
 
 
+    espectros[0].setPosition({17,36});
+    route1.push({23,36});
+    route1.push({23,44});
+    route1.push({17,44});
+    route1.push({17,36});
+    espectros[0].setRoute(route1);
 
+    espectros[1].setPosition({45,28});
+    route2.push({31,28});
+    route2.push({31,20});
+    route2.push({45,20});
+    route2.push({45,28});
+    espectros[1].setRoute(route2);
+
+
+    espectros[2].setPosition({32,11});
+    route3.push({42,11});
+    route3.push({42,6});
+    route3.push({32,6});
+    route3.push({31,11});
+    espectros[2].setRoute(route3);
+
+    for ( int i = 0; i < 2; i++){
+        ratones.push_back(Ratones());
+    }
+    ratones[0].setPosition({42, 28});
+
+    ratones[1].setPosition({32, 11});
+
+    for (int i = 0; i < 2; i++){
+        ojos_espectrales.push_back(Ojo_Espectral());
+    }
+    ojos_espectrales[0].setPosition({56,3});
+    ojos_espectrales[1].setPosition({68,39});
+
+//==========Matrices de colisiones================
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
     LoadMap("../Level1.json", 2, wall);
+    LoadMap("../Level1.json", 3, traps);
+    LoadMap("../Level1.json", 4, falsefloor);
 
 
     miniMapTexture = LoadTexture("../assets/Level1.png");
@@ -65,16 +95,22 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     PlayMusicStream(levelMusic);
 
-
 }
+
 
 void Nivel1::Update() {
     static bool cofreDetectado = false;
+    static bool jarronDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
+
+    if (ball.lives <=0){
+        Nivel::ResetLevel(90,160);
+
+    }
 
     if (isShiftPressed) {
         speed *= 2.0f;
@@ -92,6 +128,7 @@ void Nivel1::Update() {
         ball.Atacar();
 
 
+
     if(IsKeyDown(KEY_K) && !keyKPressed) {
         ball.Defender();
         keyKPressed = true;
@@ -102,69 +139,30 @@ void Nivel1::Update() {
         keyKPressed = false;
     }
 
-
-
-
+    LayerCollision(deltaX, deltaY, traps, "traps");
+    LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, floor, "stairs");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
+
     UpdateMusicStream(levelMusic);
 
 
-    // Convertir las coordenadas de la bola a las coordenadas de la matriz
+    UpdateEspectros(espectros);
+    UpdateRatones(ratones);
+    UpdateOjos(ojos_espectrales, ball.GetPosition());
 
 
+    if (!personaje_visto){
 
-    int ball_x_grid = static_cast<int>( ball.GetPosition().x / TILE_SIZE);
-    int ball_y_grid = static_cast<int>( ball.GetPosition().y / TILE_SIZE);
-
-    int enemy_x_grid = static_cast<int>( enemigos[0].GetPosition().x / TILE_SIZE);
-    int enemy_y_grid = static_cast<int>( enemigos[0].GetPosition().y / TILE_SIZE);
-
-
-
-    AStar astar(wall);
-    path = astar.findPath(enemy_x_grid,enemy_y_grid,ball_x_grid,ball_y_grid);
-    path.pop();
-
-
-    if(personaje_visto){
-        enemigos[0].FollowPath(path);
-    }
-    else if(personaje_visto== false && enemigos[0].initial_position.x != enemigos[0].position.x && enemigos[0].initial_position.y != enemigos[0].position.y ){
-//        path=astar.findPath(enemy_x_grid,enemy_y_grid,enemigos[0].initial_position.x/TILE_SIZE,enemigos[0].initial_position.y/TILE_SIZE);
-//        enemigos[0].Back_to_place(path,TILE_SIZE);
+        espectros[0].LoopPath(route1);
+        espectros[1].LoopPath(route2);
+        espectros[2].LoopPath(route3);
 
     }
 
 
 
-    if (!ball.GetSafeRoom()){
-        personaje_visto= false;
-
-        for (auto& enemigo : enemigos) {
-            if (enemigo.FollowBreadcrumb(ball.crums)) {
-                personaje_visto = true;
-                break;
-            }
-
-
-
-        }
-
-    }
-
-
-
-    for(auto& enemy : enemigos) {
-        float distance = Vector2Distance(ball.GetPosition(), enemy.GetPosition());
-        if (distance < ball.GetRadius() + 10) {
-            if (IsKeyDown(KEY_L)) {
-                ball.Atacar();
-                enemy.setPosition({-1000, 1000});
-            }
-        }
-    }
     for(auto& cofre : cofres){
         float distancian = Vector2Distance(ball.GetPosition(),cofre.GetPosition());
         if(distancian < ball.GetRadius() + 11 && !cofre.abierto){
@@ -182,37 +180,45 @@ void Nivel1::Update() {
         }
     }
 
+    for(auto& jarron: jarrones){
+        float distancie = Vector2Distance(ball.GetPosition(), jarron.GetPosition());
+        if(distancie < ball.GetRadius() + 20 && !jarron.abierto){
+            if(IsKeyDown(KEY_L) && !jarronDetectado){
+                jarron.Anim();
+                ball.IncreaseLives();
 
-
-
-    // Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
-//    for(auto& enemy: enemigos){
-//        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
-//            if (ball.CheckCollisionWithEnemy(enemy)) {
-//               vidas.DecreaseLife();
-//                if(!vidas.IsAlive()){
-//                    ResetLevel();
-//                }
-//                collisionDetected = true;
-//                lastCollisionDetectionTime = GetTime();
-//            }
-//        }
-//        collisionDetected = false;
-//
-//    }
-
-}
-
-void Nivel1::ResetLevel() {
-    ball.setPosition({90, 160});
-
-    for (auto& enemy : enemigos) {
-        enemy.setPosition({100, 300}); // Restablecer la posición de cada enemigo
+                cout << "Jarron abierto" << endl;
+                jarronDetectado = true;
+                jarron.abierto = true;
+            }
+                // Solo restablece jarronDetectado si el jarrón está abierto y la tecla Q está suelta
+            else if (!IsKeyDown(KEY_L) && jarron.abierto) {
+                jarronDetectado = false;
+            }
+        }
     }
-    collisionDetected = false;
-    vidas.ResetLives();
-    lastCollisionDetectionTime = GetTime();
+
+
+
+
+   //Realiza la detección de colisiones solo si ha pasado suficiente tiempo y no se ha detectado una colisión recientemente
+    for(auto& espectros: espectros){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+
+            if (ball.CheckCollisionWithEnemy(espectros)) {
+               ball.DecreaseLives();
+               std::cout<<ball.lives << "\n";
+
+                collisionDetected = true;
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
+    }
+
 }
+
 
 void Nivel1::Draw() {
     BeginMode2D(camera);
@@ -220,6 +226,8 @@ void Nivel1::Draw() {
     mapa.DrawMap(floor, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(saferoom, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(wall, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
+    mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
 
     for(const auto& cofre:cofres){
         cofre.Draw();
@@ -232,10 +240,20 @@ void Nivel1::Draw() {
 
 
     ball.Draw();
-    vidas.Draw(camera);
-    for (const auto& enemigo : enemigos) {
-        enemigo.Draw();
+    ball.DrawHearts(camera);
+
+    for (auto& espectro : espectros) {
+        espectro.Draw();
     }
+
+    for (auto& raton : ratones) {
+        raton.Draw();
+    }
+
+    for (auto& ojo_espectral : ojos_espectrales) {
+        ojo_espectral.Draw();
+    }
+
 //    int textPosX = GetScreenWidth() / 2 - MeasureText(FormatText("x: %d", contadorCofres), 20) / 2 + camera.target.x;
 //    int textPosY = 10 + camera.target.y; // Altura fija desde la parte superior de la pantalla
 //
@@ -257,6 +275,8 @@ void Nivel1::Draw() {
 
 
 
+
+
 void Nivel1::DrawAStar(Stack<Vector2> path) {
     // Calcula el desplazamiento necesario para centrar los círculos en cada celd
     float offsetX = (TILE_SIZE - 6) / 2.0f; // 5 es el radio del círculo
@@ -275,5 +295,3 @@ void Nivel1::DrawAStar(Stack<Vector2> path) {
         DrawCircle(worldX, worldY, 5, GREEN);
     }
 }
-
-//Holam

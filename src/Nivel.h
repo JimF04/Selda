@@ -9,7 +9,11 @@
 #include "Mapa.h"
 #include "raylib.h"
 #include "DataStructures/Stack.h"
+#include "DataStructures/Vector.h"
 #include "ball.h"
+#include "Enemy/Espectro.h"
+#include "Enemy/Ratones.h"
+#include "Enemy/Ojo_Espectral.h"
 
 class Nivel {
 public:
@@ -22,9 +26,12 @@ public:
     virtual void LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIGHT], std::string type);
     void DrawCenteredText(const char* text, int fontSize, Color color);
     void DrawMiniMap();
-    void DrawHeart();
+    void ResetLevel(float BallXPos, float BallYPos);
+
     Texture2D miniMapTexture;
     Texture2D imageTexture;
+
+    void UpdateEspectros(Vector<Espectro>& espectros);
 
 
 protected:
@@ -37,13 +44,25 @@ protected:
     int floor[MAP_WIDTH][MAP_HEIGHT];
     int wall[MAP_WIDTH][MAP_HEIGHT];
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
+
     int traps[MAP_WIDTH][MAP_HEIGHT];
     int falsefloor[MAP_WIDTH][MAP_HEIGHT];
+
+    void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
     Ball ball;
     int stairs [4] = {158,159,183,184};
     bool onstairs = false;
 
+    void UpdateRatones(Vector<Ratones>& ratones);
+
+    Stack<Vector2> path;
+    Stack<Vector2> pathback;
+    bool personaje_visto;
+    bool find_AStar = false;
+    queue<Vector2> routa;
+
+    bool visto_por_ojo;
 };
 
 #endif //SELDA_NIVEL_H

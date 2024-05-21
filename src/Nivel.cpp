@@ -4,12 +4,23 @@
 
 #include <fstream>
 #include "Nivel.h"
+#include "Algoritmos/AStar.h"
+#include "Algoritmos/Backtrack.h"
+#include "Enemy/Ojo_Espectral.h"
+#include <random>
+#include "math.h"
+#include <chrono>
+#include <ctime>
+
+std::chrono::time_point<std::chrono::system_clock> lastTrapCollisionTime;
+
 
 Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), screenHeight(screenHeight) {
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
     camera.zoom = 5.0f;
+
 
 }
 
@@ -36,6 +47,10 @@ void Nivel::LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MA
 void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIGHT], std::string type) {
 
     bool safeRoom = false;
+    auto currentTime = std::chrono::system_clock::now();
+
+
+    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTrapCollisionTime).count();
 
     // Calcula la posición proyectada de la bola
     Vector2 projectedPosition = { ball.GetPosition().x + deltaX, ball.GetPosition().y + deltaY };
@@ -68,9 +83,15 @@ void Nivel::LayerCollision(int deltaX, int deltaY, int layer[MAP_WIDTH][MAP_HEIG
                                 if (tileType == stairs[i]){
                                     onstairs=true;
                                 }
-
-
                             }
+                        }
+
+                        else if (type == "falsefloor"){
+                            ball.lives=0;
+                        }
+                        else if (type == "traps" && elapsedTime >= 2600){
+                            ball.DecreaseLives();
+                            lastTrapCollisionTime = currentTime;
                         }
                     }
                 }
@@ -130,4 +151,100 @@ void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
 }
 
 
+void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
+    AStar astar(wall);
+    Backtrack backtrack(wall);
+
+    if (!ball.GetSafeRoom()) {
+        for (auto& espectro : espectros) {
+            if (espectro.FollowBreadcrumb(ball.crums) || visto_por_ojo) {
+                personaje_visto = true;
+                find_AStar = true;
+                break;
+            } else {
+                personaje_visto = false;
+                find_AStar = false;
+            }
+        }
+
+        if (find_AStar) {
+            for (auto& espectro : espectros) {
+                int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+                int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+
+                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+
+                Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+                path.pop();  // Eliminar el primer nodo del camino si es necesario
+                espectro.FollowPath(path);
+                espectro.set_llego(false);
+            }
+        } else {
+            for (auto& espectro : espectros) {
+                int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+
+                int initial_x_grid = static_cast<int>(espectro.Get_inial_position().x / TILE_SIZE);
+                int initial_y_grid = static_cast<int>(espectro.Get_inial_position().y / TILE_SIZE);
+
+                if(enemy_x_grid == initial_x_grid && enemy_y_grid == initial_y_grid || espectro.halegado()){
+                    espectro.set_llego(true);
+
+                }
+                else{
+                    Stack<Vector2> pathback = backtrack.findPath(enemy_x_grid, enemy_y_grid, initial_x_grid, initial_y_grid);
+                    pathback.pop();  // Eliminar el primer nodo del camino si es necesario
+                    espectro.FollowPath(pathback);
+                }
+
+
+
+
+                // Verificar si el espectro ya llegó a su posición inicial alguna vez
+
+            }
+        }
+    } else {
+        personaje_visto = false;
+    }
+
+    // Modo patrulla si no se ve al personaje
+
+}
+
+
+void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
+
+     AStar aestar(wall);
+
+    for(auto& raton:ratones){
+
+        raton.MoveRandomly(wall);
+    }
+
+}
+
+
+void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
+    for(auto& ojo:ojos){
+
+        float dis = std::sqrt(std::pow(ojo.GetPosition().x - posision_player.x, 2) + std::pow(ojo.GetPosition().y - posision_player.y, 2));
+        if(dis<30){
+            visto_por_ojo = true;
+            ojo.Animacion_random();
+            break;
+        }
+        else{
+            visto_por_ojo = false;
+        }
+
+    }
+}
+
+
+void Nivel::ResetLevel(float BallXPos, float BallYPos) {
+    ball.setPosition({BallXPos, BallYPos});
+    ball.ResetLives();
+}
 

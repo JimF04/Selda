@@ -36,14 +36,23 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Nivel.cpp
         src/Hitbox.cpp
         src/Hitbox.h
-        src/Lives/Vidas.cpp
-        src/Lives/Vidas.h
         src/Objects/Objetos.cpp
         src/Objects/Objetos.h
         src/Objects/Jarrones.cpp
         src/Objects/Jarrones.h
         src/Objects/Cofres.cpp
         src/Objects/Cofres.h
+        src/Enemy/Espectro.cpp
+        src/Enemy/Espectro.h
+        src/DataStructures/Vector.h
+        src/Enemy/Ojo_Espectral.cpp
+        src/Enemy/Ojo_Espectral.h
+        src/Enemy/Ratones.cpp
+        src/Enemy/Ratones.h
+        src/Enemy/Chocobos.cpp
+        src/Enemy/Chocobos.h
+        src/Algoritmos/Backtrack.cpp
+        src/Algoritmos/Backtrack.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp glog::glog)

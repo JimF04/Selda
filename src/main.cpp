@@ -37,8 +37,7 @@ int main(int argc, char* argv[]) {
         nivelActual->Draw();
 
 
-
-        if (nivelActual->CheckWinCondition()){
+        if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_SPACE)){
             delete nivelActual;
 
             nivelActualIndex++; // Avanzar al siguiente nivel

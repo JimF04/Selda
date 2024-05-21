@@ -7,8 +7,6 @@
 
     #include "raylib.h"
     #include <vector>
-
-    #include "Lives/Vidas.h"
     #include "raymath.h"
     #include "Hitbox.h"
     #include "Enemy/Enemy.h"
@@ -41,23 +39,28 @@
         int frameCounter;
         int currentFrame;
         int frameSpeed;
+        int lives;
         Texture2D spritesheet;
         Rectangle sourceRec;
         int time_for_crums;
         int GetLives() const;
         void DecreaseLives();
         bool CheckCollisionWithEnemy(const  Enemy& enemy) const;
-        void ResetLives();
-        int GetRemainingLives() const;
+        bool CheckDeath();
+        int ResetLives();
+        void DrawHearts(Camera2D camera) const;
+        void IncreaseLives();
+        Texture2D heartTexture;
+
+
 
     private:
         Texture2D sprite;
         Vector2 position;
         int radius;
         Color color;
-        int lives;
-        static const int INNITIAL_LIVES = 5;
-        Vidas vidas;
+
+        //Vidas vidas;
     };
 
 

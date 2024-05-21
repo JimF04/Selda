@@ -8,6 +8,7 @@
 #include "raylib.h"
 #include <json/json.h>
 #include <glog/logging.h>
+#include "raymath.h"
 
 #define TILE_SIZE 16
 
@@ -24,9 +25,9 @@ class Mapa {
 public:
     Mapa();
     void DrawMap(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture);
-    void DrawTile(int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture);
-    void DrawMapAtPosition(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture, Vector2 center, float innerRadius, float outerRadius);
+    void DrawTile( int pos_x, int pos_y, int tile_x, int tile_y, texture_asset texture);
     Texture2D textures[MAX_TEXTURES];
+    void DrawMapAtPosition(int matriz[][MAP_HEIGHT], int tileSetSize, texture_asset texture, Vector2 center, float innerRadius, float outerRadius);
 
 private:
     int screenWidth;
