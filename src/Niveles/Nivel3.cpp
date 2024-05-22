@@ -15,6 +15,7 @@ Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
+
     LoadMap("../Level3.json", 0, floor);
     LoadMap("../Level3.json", 1, saferoom);
     LoadMap("../Level3.json", 2, wall);
@@ -24,6 +25,24 @@ Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     miniMapTexture = LoadTexture("../assets/Level3.png");
     levelMusic = LoadMusicStream("../assets/lvl3_music.mp3");
     PlayMusicStream(levelMusic);
+
+//===========Objetos==============//
+    for(int i = 0;i<3;i++){
+        cofres.push_back(Cofres());
+    }
+    cofres[0].setPosition({14,39});
+    cofres[1].setPosition({4,15});
+    cofres[2].setPosition({51,9});
+
+
+
+    for(int i = 0; i < 3;i++){
+        jarrones.push_back(Jarrones());
+    }
+
+    jarrones[0].setPosition({53,26});
+    jarrones[1].setPosition({72,46});
+    jarrones[2].setPosition({41,15});
 }
 
 void Nivel3::Update() {

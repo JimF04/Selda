@@ -25,6 +25,28 @@ Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     levelMusic = LoadMusicStream("../assets/lvl4_music.mp3");
     PlayMusicStream(levelMusic);
 
+
+
+
+    for(int i = 0;i<3;i++){
+        cofres.push_back(Cofres());
+    }
+    cofres[0].setPosition({24,5});
+    cofres[1].setPosition({72,12});
+    cofres[2].setPosition({45,26});
+
+
+
+    for(int i = 0; i < 3;i++){
+        jarrones.push_back(Jarrones());
+    }
+
+    jarrones[0].setPosition({23,23});
+    jarrones[1].setPosition({72,29});
+    jarrones[2].setPosition({13,6});
+
+
+
 }
 
 void Nivel4::Update() {
