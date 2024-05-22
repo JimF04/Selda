@@ -250,7 +250,7 @@ void Nivel::UpdatesAzules(Vector<Espectro> &azules, Vector2 player_pos) {
 
 void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
 
-     AStar aestar(wall);
+    AStar aestar(wall);
 
     for(auto& raton:ratones){
 
@@ -286,6 +286,11 @@ void Nivel::DrawChestCounter() {
     DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
 }
 
+void Nivel::DrawPuntuationCounter(){
+    Vector2  drawpos = {-115 + camera.target.x, -40 + camera.target.y};
+    DrawText(FormatText("Puntuacion: %d",contadorPuntuacion),drawpos.x,drawpos.y,10,WHITE);
+}
+
 void Nivel::UpdateChests(Vector<Cofres>& cofres) {
     for(auto& cofre : cofres){
         bool cofreDetectado = false;
@@ -295,6 +300,7 @@ void Nivel::UpdateChests(Vector<Cofres>& cofres) {
                 cofre.UpdateAnimation();
                 cofre.drawTile();
                 contadorCofres++;
+                contadorPuntuacion+= 50;
                 cout<<contadorCofres;
                 cofreDetectado = true;
                 cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
@@ -327,9 +333,7 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
 }
 
 
-
-
-
-
-
+//
+// Created by winjimmy on 5/3/2024.
+//
 

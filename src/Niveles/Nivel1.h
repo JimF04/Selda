@@ -40,8 +40,8 @@ public:
         }
         return winCondition;
     }
+    int puntuacionAcumulada = 0;
 
-    void DrawCounter();
 
 
 private:
@@ -55,6 +55,9 @@ private:
     Vector<Ojo_Espectral> ojos_espectrales;
 
     void DrawAStar(Stack<Vector2> path);
+
+
+
 
     Hitbox hitbox;
 };

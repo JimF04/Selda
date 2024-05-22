@@ -25,6 +25,7 @@ public:
     Texture2D miniMapTexture;
     Texture2D imageTexture;
     int contadorCofres = 0;
+    int contadorPuntuacion = 0;
 
     // Metodos de la clase
 
@@ -42,6 +43,7 @@ public:
     void UpdateEspectros(Vector<Espectro>& espectros);
 
     void DrawChestCounter();
+    void DrawPuntuationCounter();
 
     void UpdateRatones(Vector<Ratones>& ratones);
     void UpdatesAzules(Vector<Espectro> &azules, Vector2 vector2);

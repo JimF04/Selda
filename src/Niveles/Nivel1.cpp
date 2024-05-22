@@ -1,3 +1,4 @@
+
 //
 // Created by winjimmy on 5/3/2024.
 //
@@ -124,7 +125,7 @@ void Nivel1::Update() {
     }
 
     if (IsKeyDown(KEY_W))
-    deltaY -= speed;
+        deltaY -= speed;
     if (IsKeyDown(KEY_S))
         deltaY += speed;
     if (IsKeyDown(KEY_A))
@@ -155,6 +156,8 @@ void Nivel1::Update() {
             if(IsKeyDown(KEY_L)){
                 cout<<"Collisioned with Rat";
                 ball.Atacar();
+                contadorPuntuacion += 15;
+                cout<<contadorPuntuacion;
                 raton.setPosition({-1000,1000});
             }
         }
@@ -166,9 +169,12 @@ void Nivel1::Update() {
         float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
         if(distance < ball.GetRadius() + 10){
             if(IsKeyDown(KEY_L)){
-                cout<<"Collisioned with Rat";
+                cout<<"Collisioned with Espectro";
                 ball.Atacar();
+                contadorPuntuacion += 15;
+                cout<<contadorPuntuacion;
                 espectro.setPosition({-1000,1000});
+
             }
         }
     }
@@ -179,9 +185,10 @@ void Nivel1::Update() {
         float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
         if(distance < ball.GetRadius() + 10){
             if(IsKeyDown(KEY_L)){
-                cout<<"Collisioned with Rat";
+                cout<<"Collisioned with Ojo espectral";
                 ball.Atacar();
                 ojo_espectral.setPosition({-1000,1000});
+                contadorPuntuacion += 15;
             }
         }
     }
@@ -231,6 +238,7 @@ void Nivel1::Draw() {
     }
     DrawChestCounter();
 
+
     for(auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
         jarron.drawTile();
     }
@@ -240,14 +248,17 @@ void Nivel1::Draw() {
     for (auto& espectro : espectros) {
         espectro.Draw();
     }
+    DrawPuntuationCounter();
 
     for (auto& raton : ratones) {
         raton.Draw();
     }
+    DrawPuntuationCounter();
 
     for (auto& ojo_espectral : ojos_espectrales) {
         ojo_espectral.Draw();
     }
+    DrawPuntuationCounter();
 
     //========================Otros========================
     ball.Draw();
