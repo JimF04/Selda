@@ -15,6 +15,17 @@
 
 #include <queue>
 
+#include <ctime>
+
+enum Direction {
+    RIGHT,
+    LEFT,
+    DOWN,
+    UP,
+    IDLE
+};
+
+
 class Enemy
 {
 public:
@@ -72,6 +83,16 @@ public:
     void setDamage(int damage){
         this->damage = damage;
     };
+
+
+    Direction currentDirection;
+    float lastDirectionChangeTime;
+    float changeInterval = 1.0f;
+
+    void changeDirection(Direction newDirection);
+    void updateDir(float deltaTime);
+
+
 
 
 protected:

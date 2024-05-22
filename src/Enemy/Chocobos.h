@@ -14,6 +14,11 @@ public:
         spritesheet = LoadTexture("../assets/enemyPack/chocobo.png");
     };
 
+    void bresenham(Vector2 playerPos, int layer[MAP_WIDTH][MAP_HEIGHT]);
+
+private:
+
+
 };
 
 

@@ -50,6 +50,9 @@ public:
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
+    void Vision(Enemy enemy);
+    bool personaje_visto;
+
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;
@@ -70,11 +73,11 @@ protected:
 
     Stack<Vector2> path;
     Stack<Vector2> pathback;
-    bool personaje_visto;
     bool find_AStar = false;
     queue<Vector2> routa;
 
     bool visto_por_ojo;
+    bool visto_por_enemigos;
 
     bool collisionDetected = false;
     double lastCollisionDetectionTime;

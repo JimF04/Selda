@@ -17,9 +17,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     hitbox = Hitbox();
     ball.setPosition({90,160});
     lastCollisionDetectionTime = GetTime();
-    camera.zoom = 1.0f;
-
-//camera.zoom = 1.0f;
+    //camera.zoom = 1.0f;
 
 //==================Objetos==================
     for (int i = 0; i < 3; i++){
@@ -45,8 +43,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     espectros.push_back(Espectro("azul"));
 
     espectros[3].setPosition({17,36});
-
-    camera.zoom = 1.0f;
 
 
     espectros[0].setPosition({17,36});
@@ -90,6 +86,10 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ojos_espectrales[0].setPosition({56,3});
     ojos_espectrales[1].setPosition({68,39});
 
+
+    chocobos.push_back(Chocobos());
+    chocobos[0].setPosition({10, 21});
+
 //==========Matrices de colisiones================
     LoadMap("../Level1.json", 0, floor);
     LoadMap("../Level1.json", 1, saferoom);
@@ -124,7 +124,7 @@ void Nivel1::Update() {
     }
 
     if (IsKeyDown(KEY_W))
-    deltaY -= speed;
+        deltaY -= speed;
     if (IsKeyDown(KEY_S))
         deltaY += speed;
     if (IsKeyDown(KEY_A))
@@ -160,6 +160,12 @@ void Nivel1::Update() {
     UpdateRatones(ratones);
     UpdateOjos(ojos_espectrales, ball.GetPosition());
     UpdatesAzules(espectros, ball.GetPosition());
+
+    chocobos[0].bresenham(ball.GetPosition(), wall);
+
+//    for (auto& chocobo : chocobos) {
+//        Vision(chocobo);
+//    }
 
     //==========Updates de los objetos================
 
@@ -206,6 +212,10 @@ void Nivel1::Draw() {
 
     for (auto& ojo_espectral : ojos_espectrales) {
         ojo_espectral.Draw();
+    }
+
+    for (auto& chocobo : chocobos) {
+        chocobo.Draw();
     }
 
     //========================Otros========================

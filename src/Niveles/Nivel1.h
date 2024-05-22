@@ -20,6 +20,7 @@
 #include "../Enemy/Espectro.h"
 #include "../Enemy/Ratones.h"
 #include "../Enemy/Ojo_Espectral.h"
+#include "../Enemy/Chocobos.h"
 
 class Nivel1 : public Nivel {
 public:
@@ -43,7 +44,6 @@ public:
 
     void DrawCounter();
 
-
 private:
 
     Vector<Espectro> espectros;
@@ -53,6 +53,7 @@ private:
 
     Vector<Ratones> ratones;
     Vector<Ojo_Espectral> ojos_espectrales;
+    Vector<Chocobos> chocobos;
 
     void DrawAStar(Stack<Vector2> path);
 

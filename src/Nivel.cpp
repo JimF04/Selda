@@ -171,7 +171,7 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
     if (!ball.GetSafeRoom()) {
         for (auto& espectro : espectros) {
-            if (espectro.FollowBreadcrumb(ball.crums) || visto_por_ojo) {
+            if (espectro.FollowBreadcrumb(ball.crums) || visto_por_ojo || visto_por_enemigos) {
                 personaje_visto = true;
                 find_AStar = true;
                 break;
@@ -218,9 +218,6 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
                     }
 
                 }
-
-
-                // Verificar si el espectro ya llegó a su posición inicial alguna vez
 
             }
         }
@@ -322,6 +319,72 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
             else if (!IsKeyDown(KEY_L) && jarron.abierto) {
                 jarronDetectado = false;
             }
+        }
+    }
+}
+
+void Nivel::Vision(Enemy enemy){
+
+    int x1 = static_cast<int>(enemy.GetPosition().x) / 16;
+    int y1 = static_cast<int>(enemy.GetPosition().y) / 16;
+    int x0 = static_cast<int>(ball.GetPosition().x) / 16;
+    int y0 = static_cast<int>(ball.GetPosition().y) / 16;
+
+    int maxDistance = 3; // Distancia máxima en tiles que el enemigo puede ver
+    switch (enemy.currentDirection) {
+        case RIGHT:
+            if (x1 < x0 && abs(y1 - y0) <= (x0 - x1) && abs(x1 - x0) <= maxDistance) {
+                visto_por_enemigos = true;
+            }
+            break;
+        case LEFT:
+            if (x1 > x0 && abs(y1 - y0) <= (x1 - x0) && abs(x1 - x0) <= maxDistance) {
+                visto_por_enemigos = true;
+            }
+            break;
+        case DOWN:
+        case IDLE:
+            if (y1 < y0 && abs(x1 - x0) <= (y0 - y1) && abs(y1 - y0) <= maxDistance) {
+                visto_por_enemigos = true;
+            }
+            break;
+        case UP:
+            if (y1 > y0 && abs(x1 - x0) <= (y1 - y0) && abs(y1 - y0) <= maxDistance) {
+                visto_por_enemigos = true;
+            }
+            break;
+    }
+
+    // Si el enemigo no puede ver al jugador o está más allá de la distancia máxima, salir de la función
+    if (!visto_por_enemigos) {
+        return;
+    }
+
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+
+    int err = dx - dy;
+
+    while (x0 != x1 || y0 != y1) {
+        // Check if the current position has an obstacle
+        if (wall[x0][y0] != 0) {
+            //std::cout << "No ve al personaje" << std::endl;
+            visto_por_enemigos = false;
+
+            return;
+        }
+
+        int e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            x0 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y0 += sy;
         }
     }
 }

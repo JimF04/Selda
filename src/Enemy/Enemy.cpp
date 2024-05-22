@@ -31,12 +31,14 @@ Enemy::Enemy(){
 
     initial_position = position;
 
-
-
+    currentDirection = IDLE;
 
     looping = true;
-     llego = false;
+    llego = false;
     const float PATROL_RADIUS = 2.0f * TILE_SIZE;
+
+    lastDirectionChangeTime = 0.0f;
+    srand(time(NULL));
 
 
 
@@ -53,24 +55,29 @@ void Enemy::Move(int deltaX, int deltaY) {
 
     // Determine which animation to play based on movement
     if (deltaX > 0) {
+        currentDirection = RIGHT;
         // Moving right
         sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
         // Reset any previous flips
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaX < 0) {
+        currentDirection = LEFT;
         // Moving left
         sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
         // Flip the sprite horizontally
         sourceRec.width = -FRAME_WIDTH; // Invert the width
     } else if (deltaY > 0) {
+        currentDirection = DOWN;
         // Moving down
         sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
+        currentDirection = UP;
         // Moving up
         sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
+        currentDirection = IDLE;
         // No movement, idle animation
         sourceRec.y = 0; // Row 1: Idle
         sourceRec.width = FRAME_WIDTH; // Reset the width
@@ -112,24 +119,29 @@ void Enemy::moveToTile(int targetX, int targetY, float pixel) {
 
     // Determine which animation to play based on movement
     if (deltaX > 0) {
+        currentDirection = RIGHT;
         // Moving right
         sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
         // Reset any previous flips
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaX < 0) {
+        currentDirection = LEFT;
         // Moving left
         sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
         // Flip the sprite horizontally
         sourceRec.width = -FRAME_WIDTH; // Invert the width
     } else if (deltaY > 0) {
+        currentDirection = DOWN;
         // Moving down
         sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
+        currentDirection = UP;
         // Moving up
         sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
+        currentDirection = IDLE;
         // No movement, idle animation
         sourceRec.y = 0; // Row 1: Idle
         sourceRec.width = FRAME_WIDTH; // Reset the width
@@ -187,7 +199,6 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
     // Obtiene la última "crumb" (últimas coordenadas del jugador)
 
-    // Imprime la distancia
     if(distanceToPlayer<40 && distanceToPlayer>20){
         // Calcula la dirección hacia la "crumb"
         float directionX = target.x - position.x;
@@ -334,4 +345,45 @@ void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
     }
 }
 
+
+void Enemy::changeDirection(Direction newDirection) {
+    currentDirection = newDirection;
+
+    // Actualizar el sprite según la nueva dirección
+    switch (currentDirection) {
+        case RIGHT:
+            sourceRec.y = FRAME_HEIGHT * 3; // Fila 4: Caminar de lado
+            sourceRec.width = FRAME_WIDTH;  // Resetear el ancho
+            break;
+        case LEFT:
+            sourceRec.y = FRAME_HEIGHT * 3; // Fila 4: Caminar de lado
+            sourceRec.width = -FRAME_WIDTH; // Invertir el ancho
+            break;
+        case DOWN:
+            sourceRec.y = FRAME_HEIGHT * 2; // Fila 3: Caminar hacia adelante
+            sourceRec.width = FRAME_WIDTH;  // Resetear el ancho
+            break;
+        case UP:
+            sourceRec.y = FRAME_HEIGHT * 4; // Fila 3: Caminar hacia adelante
+            sourceRec.width = FRAME_WIDTH;  // Resetear el ancho
+            break;
+        case IDLE:
+            sourceRec.y = 0; // Fila 1: Idle
+            sourceRec.width = FRAME_WIDTH; // Resetear el ancho
+            break;
+    }
+}
+
+void Enemy::updateDir(float deltaTime) {
+    lastDirectionChangeTime += deltaTime;
+
+    if (lastDirectionChangeTime >= changeInterval) {
+        // Cambiar la dirección aleatoriamente
+        Direction newDirection = static_cast<Direction>(rand() % 4); // Suponiendo que hay 4 direcciones
+        changeDirection(newDirection);
+
+        // Resetear el tiempo acumulado
+        lastDirectionChangeTime = 0.0f;
+    }
+}
 
