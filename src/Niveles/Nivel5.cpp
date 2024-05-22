@@ -3,13 +3,15 @@
 //
 
 #include "Nivel5.h"
-
+#include "../Algoritmos/AStar.h"
 
 
 Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 592, 704 });
+    boss = Boss();
+    boss.setPosition({36,24});
 
     LoadMap("../BossLevel.json", 0, floor);
     LoadMap("../BossLevel.json", 1, saferoom);
@@ -67,6 +69,20 @@ void Nivel5::Update() {
     //==============Update de los enemigos===============
 
 
+    AStar astar(wall);
+    int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+    int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+
+    int enemy_x_grid = static_cast<int>(boss.GetPosition().x / TILE_SIZE);
+    int enemy_y_grid = static_cast<int>(boss.GetPosition().y / TILE_SIZE);
+
+    cout << ball_x_grid << " " << ball_y_grid << endl;
+    cout << enemy_x_grid << " " << enemy_y_grid << endl;
+
+    Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+    path.pop();  // Eliminar el primer nodo del camino si es necesario
+    boss.FollowPath(path);
+
     //==============Update de los objetos===============
     UpdateChests(cofres);
     UpdateJars(jarrones);
@@ -85,6 +101,7 @@ void Nivel5::Draw() {
     DrawMiniMap();
     ball.Draw();
     ball.DrawHearts(camera);
+    boss.Draw();
 
 
     //===========Objetos================

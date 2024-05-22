@@ -16,6 +16,7 @@
 #include "Enemy/Ojo_Espectral.h"
 #include "Objects/Cofres.h"
 #include "Objects/Jarrones.h"
+#include "Enemy/Boss.h"
 
 class Nivel {
 public:
@@ -39,6 +40,7 @@ public:
     void DrawMiniMap();
     void ResetLevel(float BallXPos, float BallYPos);
 
+    void UpdateBoss(Boss boss);
     void UpdateEspectros(Vector<Espectro>& espectros);
 
     void DrawChestCounter();

@@ -64,7 +64,8 @@ void Enemy::Move(int deltaX, int deltaY) {
         sourceRec.width = -FRAME_WIDTH; // Invert the width
     } else if (deltaY > 0) {
         // Moving down
-        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
         // Moving up
@@ -210,7 +211,6 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
     }
 }
-
 
 void Enemy::Ataque(){
     sourceRec.y = FRAME_HEIGHT*5;

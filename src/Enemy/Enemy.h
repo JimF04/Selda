@@ -38,7 +38,7 @@ public:
     int frameCounter;
     int frameSpeed;
     int currentFrame;
-    void UpdateAnimation();
+    virtual void UpdateAnimation();
     virtual bool GetCollisionWithHitbox(const Hitbox& hitbox) const;
     void SetEliminated(bool eliminated);
     bool IsEliminated() const;

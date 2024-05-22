@@ -11,6 +11,7 @@
 #include "../ball.h"
 #include "../Enemy/Enemy.h"
 #include "../Nivel.h"
+#include "../Enemy/Boss.h"
 
 
 
@@ -20,6 +21,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    Boss boss;
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {
