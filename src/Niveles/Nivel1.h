@@ -44,6 +44,7 @@ public:
     void DrawCounter();
 
 
+
 private:
 
     Vector<Espectro> espectros;
@@ -53,6 +54,8 @@ private:
 
     Vector<Ratones> ratones;
     Vector<Ojo_Espectral> ojos_espectrales;
+
+
 
     void DrawAStar(Stack<Vector2> path);
 

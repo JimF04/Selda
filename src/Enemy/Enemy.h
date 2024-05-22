@@ -73,6 +73,10 @@ public:
         this->damage = damage;
     };
 
+    bool muerto;
+    int ataques;
+    int dutacion;
+
 
 protected:
     int radius;

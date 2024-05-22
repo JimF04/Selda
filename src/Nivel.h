@@ -49,6 +49,7 @@ public:
     void UpdateChests(Vector<Cofres>& cofres);
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
+    Vector<Vector3> Genes;
 
 protected:
     // Variables comunes a todos los niveles
@@ -82,6 +83,7 @@ protected:
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
 
+    void Dar_genes(Vector<Espectro> espectros);
 };
 
 #endif //SELDA_NIVEL_H

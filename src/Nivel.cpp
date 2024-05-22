@@ -19,7 +19,7 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
-    camera.zoom = 5.0f;
+    camera.zoom = 20.0f;
 
 
 }
@@ -324,6 +324,48 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
             }
         }
     }
+}
+
+void Nivel::Dar_genes(Vector<Espectro> espectros){
+    // Verificar que el vector de genes no esté vacío
+    if (Genes.empty()) {
+        std::cerr << "Error: El vector de genes está vacío." << std::endl;
+        throw std::runtime_error("El vector de genes está vacío.");
+    }
+
+    // Verificar que el vector de espectros no esté vacío
+    if (espectros.empty()) {
+        std::cerr << "Error: El vector de espectros está vacío." << std::endl;
+        throw std::runtime_error("El vector de espectros está vacío.");
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 2); // Distribución para seleccionar índices de genes (0, 1, 2)
+
+    // Iterar sobre cada espectro y asignar un valor aleatorio de genes a un atributo aleatorio
+    for (auto& espectro : espectros) {
+//        int random_index = dist(gen);
+//        std::cout << "Índice aleatorio generado: " << random_index << std::endl;
+
+//        if (random_index < 0 || random_index >= Genes.size) {
+//            std::cerr << "Error: Índice de gene aleatorio fuera de rango." << std::endl;
+//            throw std::out_of_range("Índice de gene aleatorio fuera de rango.");
+//        }
+
+        Vector3 gen = Genes[1];
+
+        // Debugging: imprimir el gene seleccionado y los valores asignados
+        std::cout << "Asignando gen: (" << gen.x << ", " << gen.y << ", " << gen.z << ") al espectro" << std::endl;
+
+        espectro.speed = gen.x;
+        espectro.lives = gen.y;
+        espectro.damage = gen.z;
+
+        std::cout << "Asignación completada para el espectro." << std::endl;
+    }
+
+    std::cout << "Función Dar_genes completada." << std::endl;
 }
 
 
