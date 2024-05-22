@@ -85,6 +85,21 @@ void Nivel2::Update() {
         keyKPressed = false;
     }
 
+    // ======================Eliminar Enemigos========================//
+
+    //ESPECTRO ROJO:
+
+    for(auto& espectro_rojo:espectroRojo){
+        float distance = Vector2Distance(ball.GetPosition(),espectro_rojo.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Rat";
+                ball.Atacar();
+                espectro_rojo.setPosition({-1000,1000});
+            }
+        }
+    }
+
     LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");

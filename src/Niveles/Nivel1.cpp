@@ -17,7 +17,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     hitbox = Hitbox();
     ball.setPosition({90,160});
     lastCollisionDetectionTime = GetTime();
-    camera.zoom = 1.0f;
+//    camera.zoom = 1.0f;
 
 //camera.zoom = 1.0f;
 
@@ -46,7 +46,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     espectros[3].setPosition({17,36});
 
-    camera.zoom = 1.0f;
+//    camera.zoom = 1.0f;
 
 
     espectros[0].setPosition({17,36});
@@ -145,6 +145,47 @@ void Nivel1::Update() {
     if (IsKeyUp(KEY_K)) {
         keyKPressed = false;
     }
+
+    //==================Eliminar a los enemigos=======================//
+
+    //RATA:
+    for(auto& raton:ratones){
+        float distance = Vector2Distance(ball.GetPosition(),raton.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Rat";
+                ball.Atacar();
+                raton.setPosition({-1000,1000});
+            }
+        }
+    }
+
+    //ESPECTROS:
+
+    for(auto& espectro:espectros){
+        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Rat";
+                ball.Atacar();
+                espectro.setPosition({-1000,1000});
+            }
+        }
+    }
+
+    //OJOS ESPECTRALES:
+
+    for(auto& ojo_espectral:ojos_espectrales){
+        float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Rat";
+                ball.Atacar();
+                ojo_espectral.setPosition({-1000,1000});
+            }
+        }
+    }
+
 
     LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
