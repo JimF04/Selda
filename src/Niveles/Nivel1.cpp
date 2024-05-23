@@ -55,8 +55,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route1.push({17,44});
     route1.push({17,36});
     espectros[0].setRoute(route1);
-
-
     espectros[3].setPosition({17,36});
 
 

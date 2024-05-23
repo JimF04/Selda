@@ -54,6 +54,8 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Objects/torch.h
         src/Enemy/Boss.cpp
         src/Enemy/Boss.h
+        src/Enemy/Slime.cpp
+        src/Enemy/Slime.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp glog::glog)

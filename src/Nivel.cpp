@@ -169,6 +169,8 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
     }
 
+
+
     if (!ball.GetSafeRoom()) {
         for (auto& espectro : espectros) {
             if (espectro.FollowBreadcrumb(ball.crums) || visto_por_ojo) {
@@ -229,6 +231,41 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
     }
 
     // Modo patrulla si no se ve al personaje
+
+}
+
+void Nivel::UpdateSlimes(Vector<Slime> &slimes){
+
+    AStar astar(wall);
+    Backtrack backtrack(wall);
+
+    for(auto& slimes: slimes){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+
+            if (ball.CheckCollisionWithEnemy(slimes)) {
+                ball.DecreaseLives(slimes.getDamage());
+
+                collisionDetected = true;
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
+    }
+
+            for (auto& Slimes : slimes) {
+                    int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+                    int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+
+                    int enemy_x_grid = static_cast<int>(Slimes.GetPosition().x / TILE_SIZE);
+                    int enemy_y_grid = static_cast<int>(Slimes.GetPosition().y / TILE_SIZE);
+
+                    Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
+                    path.pop();  // Eliminar el primer nodo del camino si es necesario
+                    Slimes.FollowPath(path);
+                    Slimes.set_llego(false);
+
+            }
 
 }
 

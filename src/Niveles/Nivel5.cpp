@@ -12,6 +12,12 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ball.setPosition({ 592, 704 });
     boss = Boss();
     boss.setPosition({36,24});
+    boss.SpawnSlime(slimes);
+    boss.SpawnSlime(slimes);
+    boss.SpawnSlime(slimes);
+
+
+    camera.zoom = 1.0f;
 
     LoadMap("../BossLevel.json", 0, floor);
     LoadMap("../BossLevel.json", 1, saferoom);
@@ -76,14 +82,11 @@ void Nivel5::Update() {
     int enemy_x_grid = static_cast<int>(boss.GetPosition().x / TILE_SIZE);
     int enemy_y_grid = static_cast<int>(boss.GetPosition().y / TILE_SIZE);
 
-    cout << ball_x_grid << " " << ball_y_grid << endl;
-    cout << enemy_x_grid << " " << enemy_y_grid << endl;
-
     Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
-    path.pop();  // Eliminar el primer nodo del camino si es necesario
+    path.pop();
     boss.FollowPath(path);
 
-    //==============Update de los objetos===============
+
     UpdateChests(cofres);
     UpdateJars(jarrones);
 }
@@ -102,6 +105,13 @@ void Nivel5::Draw() {
     ball.Draw();
     ball.DrawHearts(camera);
     boss.Draw();
+
+
+    //===========Slimes================
+    for (auto& slime : slimes) {
+        slime.Draw();
+
+    }
 
 
     //===========Objetos================

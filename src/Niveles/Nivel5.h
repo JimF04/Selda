@@ -22,6 +22,7 @@ public:
     virtual void Draw() override;
     Music levelMusic;
     Boss boss;
+    Vector<Slime> slimes;
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {

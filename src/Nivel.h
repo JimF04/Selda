@@ -17,6 +17,7 @@
 #include "Objects/Cofres.h"
 #include "Objects/Jarrones.h"
 #include "Enemy/Boss.h"
+#include "Enemy/Slime.h"
 
 class Nivel {
 public:
@@ -51,7 +52,7 @@ public:
     void UpdateChests(Vector<Cofres>& cofres);
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
-
+    void UpdateSlimes(Vector<Slime> &slimes);
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;
@@ -83,6 +84,7 @@ protected:
 
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
+
 
 };
 
