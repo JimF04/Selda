@@ -8,8 +8,6 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     boss = Boss();
     boss.setPosition({36,24});
 
-    //camera.zoom = 1.0f;
-
     LoadMap("../BossLevel.json", 0, floor);
     LoadMap("../BossLevel.json", 1, saferoom);
     LoadMap("../BossLevel.json", 2, wall);
@@ -22,12 +20,17 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 }
 
 void Nivel5::Update() {
+    double currentTime = GetTime();
     static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
+    static double lastAttackTime = 0.0;
+    static double lastBossAttackTime = 0.0;
+    float distanceToPlayer = Vector2Distance(boss.GetPosition(), ball.GetPosition());
+    float attackRangeToPlayer = 18.0f;
 
     if (ball.lives <= 0) {
         Nivel::ResetLevel(592, 704);
@@ -46,12 +49,35 @@ void Nivel5::Update() {
         deltaX -= speed;
     if (IsKeyDown(KEY_D))
         deltaX += speed;
-    if (IsKeyDown(KEY_L))
+    if (IsKeyDown(KEY_L)) {
         ball.Atacar();
+
+        if (currentTime - lastAttackTime >= 1.0) {
+            ball.Atacar();
+
+            float distanceToBoss = Vector2Distance(ball.GetPosition(), boss.GetPosition());
+            float attackRangeToBoss = 30.0f;
+
+            if (distanceToBoss < attackRangeToBoss) {
+                boss.DecreaseBossLives();
+            }
+
+            lastAttackTime = currentTime;
+        }
+        for (size_t i = 0; i < slimes.getSize(); ++i) {
+            float distance = Vector2Distance(ball.GetPosition(), slimes[i].GetPosition());
+            float attackRange = 30.0f;
+
+            if (distance < attackRange) {
+                // Establecer la posición del slime al punto específico
+                slimes[i].setPosition({1200, -1100});
+            }
+        }
+
+    }
 
     if (IsKeyDown(KEY_K) && !keyKPressed) {
         ball.Defender();
-        boss.DecreaseBossLives();
         keyKPressed = true;
     }
 
@@ -80,19 +106,31 @@ void Nivel5::Update() {
     UpdateSlimes(slimes);
     UpdateChests(cofres);
 
-    // Generar slime cada 5 segundos
-    double currentTime = GetTime();
-    if (currentTime - lastSlimeSpawnTime >= 5.0f) {
+
+    if (distanceToPlayer < attackRangeToPlayer) {
+        double currentTime = GetTime();
+        if (currentTime - lastBossAttackTime >= 2.0) {
+            // Reducir una vida al jugador
+            ball.DecreaseLives(2);
+            lastBossAttackTime = currentTime;
+        }
+    }
+
+
+
+    if (currentTime - lastSlimeSpawnTime >= GetRandomValue(5, 8) && boss.GetBossLives() > 0) {
         boss.SpawnSlime(slimes);
 
-        // Establecer la posición de los slimes generados en la posición del jefe
         for (int i = 0; i < slimes.getSize(); ++i) {
             if (i == slimes.getSize() - 1) { // Solo para el último slime
-                slimes[i].setPosition({boss.GetPosition().x / 16+1, boss.GetPosition().y / 16-1});
+                slimes[i].setPosition({boss.GetPosition().x / 16 + 1, boss.GetPosition().y / 16 - 1});
             }
         }
+        lastSlimeSpawnTime = currentTime;
+    }
 
-        lastSlimeSpawnTime = currentTime; // Actualizar el tiempo del último slime spawn
+    if(boss.GetBossLives() == 0){
+        boss.setPosition({1000,-1100});
     }
 }
 
@@ -118,16 +156,16 @@ void Nivel5::Draw() {
     float healthBarWidth = 150.0f;
     float healthBarHeight = 5.0f;
     Vector2 healthBarPosition = { ball.GetPosition().x - healthBarWidth / 2, ball.GetPosition().y + 70 };
-    float healthPercentage = static_cast<float>(boss.GetBossLives()) / 15; //
+    float healthPercentage = static_cast<float>(boss.GetBossLives()) / 25; //
 
 
     DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth, healthBarHeight, BLACK);
     DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
 
-    const char* bossName = "Sir Bloop, Scouge of Pain:";
+    const char* bossName = "SunderBloop the Shatterer:";
     int fontSize = 10; // Font size
     int textWidth = MeasureText(bossName, fontSize); // Measure the text width to center it
-    Vector2 textPosition = { ball.GetPosition().x - healthBarWidth / 2 + 10, ball.GetPosition().y + 60 };
+    Vector2 textPosition = { ball.GetPosition().x - healthBarWidth / 2 + 4, ball.GetPosition().y + 60 };
     DrawText(bossName, textPosition.x, textPosition.y, fontSize, WHITE);
 
 
