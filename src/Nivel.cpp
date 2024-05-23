@@ -326,17 +326,11 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
     }
 }
 
-void Nivel::Dar_genes(Vector<Espectro> espectros){
+void Nivel::Dar_genes(Vector<Espectro> *espectros){
     // Verificar que el vector de genes no esté vacío
     if (Genes.empty()) {
         std::cerr << "Error: El vector de genes está vacío." << std::endl;
         throw std::runtime_error("El vector de genes está vacío.");
-    }
-
-    // Verificar que el vector de espectros no esté vacío
-    if (espectros.empty()) {
-        std::cerr << "Error: El vector de espectros está vacío." << std::endl;
-        throw std::runtime_error("El vector de espectros está vacío.");
     }
 
     std::random_device rd;
@@ -344,16 +338,16 @@ void Nivel::Dar_genes(Vector<Espectro> espectros){
     std::uniform_int_distribution<> dist(0, 2); // Distribución para seleccionar índices de genes (0, 1, 2)
 
     // Iterar sobre cada espectro y asignar un valor aleatorio de genes a un atributo aleatorio
-    for (auto& espectro : espectros) {
-//        int random_index = dist(gen);
-//        std::cout << "Índice aleatorio generado: " << random_index << std::endl;
+    for (auto& espectro : *espectros) {
+        int random_index = dist(gen);
+        std::cout << "Índice aleatorio generado: " << random_index << std::endl;
 
-//        if (random_index < 0 || random_index >= Genes.size) {
-//            std::cerr << "Error: Índice de gene aleatorio fuera de rango." << std::endl;
-//            throw std::out_of_range("Índice de gene aleatorio fuera de rango.");
-//        }
+        if (random_index < 0 || random_index >= Genes.size) {
+            std::cerr << "Error: Índice de gene aleatorio fuera de rango." << std::endl;
+            throw std::out_of_range("Índice de gene aleatorio fuera de rango.");
+        }
 
-        Vector3 gen = Genes[1];
+        Vector3 gen = Genes[random_index];
 
         // Debugging: imprimir el gene seleccionado y los valores asignados
         std::cout << "Asignando gen: (" << gen.x << ", " << gen.y << ", " << gen.z << ") al espectro" << std::endl;
@@ -366,6 +360,10 @@ void Nivel::Dar_genes(Vector<Espectro> espectros){
     }
 
     std::cout << "Función Dar_genes completada." << std::endl;
+}
+
+Vector<Espectro> Nivel::Regresar_resultado(Vector<Espectro> espectros){
+    return espectros;
 }
 
 

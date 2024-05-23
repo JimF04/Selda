@@ -51,6 +51,8 @@ public:
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
     Vector<Vector3> Genes;
 
+    Vector<Espectro> Regresar_resultado(Vector<Espectro> espectros);
+
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;
@@ -83,7 +85,9 @@ protected:
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
 
-    void Dar_genes(Vector<Espectro> espectros);
+    void Dar_genes(Vector<Espectro> *espectros);
+
+    void Regresar_resultado();
 };
 
 #endif //SELDA_NIVEL_H

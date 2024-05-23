@@ -79,7 +79,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     Genes.push_back(Vector3{1.0f, 2.0f, 3.0f});
     Genes.push_back(Vector3{4.0f, 5.0f, 6.0f});
     Genes.push_back(Vector3{7.0f, 8.0f, 9.0f});
-    Dar_genes(espectros);
+    Dar_genes(&espectros);
 
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());
@@ -202,8 +202,8 @@ void Nivel1::Draw() {
 
     //========================Enemigos========================
 
-    for (auto& espectro : espectros) {
-        espectro.Draw();
+    for (auto& Espectro : espectros) {
+        Espectro.Draw();
     }
 
     for (auto& raton : ratones) {
@@ -252,3 +252,7 @@ void Nivel1::DrawAStar(Stack<Vector2> path) {
         DrawCircle(worldX, worldY, 5, GREEN);
     }
 }
+
+
+
+
