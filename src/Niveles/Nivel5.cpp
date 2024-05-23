@@ -75,7 +75,7 @@ void Nivel5::Update() {
     Stack<Vector2> path = astar.findPath(enemy_x_grid, enemy_y_grid, ball_x_grid, ball_y_grid);
     path.pop();
     boss.FollowPath(path);
-
+    UpdateSlimes(slimes);
     UpdateChests(cofres);
 
     // Generar slime cada 5 segundos
@@ -86,7 +86,7 @@ void Nivel5::Update() {
         // Establecer la posición de los slimes generados en la posición del jefe
         for (int i = 0; i < slimes.getSize(); ++i) {
             if (i == slimes.getSize() - 1) { // Solo para el último slime
-                slimes[i].setPosition({boss.GetPosition().x / 16, boss.GetPosition().y / 16});
+                slimes[i].setPosition({boss.GetPosition().x / 16+1, boss.GetPosition().y / 16-1});
             }
         }
 

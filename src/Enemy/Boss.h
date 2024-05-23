@@ -1,16 +1,16 @@
-//
-// Created by ahenao on 21/05/24.
-//
-
 #ifndef SELDA_BOSS_H
 #define SELDA_BOSS_H
+
 #include "Enemy.h"
 #include "Slime.h"
 
-class Boss : public Enemy{
+class Boss : public Enemy {
+private:
+    int BossLives;
 public:
-    Boss(){
+    Boss() {
         spritesheet = LoadTexture("../assets/enemyPack/chara_slime.png");
+        BossLives = 5;
     }
 
     virtual void Draw() const override;
@@ -18,7 +18,4 @@ public:
 
 };
 
-
-#endif //SELDA_BOSS_H
-
-
+#endif // SELDA_BOSS_H
