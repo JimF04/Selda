@@ -3,3 +3,8 @@
 //
 
 #include "Slime.h"
+
+void Slime::Ataque(){
+    sourceRec.y = 48*8;
+    UpdateAnimation();
+}

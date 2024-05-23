@@ -222,7 +222,7 @@ void Enemy::UpdateAnimation() {
     if (frameCounter >= frameSpeed) {
         frameCounter = 0;
         currentFrame++;
-        if (currentFrame > 2) // Si excede el número de frames de la animación
+        if (currentFrame > 3) // Si excede el número de frames de la animación
         {
             currentFrame = 0; // Reiniciar la animación
         }

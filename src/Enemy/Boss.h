@@ -9,10 +9,11 @@ private:
     int BossLives;
 public:
     Boss() {
-        spritesheet = LoadTexture("../assets/enemyPack/chara_slime.png");
-        BossLives = 1;
+        spritesheet = LoadTexture("../assets/enemyPack/chara_boss.png");
+        BossLives = 25;
     }
 
+    virtual void Ataque() override;
     virtual void Draw() const override;
     void SpawnSlime(Vector<Slime> &slimes);
     int GetBossLives();

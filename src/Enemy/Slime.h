@@ -13,6 +13,13 @@ public:
         spritesheet = LoadTexture("../assets/enemyPack/chara_slime.png");
     }
 
+    virtual void Ataque() override;
+
 };
+
+
+
+
+
 #endif //SELDA_SLIME_H
 

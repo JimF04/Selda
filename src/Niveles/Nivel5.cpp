@@ -33,8 +33,8 @@ void Nivel5::Update() {
     static double lastAttackTime = 0.0;
     static double lastBossAttackTime = 0.0;
     float distanceToPlayer = Vector2Distance(boss.GetPosition(), ball.GetPosition());
-    float attackRangeToPlayer = 18.0f;
-
+    float BossattackRange = 15.0f;
+    float slimeattackRange = 15.0f;
 
     if (ball.lives <= 0) {
         Nivel::ResetLevel(592, 704);
@@ -58,7 +58,6 @@ void Nivel5::Update() {
 
         if (currentTime - lastAttackTime >= 1.0) {
             ball.Atacar();
-
             float distanceToBoss = Vector2Distance(ball.GetPosition(), boss.GetPosition());
             float attackRangeToBoss = 30.0f;
 
@@ -73,7 +72,6 @@ void Nivel5::Update() {
             float attackRange = 30.0f;
 
             if (distance < attackRange) {
-                // Establecer la posición del slime al punto específico
                 slimes[i].setPosition({1200, -1100});
             }
         }
@@ -97,6 +95,7 @@ void Nivel5::Update() {
 
     //==============Update de los enemigos===============
 
+
     AStar astar(wall);
     int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
     int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
@@ -111,10 +110,11 @@ void Nivel5::Update() {
     UpdateChests(cofres);
 
 
-    if (distanceToPlayer < attackRangeToPlayer) {
+
+
+    if (distanceToPlayer < BossattackRange) {
         double currentTime = GetTime();
         if (currentTime - lastBossAttackTime >= 2.0) {
-            // Reducir una vida al jugador
             ball.DecreaseLives(2);
             lastBossAttackTime = currentTime;
         }
@@ -147,8 +147,18 @@ void Nivel5::Update() {
 
     }
 
-}
+    for (auto& slime : slimes){
+        // Calcular la distancia entre el slime y el jugador
+        float distance = Vector2Distance(ball.GetPosition(), slime.GetPosition());
 
+        // Verificar si el slime está dentro del rango de ataque
+        if (distance < slimeattackRange ) {
+            // Llamar a la función Atacar del slime
+            slime.Ataque();
+        }
+    }
+
+}
 
 
 void Nivel5::Draw() {
@@ -179,11 +189,10 @@ void Nivel5::Draw() {
         DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
     }
 
-    // Nombre del jefe
     if (boss.GetBossLives() > 0) {
         const char* bossName = "SunderBloop the Shatterer:";
         int fontSize = 10; // Font size
-        Vector2 textPosition = { ball.GetPosition().x - 75, ball.GetPosition().y + 60 };
+        Vector2 textPosition = { ball.GetPosition().x - 73, ball.GetPosition().y + 60 };
         DrawText(bossName, textPosition.x, textPosition.y, fontSize, WHITE);
     }
 
