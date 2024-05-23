@@ -25,6 +25,7 @@ public:
     Texture2D miniMapTexture;
     Texture2D imageTexture;
     int contadorCofres = 0;
+    Music Ojomuisca;
 
     // Metodos de la clase
 
@@ -75,8 +76,8 @@ protected:
     Stack<Vector2> pathback;
     bool find_AStar = false;
     queue<Vector2> routa;
-
     bool visto_por_ojo;
+
     bool visto_por_enemigos;
 
     bool collisionDetected = false;

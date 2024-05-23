@@ -106,17 +106,14 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
 
 void Nivel1::Update() {
-
-
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
 
-    if (ball.lives <=0){
-        Nivel::ResetLevel(90,160);
-
+    if (ball.lives <= 0) {
+        Nivel::ResetLevel(90, 160);
     }
 
     if (isShiftPressed) {
@@ -134,13 +131,10 @@ void Nivel1::Update() {
     if (IsKeyDown(KEY_L))
         ball.Atacar();
 
-
-
-    if(IsKeyDown(KEY_K) && !keyKPressed) {
+    if (IsKeyDown(KEY_K) && !keyKPressed) {
         ball.Defender();
         keyKPressed = true;
     }
-
 
     if (IsKeyUp(KEY_K)) {
         keyKPressed = false;
@@ -163,20 +157,28 @@ void Nivel1::Update() {
 
     chocobos[0].bresenham(ball.GetPosition(), wall);
 
-//    for (auto& chocobo : chocobos) {
-//        Vision(chocobo);
-//    }
+    //    for (auto& chocobo : chocobos) {
+    //        Vision(chocobo);
+    //    }
 
     //==========Updates de los objetos================
 
     UpdateChests(cofres);
     UpdateJars(jarrones);
 
-    if (!personaje_visto){
+    if (!personaje_visto) {
         espectros[0].LoopPath(route1);
         espectros[1].LoopPath(route2);
         espectros[2].LoopPath(route3);
     }
+
+    // Reproducción del sonido si el personaje es visto por un ojo
+    if (visto_por_ojo) {
+        PlayMusicStream(Ojomuisca);
+    }
+
+    // Actualiza el stream de música del ojo
+    UpdateMusicStream(Ojomuisca);
 }
 
 

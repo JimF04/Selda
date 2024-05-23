@@ -21,6 +21,7 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     camera.rotation = 0.0f;
     camera.zoom = 5.0f;
 
+    Ojomuisca = LoadMusicStream("../assets/OjoSound.mp3");
 
 }
 
@@ -234,6 +235,7 @@ void Nivel::UpdatesAzules(Vector<Espectro> &azules, Vector2 player_pos) {
         if(espectro.type == "azul"){
 
             if(visto_por_ojo && !espectro.halegado()){
+
                 espectro.setPosition({(player_pos.x/TILE_SIZE)+2,(player_pos.y/TILE_SIZE)-2});
                 espectro.set_llego(true);
             }
@@ -257,21 +259,23 @@ void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
 }
 
 
-void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
-    for(auto& ojo:ojos){
-
-        float dis = std::sqrt(std::pow(ojo.GetPosition().x - posision_player.x, 2) + std::pow(ojo.GetPosition().y - posision_player.y, 2));
-        if(dis<30){
-            visto_por_ojo = true;
+void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posicion_player) {
+    for(auto& ojo : ojos) {
+        float dis = std::sqrt(std::pow(ojo.GetPosition().x - posicion_player.x, 2) + std::pow(ojo.GetPosition().y - posicion_player.y, 2));
+        if(dis < 30) {
+            if (!visto_por_ojo) {
+                visto_por_ojo = true;
+                PlayMusicStream(Ojomuisca);  // Reproduce el sonido cuando visto_por_ojo se pone en true
+            }
             ojo.Animacion_random();
             break;
-        }
-        else{
+        } else {
             visto_por_ojo = false;
+            StopMusicStream(Ojomuisca);  // Detén el sonido si ya no se ve por el ojo
         }
-
     }
 }
+
 
 void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.setPosition({BallXPos, BallYPos});
