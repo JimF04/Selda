@@ -28,9 +28,8 @@ void Boss::DecreaseBossLives(){
 }
 
 void Boss::Ataque(){
-    sourceRec.y = 48*8;
+    sourceRec.y = 48*6;
     UpdateAnimation();
 }
-
 
 

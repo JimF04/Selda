@@ -111,15 +111,15 @@ void Nivel5::Update() {
 
 
 
-
     if (distanceToPlayer < BossattackRange) {
         double currentTime = GetTime();
+        boss.Ataque();
         if (currentTime - lastBossAttackTime >= 2.0) {
             ball.DecreaseLives(2);
             lastBossAttackTime = currentTime;
+            boss.Ataque();
         }
     }
-
 
 
     if (currentTime - lastSlimeSpawnTime >= GetRandomValue(5, 8) && boss.GetBossLives() > 0) {

@@ -8,7 +8,7 @@ Ball::Ball() {
 
     heartTexture = LoadTexture("../assets/heart.png");
 
-    lives= 6;
+    lives= 5;
     position = {400, 300};
 
     collisionBox = {0, 0, 16, 16};
