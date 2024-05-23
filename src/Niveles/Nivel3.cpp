@@ -7,8 +7,8 @@
 #include "raymath.h"
 
 
-Nivel3::Nivel3(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
-    // Iniciar clases
+Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight){
+    contadorPuntuacion = puntuacionInicial;
     ball = Ball();
     ball.setPosition({ 368, 80 });
     enemigo = Enemy();
@@ -132,7 +132,7 @@ void Nivel3::Draw() {
     for(auto& jarron:jarrones){
         jarron.drawTile();
     }
-
+    DrawPuntuationCounter();
     DrawMiniMap();
     ball.Draw();
     ball.DrawHearts(camera);

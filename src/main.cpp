@@ -28,6 +28,8 @@ int main(int argc, char* argv[]) {
 
     int nivelActualIndex = 0;
 
+    int puntuacionAcumulada = 0;
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -38,11 +40,13 @@ int main(int argc, char* argv[]) {
 
 
         if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_SPACE)){
+            puntuacionAcumulada =100 + nivelActual->GetPuntuacion();
             delete nivelActual;
 
             nivelActualIndex++; // Avanzar al siguiente nivel
             if (nivelActualIndex >= 5){
                 nivelActualIndex = 0;
+                puntuacionAcumulada = 0;
             }
 
             switch (nivelActualIndex){
@@ -50,13 +54,13 @@ int main(int argc, char* argv[]) {
                     nivelActual = new Nivel1(screenWidth, screenHeight);
                     break;
                 case 1:
-                    nivelActual = new Nivel2(screenWidth, screenHeight);
+                    nivelActual = new Nivel2(screenWidth, screenHeight,puntuacionAcumulada);
                     break;
                 case 2:
-                    nivelActual = new Nivel3(screenWidth, screenHeight);
+                    nivelActual = new Nivel3(screenWidth, screenHeight,puntuacionAcumulada);
                     break;
                 case 3:
-                    nivelActual = new Nivel4(screenWidth, screenHeight);
+                    nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada);
                     break;
                 case 4:
                     nivelActual = new Nivel5(screenWidth, screenHeight);

@@ -52,6 +52,11 @@ public:
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
+    int GetPuntuacion()const {
+        return contadorPuntuacion;
+    }
+
+
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;

@@ -6,8 +6,9 @@
 #include "raylib.h"
 #include "raymath.h"
 
-Nivel4::Nivel4(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
+Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
+    contadorPuntuacion = puntuacionInicial;
     ball = Ball();
     ball.setPosition({ 112, 672 });
 
@@ -129,6 +130,8 @@ void Nivel4::Draw() {
     for(auto& jarron:jarrones){
         jarron.drawTile();
     }
+
+    DrawPuntuationCounter();
 
 
     if (ball.GetSafeRoom()){

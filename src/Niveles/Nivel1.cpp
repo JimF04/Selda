@@ -156,7 +156,7 @@ void Nivel1::Update() {
             if(IsKeyDown(KEY_L)){
                 cout<<"Collisioned with Rat";
                 ball.Atacar();
-                contadorPuntuacion += 15;
+                contadorPuntuacion += 10;
                 cout<<contadorPuntuacion;
                 raton.setPosition({-1000,1000});
             }

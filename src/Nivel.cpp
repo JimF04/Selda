@@ -279,6 +279,7 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posision_player) {
 void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.setPosition({BallXPos, BallYPos});
     ball.ResetLives();
+    contadorPuntuacion = 0;
 }
 
 void Nivel::DrawChestCounter() {
@@ -288,7 +289,7 @@ void Nivel::DrawChestCounter() {
 
 void Nivel::DrawPuntuationCounter(){
     Vector2  drawpos = {-115 + camera.target.x, -40 + camera.target.y};
-    DrawText(FormatText("Puntuacion: %d",contadorPuntuacion),drawpos.x,drawpos.y,10,WHITE);
+    DrawText(FormatText("Pts: %d",contadorPuntuacion),drawpos.x,drawpos.y,10,WHITE);
 }
 
 void Nivel::UpdateChests(Vector<Cofres>& cofres) {

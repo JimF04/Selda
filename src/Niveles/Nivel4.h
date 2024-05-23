@@ -16,7 +16,7 @@
 
 class Nivel4 : public Nivel {
 public:
-    Nivel4(int screenWidth, int screenHeight);
+    Nivel4(int screenWidth, int screenHeight,int puntuacionInicial);
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;

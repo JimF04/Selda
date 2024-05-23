@@ -31,6 +31,8 @@ public:
     void ResetLevel();
     bool KeyQPressed = false;
 
+
+
     virtual bool CheckWinCondition() override {
         if (onstairs){
             winCondition = true;
