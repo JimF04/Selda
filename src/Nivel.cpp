@@ -234,6 +234,7 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
 
 }
 
+
 void Nivel::UpdateSlimes(Vector<Slime> &slimes){
 
     AStar astar(wall);

@@ -10,12 +10,14 @@ private:
 public:
     Boss() {
         spritesheet = LoadTexture("../assets/enemyPack/chara_slime.png");
-        BossLives = 5;
+        BossLives = 15;
     }
 
     virtual void Draw() const override;
     void SpawnSlime(Vector<Slime> &slimes);
+    int GetBossLives();
 
+    void DecreaseBossLives();
 };
 
 #endif // SELDA_BOSS_H

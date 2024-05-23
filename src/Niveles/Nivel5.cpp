@@ -8,7 +8,7 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     boss = Boss();
     boss.setPosition({36,24});
 
-    camera.zoom = 1.0f;
+    //camera.zoom = 1.0f;
 
     LoadMap("../BossLevel.json", 0, floor);
     LoadMap("../BossLevel.json", 1, saferoom);
@@ -51,12 +51,14 @@ void Nivel5::Update() {
 
     if (IsKeyDown(KEY_K) && !keyKPressed) {
         ball.Defender();
+        boss.DecreaseBossLives();
         keyKPressed = true;
     }
 
     if (IsKeyUp(KEY_K)) {
         keyKPressed = false;
     }
+
 
     LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, wall, "wall");
@@ -107,12 +109,29 @@ void Nivel5::Draw() {
     ball.DrawHearts(camera);
     boss.Draw();
 
-    // Dibujar slimes en la posición del jefe
+    // Dibujar slimes
     for (auto& slime : slimes) {
         slime.Draw();
     }
 
-    // Resto de tu código de dibujo aquí
+    // Barra de vida
+    float healthBarWidth = 150.0f;
+    float healthBarHeight = 5.0f;
+    Vector2 healthBarPosition = { ball.GetPosition().x - healthBarWidth / 2, ball.GetPosition().y + 70 };
+    float healthPercentage = static_cast<float>(boss.GetBossLives()) / 15; //
+
+
+    DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth, healthBarHeight, BLACK);
+    DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
+
+    const char* bossName = "Sir Bloop, Scouge of Pain:";
+    int fontSize = 10; // Font size
+    int textWidth = MeasureText(bossName, fontSize); // Measure the text width to center it
+    Vector2 textPosition = { ball.GetPosition().x - healthBarWidth / 2 + 10, ball.GetPosition().y + 60 };
+    DrawText(bossName, textPosition.x, textPosition.y, fontSize, WHITE);
+
+
 
     EndMode2D();
+
 }

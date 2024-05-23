@@ -18,5 +18,14 @@ void Boss::SpawnSlime(Vector<Slime> &slimes){
 
 }
 
+int Boss::GetBossLives() {
+    return BossLives;
+}
+
+void Boss::DecreaseBossLives(){
+    BossLives --;
+
+}
+
 
 
