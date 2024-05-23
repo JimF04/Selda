@@ -5,6 +5,7 @@
 #include "Niveles/Nivel3.h"
 #include "Niveles/Nivel4.h"
 #include "Niveles/Nivel5.h"
+#include "Algoritmos/Genetico.h"
 #include <glog/logging.h>
 
 int main(int argc, char* argv[]) {
@@ -27,6 +28,8 @@ int main(int argc, char* argv[]) {
     Nivel* nivelActual = new Nivel1(screenWidth, screenHeight);
 
     int nivelActualIndex = 0;
+
+
 
     while (!WindowShouldClose())
     {

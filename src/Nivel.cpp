@@ -362,8 +362,9 @@ void Nivel::Dar_genes(Vector<Espectro> *espectros){
     std::cout << "Función Dar_genes completada." << std::endl;
 }
 
-Vector<Espectro> Nivel::Regresar_resultado(Vector<Espectro> espectros){
+Vector<Espectro> Nivel::Regresar_resultado(){
     return espectros;
+
 }
 
 

@@ -87,7 +87,9 @@ protected:
 
     void Dar_genes(Vector<Espectro> *espectros);
 
-    void Regresar_resultado();
+    Vector<Espectro> Regresar_resultado();
+
+    Vector<Espectro> espectros;
 };
 
 #endif //SELDA_NIVEL_H

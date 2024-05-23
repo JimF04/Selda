@@ -75,7 +75,7 @@ public:
 
     bool muerto;
     int ataques;
-    int dutacion;
+    int duracion;
 
 
 protected:

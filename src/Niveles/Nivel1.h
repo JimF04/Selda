@@ -34,6 +34,7 @@ public:
     virtual bool CheckWinCondition() override {
         if (onstairs){
             winCondition = true;
+
         }
         else {
             winCondition= false;
@@ -47,7 +48,7 @@ public:
 
 private:
 
-    Vector<Espectro> espectros;
+
     queue<Vector2> route1;
     queue<Vector2> route2;
     queue<Vector2> route3;
