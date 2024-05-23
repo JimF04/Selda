@@ -15,8 +15,11 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     miniMapTexture = LoadTexture("../assets/BossLevel.png");
     levelMusic = LoadMusicStream("../assets/boss_music.mp3");
+    victoryMusic = LoadMusicStream("../assets/Victory.mp3");
     PlayMusicStream(levelMusic);
     lastSlimeSpawnTime = GetTime();
+    victoryMusicStarted = false;
+
 }
 
 void Nivel5::Update() {
@@ -31,6 +34,7 @@ void Nivel5::Update() {
     static double lastBossAttackTime = 0.0;
     float distanceToPlayer = Vector2Distance(boss.GetPosition(), ball.GetPosition());
     float attackRangeToPlayer = 18.0f;
+
 
     if (ball.lives <= 0) {
         Nivel::ResetLevel(592, 704);
@@ -129,10 +133,23 @@ void Nivel5::Update() {
         lastSlimeSpawnTime = currentTime;
     }
 
-    if(boss.GetBossLives() == 0){
+
+
+    if (boss.GetBossLives() == 0 && !victoryMusicStarted) {
+        StopMusicStream(levelMusic);
+        victoryMusicStarted = true;
         boss.setPosition({1000,-1100});
     }
+
+    if(victoryMusicStarted){
+        PlayMusicStream(victoryMusic);
+        UpdateMusicStream(victoryMusic);
+
+    }
+
 }
+
+
 
 void Nivel5::Draw() {
     BeginMode2D(camera);
@@ -152,23 +169,31 @@ void Nivel5::Draw() {
         slime.Draw();
     }
 
-    // Barra de vida
-    float healthBarWidth = 150.0f;
-    float healthBarHeight = 5.0f;
-    Vector2 healthBarPosition = { ball.GetPosition().x - healthBarWidth / 2, ball.GetPosition().y + 70 };
-    float healthPercentage = static_cast<float>(boss.GetBossLives()) / 25; //
+    if (boss.GetBossLives() > 0) {
+        float healthBarWidth = 150.0f;
+        float healthBarHeight = 5.0f;
+        Vector2 healthBarPosition = { ball.GetPosition().x - healthBarWidth / 2, ball.GetPosition().y + 70 };
+        float healthPercentage = static_cast<float>(boss.GetBossLives()) / 25;
+
+        DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth, healthBarHeight, BLACK);
+        DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
+    }
+
+    // Nombre del jefe
+    if (boss.GetBossLives() > 0) {
+        const char* bossName = "SunderBloop the Shatterer:";
+        int fontSize = 10; // Font size
+        Vector2 textPosition = { ball.GetPosition().x - 75, ball.GetPosition().y + 60 };
+        DrawText(bossName, textPosition.x, textPosition.y, fontSize, WHITE);
+    }
 
 
-    DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth, healthBarHeight, BLACK);
-    DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
-
-    const char* bossName = "SunderBloop the Shatterer:";
-    int fontSize = 10; // Font size
-    int textWidth = MeasureText(bossName, fontSize); // Measure the text width to center it
-    Vector2 textPosition = { ball.GetPosition().x - healthBarWidth / 2 + 4, ball.GetPosition().y + 60 };
-    DrawText(bossName, textPosition.x, textPosition.y, fontSize, WHITE);
-
-
+    if (boss.GetBossLives() <= 0) {
+        const char* message = "You Conquered the Dungeon";
+        int messageWidth = MeasureText(message, 12);
+        Vector2 messagePosition = { ball.GetPosition().x - messageWidth / 2, ball.GetPosition().y -30 };
+        DrawText(message, messagePosition.x, messagePosition.y, 12, GREEN);
+    }
 
     EndMode2D();
 

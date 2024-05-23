@@ -10,7 +10,7 @@ private:
 public:
     Boss() {
         spritesheet = LoadTexture("../assets/enemyPack/chara_slime.png");
-        BossLives = 25;
+        BossLives = 1;
     }
 
     virtual void Draw() const override;

@@ -21,8 +21,10 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    Music victoryMusic;
     Boss boss;
     Vector<Slime> slimes;
+    bool victoryMusicStarted;
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {
