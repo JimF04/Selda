@@ -1,21 +1,12 @@
-//
-// Created by winjimmy on 5/3/2024.
-//
-
 #include "Nivel5.h"
 #include "../Algoritmos/AStar.h"
 
-
-Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
+Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight) {
     // Iniciar clases
     ball = Ball();
     ball.setPosition({ 592, 704 });
     boss = Boss();
     boss.setPosition({36,24});
-    boss.SpawnSlime(slimes);
-    boss.SpawnSlime(slimes);
-    boss.SpawnSlime(slimes);
-
 
     camera.zoom = 1.0f;
 
@@ -27,6 +18,7 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     miniMapTexture = LoadTexture("../assets/BossLevel.png");
     levelMusic = LoadMusicStream("../assets/boss_music.mp3");
     PlayMusicStream(levelMusic);
+    lastSlimeSpawnTime = GetTime();
 }
 
 void Nivel5::Update() {
@@ -37,8 +29,8 @@ void Nivel5::Update() {
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
 
-    if (ball.lives <=0){
-        Nivel::ResetLevel(592,704);
+    if (ball.lives <= 0) {
+        Nivel::ResetLevel(592, 704);
 
     }
 
@@ -57,7 +49,7 @@ void Nivel5::Update() {
     if (IsKeyDown(KEY_L))
         ball.Atacar();
 
-    if(IsKeyDown(KEY_K) && !keyKPressed) {
+    if (IsKeyDown(KEY_K) && !keyKPressed) {
         ball.Defender();
         keyKPressed = true;
     }
@@ -71,9 +63,7 @@ void Nivel5::Update() {
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
 
-
     //==============Update de los enemigos===============
-
 
     AStar astar(wall);
     int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
@@ -86,12 +76,23 @@ void Nivel5::Update() {
     path.pop();
     boss.FollowPath(path);
 
-
     UpdateChests(cofres);
-    UpdateJars(jarrones);
+
+    // Generar slime cada 5 segundos
+    double currentTime = GetTime();
+    if (currentTime - lastSlimeSpawnTime >= 5.0f) {
+        boss.SpawnSlime(slimes);
+
+        // Establecer la posición de los slimes generados en la posición del jefe
+        for (int i = 0; i < slimes.getSize(); ++i) {
+            if (i == slimes.getSize() - 1) { // Solo para el último slime
+                slimes[i].setPosition({boss.GetPosition().x / 16, boss.GetPosition().y / 16});
+            }
+        }
+
+        lastSlimeSpawnTime = currentTime; // Actualizar el tiempo del último slime spawn
+    }
 }
-
-
 
 void Nivel5::Draw() {
     BeginMode2D(camera);
@@ -106,24 +107,12 @@ void Nivel5::Draw() {
     ball.DrawHearts(camera);
     boss.Draw();
 
-
-    //===========Slimes================
+    // Dibujar slimes en la posición del jefe
     for (auto& slime : slimes) {
         slime.Draw();
-
     }
 
-
-    //===========Objetos================
-    for(auto& cofre:cofres){
-        cofre.drawTile();
-    }
-    DrawChestCounter();
-
-    for(auto& jarron:jarrones){
-        jarron.drawTile();
-    }
-
+    // Resto de tu código de dibujo aquí
 
     EndMode2D();
 }

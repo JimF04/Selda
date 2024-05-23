@@ -34,6 +34,7 @@ private:
     void DrawAStar(Stack<Vector2> path);
     bool collisionDetected;
     double lastCollisionDetectionTime;
+    double lastSlimeSpawnTime;
 
     Vector<Cofres> cofres;
 
