@@ -20,8 +20,8 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
     camera.zoom = 5.0f;
-
-    Ojomuisca = LoadMusicStream("../assets/OjoSound.mp3");
+    CofreSonido = LoadSound("../assets/COFRE.mp3");
+    Ojomusica = LoadSound("../assets/OjoSound.mp3");
 
 }
 
@@ -249,7 +249,7 @@ void Nivel::UpdatesAzules(Vector<Espectro> &azules, Vector2 player_pos) {
 
 void Nivel::UpdateRatones(Vector<Ratones>& ratones) {
 
-     AStar aestar(wall);
+    AStar aestar(wall);
 
     for(auto& raton:ratones){
 
@@ -265,13 +265,12 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posicion_player) {
         if(dis < 30) {
             if (!visto_por_ojo) {
                 visto_por_ojo = true;
-                PlayMusicStream(Ojomuisca);  // Reproduce el sonido cuando visto_por_ojo se pone en true
+                PlaySound(Ojomusica);  // Reproduce el sonido cuando visto_por_ojo se pone en true
             }
             ojo.Animacion_random();
             break;
         } else {
             visto_por_ojo = false;
-            StopMusicStream(Ojomuisca);  // Detén el sonido si ya no se ve por el ojo
         }
     }
 }
@@ -288,24 +287,28 @@ void Nivel::DrawChestCounter() {
 }
 
 void Nivel::UpdateChests(Vector<Cofres>& cofres) {
-    for(auto& cofre : cofres){
+    for (auto& cofre : cofres) {
         bool cofreDetectado = false;
-        float distancia = Vector2Distance(ball.GetPosition(),cofre.getPosition());
-        if(distancia < ball.GetRadius() + 11 && !cofre.abierto){
-            if(IsKeyDown(KEY_O) && !cofreDetectado){ // Verificar si la tecla O está presionada y el cofre no ha sido detectado
+
+        float distancia = Vector2Distance(ball.GetPosition(), cofre.getPosition());
+        if (distancia < ball.GetRadius() + 11 && !cofre.abierto) {
+            if (IsKeyDown(KEY_O) && !cofreDetectado) { // Verificar si la tecla O está presionada y el cofre no ha sido detectado
                 cofre.UpdateAnimation();
                 cofre.drawTile();
                 contadorCofres++;
-                cout<<contadorCofres;
+                cout << contadorCofres;
                 cofreDetectado = true;
-                cofre.abierto = true;// Marcar el cofre como detectado para este fotograma
+                cofre.abierto = true; // Marcar el cofre como detectado para este fotograma
+                PlaySound(CofreSonido); // Reproduce el sonido del cofre
+
             }
-            else if (!IsKeyDown(KEY_O)) {
+             if (!IsKeyDown(KEY_O)) {
                 cofreDetectado = false; // Reiniciar la detección del cofre si la tecla O ya no está presionada
             }
         }
     }
 }
+
 
 void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
     for(auto& jarron: jarrones){
@@ -392,11 +395,3 @@ void Nivel::Vision(Enemy enemy){
         }
     }
 }
-
-
-
-
-
-
-
-

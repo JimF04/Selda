@@ -25,8 +25,10 @@ public:
     Texture2D miniMapTexture;
     Texture2D imageTexture;
     int contadorCofres = 0;
-    Music Ojomuisca;
+    Sound Ojomusica;
+    Sound CofreSonido;
 
+    \
     // Metodos de la clase
 
     Nivel(int screenWidth, int screenHeight);
@@ -53,7 +55,6 @@ public:
 
     void Vision(Enemy enemy);
     bool personaje_visto;
-
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;

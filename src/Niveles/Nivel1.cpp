@@ -173,12 +173,7 @@ void Nivel1::Update() {
     }
 
     // Reproducción del sonido si el personaje es visto por un ojo
-    if (visto_por_ojo) {
-        PlayMusicStream(Ojomuisca);
-    }
 
-    // Actualiza el stream de música del ojo
-    UpdateMusicStream(Ojomuisca);
 }
 
 
