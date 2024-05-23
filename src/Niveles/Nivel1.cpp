@@ -2,6 +2,7 @@
 // Created by winjimmy on 5/3/2024.
 //
 
+#include <algorithm>
 #include "Nivel1.h"
 #include "raylib.h"
 #include "../ball.h"
@@ -160,6 +161,7 @@ void Nivel1::Update() {
     UpdateRatones(ratones);
     UpdateOjos(ojos_espectrales, ball.GetPosition());
     UpdatesAzules(espectros, ball.GetPosition());
+    UpdateChoco(chocobos);
 
     chocobos[0].bresenham(ball.GetPosition(), wall);
 
@@ -177,6 +179,12 @@ void Nivel1::Update() {
         espectros[1].LoopPath(route2);
         espectros[2].LoopPath(route3);
     }
+
+    if (IsKeyDown(KEY_T)){
+        ball.LaunchFireball();
+    }
+    ball.UpdateFireballs();
+
 }
 
 
@@ -229,6 +237,8 @@ void Nivel1::Draw() {
     if (personaje_visto) {
         DrawCenteredText("En vista",10, RED);
     }
+
+    ball.DrawFireballs();
 
     DrawMiniMap();
     EndMode2D();

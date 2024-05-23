@@ -323,6 +323,22 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
     }
 }
 
+void Nivel::UpdateChoco(Vector<Chocobos> &chocobos){
+    for(auto& choco: chocobos){
+        if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
+
+            if (ball.CheckCollisionWithEnemy(choco)) {
+                ball.DecreaseLives(1);
+
+                collisionDetected = true;
+                lastCollisionDetectionTime = GetTime();
+            }
+        }
+        collisionDetected = false;
+
+    }
+}
+
 void Nivel::Vision(Enemy enemy){
 
     int x1 = static_cast<int>(enemy.GetPosition().x) / 16;

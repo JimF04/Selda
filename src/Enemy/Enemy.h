@@ -84,7 +84,6 @@ public:
         this->damage = damage;
     };
 
-
     Direction currentDirection;
     float lastDirectionChangeTime;
     float changeInterval = 1.0f;

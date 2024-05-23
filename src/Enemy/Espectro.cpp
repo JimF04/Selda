@@ -31,8 +31,3 @@ queue<Vector2> Espectro::getRoute() {
     return route;
 }
 
-//void Espectro::Draw() const
-//{
-//    DrawTextureRec(spritesheet, sourceRec, {position.x-20,position.y-20}, WHITE);
-//}
-

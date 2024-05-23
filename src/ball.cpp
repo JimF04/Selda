@@ -49,24 +49,29 @@ void Ball::Move(int deltaX, int deltaY)
 
     // Determine which animation to play based on movement
     if (deltaX > 0) {
+        currentDir = Player_RIGHT;
         // Moving right
         sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
         // Reset any previous flips
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaX < 0) {
+        currentDir = Player_LEFT;
         // Moving left
         sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
         // Flip the sprite horizontally
         sourceRec.width = -FRAME_WIDTH; // Invert the width
     } else if (deltaY > 0) {
+        currentDir = Player_DOWN;
         // Moving down
         sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
+        currentDir = Player_UP;
         // Moving up
         sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
-    } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
+    } else {
+        currentDir = Player_IDLE;
         // No movement, idle animation
         sourceRec.y = 0; // Row 1: Idle
         sourceRec.width = FRAME_WIDTH; // Reset the width
@@ -77,7 +82,6 @@ void Ball::Move(int deltaX, int deltaY)
 
     GetCrumbs();
 }
-
 
 
 
