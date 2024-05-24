@@ -364,14 +364,12 @@ void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros)
 
 Vector<Espectro> Nivel::Regresar_resultado(){
 
-    return espectros;
-//    for(auto& espectro:espectros){
-//        std::cout<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion<<endl;
-//        return espectros;
-//
-//
-//
-//    }
+
+    for(auto& espectro:espectros){
+        std::cout<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion<<endl;
+        return espectros;
+
+    }
 }
 
 std::vector<Vector3> Nivel::CargarAleloDesdeArchivo(const std::string& filename) {

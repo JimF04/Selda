@@ -11,7 +11,7 @@ class Genetico {
 public:
     Genetico();
 
-    void Producir(Vector<Espectro> resultados);
+    void Producir(Vector<Espectro> &resultados);
 
 
 

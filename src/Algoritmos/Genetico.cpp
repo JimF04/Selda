@@ -5,7 +5,7 @@ Genetico::Genetico() {
     // Constructor predeterminado, no es necesario proporcionar una implementación si no se requiere inicialización adicional
 }
 
-void Genetico::Producir(Vector<Espectro> resultados) {
+void Genetico::Producir(Vector<Espectro> &resultados) {
     std::ofstream archivo("../assets/alelos.txt", std::ios::app);
     if (!archivo.is_open()) {
         std::cerr << "Error: No se pudo abrir el archivo 'alelos.txt' para escritura." << std::endl;
@@ -51,12 +51,12 @@ int Genetico::RandInt(int min, int max) {
 Vector<size_t> Genetico::ObtenerMejoresIndices(const Vector<float>& promedios, int numMejores) {
     // Implementación del método ObtenerMejoresIndices
     Vector<size_t> indices;
-    for (size_t i = 0; i < promedios.size; ++i) {
+    for (size_t i = 0; i < promedios.getSize(); ++i) {
         indices.push_back(i);
     }
 
-    for (size_t i = 0; i < promedios.size - 1; ++i) {
-        for (size_t j = i + 1; j < promedios.size; ++j) {
+    for (size_t i = 0; i < promedios.getSize() - 1; ++i) {
+        for (size_t j = i + 1; j < promedios.getSize(); ++j) {
             if (promedios[i] < promedios[j]) {
                 std::swap(indices[i], indices[j]);
             }

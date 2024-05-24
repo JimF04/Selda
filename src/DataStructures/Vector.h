@@ -1,7 +1,3 @@
-//
-// Created by jimmy on 18/05/24.
-//
-
 #ifndef SELDA_VECTOR_H
 #define SELDA_VECTOR_H
 
@@ -13,7 +9,7 @@ class Vector {
 private:
     T *data; // Puntero al array de elementos
     size_t capacity; // Capacidad actual del vector
-    // Tamaño actual del vector
+    size_t size; // Tamaño actual del vector
 
 public:
     // Constructor por defecto
@@ -24,13 +20,33 @@ public:
         delete[] data;
     }
 
+    // Constructor de copia
+    Vector(const Vector& other) : data(nullptr), capacity(0), size(0) {
+        *this = other;
+    }
+
+    // Operador de asignación
+    Vector& operator=(const Vector& other) {
+        if (this != &other) {
+            delete[] data;
+            capacity = other.capacity;
+            size = other.size;
+            data = new T[capacity];
+            for (size_t i = 0; i < size; ++i) {
+                data[i] = other.data[i];
+            }
+        }
+        return *this;
+    }
+
     // Función para añadir elementos al final del vector
     void push_back(const T &value) {
         if (size >= capacity) {
             size_t new_capacity = (capacity == 0) ? 1 : capacity * 2;
             resize(new_capacity);
         }
-        data[size++] = value;
+        data[size] = value;
+        size++;
     }
 
     // Función para acceder a los elementos por índice
@@ -63,6 +79,7 @@ public:
         return size == 0;
     }
 
+    // Método que devuelve un iterador al principio del vector
     T* begin() {
         return data;
     }
@@ -72,19 +89,16 @@ public:
         return data + size;
     }
 
-    size_t size;
-
-    void resize(size_t new_capacity) {
-        T *new_data = new T[new_capacity];
-        for (size_t i = 0; i < size; ++i) {
-            new_data[i] = data[i];
-        }
-        delete[] data;
-        data = new_data;
-        capacity = new_capacity;
+// Función interna para cambiar la capacidad del vector
+void resize(size_t new_capacity) {
+    T *new_data = new T[new_capacity];
+    for (size_t i = 0; i < size; ++i) {
+        new_data[i] = data[i];
     }
+    delete[] data;
+    data = new_data;
+    capacity = new_capacity;
+}
 };
-
-
 
 #endif //SELDA_VECTOR_H
