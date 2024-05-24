@@ -216,7 +216,7 @@ void Nivel1::Update() {
     //==========Updates de los enemigos================
 
     UpdateEspectros(espectros);
-    UpdateRatones(ratones);
+    UpdateRatones(ratones,espectros);
     UpdateOjos(ojos_espectrales, ball.GetPosition());
     UpdatesAzules(espectros, ball.GetPosition());
     UpdateChoco(chocobos);
