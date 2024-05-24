@@ -22,6 +22,15 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     espectroRojo[0].setPosition({6, 36});
     espectroRojo[1].setPosition({16, 25});
 
+
+
+    Vector<Vector3> alelos = CargarAleloDesdeArchivo("../assets/alelos.txt");
+
+    Dar_genes(alelos, &espectroRojo);
+
+    cout << "Alelos " << alelos[0].x << " " << alelos[0].y << " " << alelos[0].z << endl;
+
+
     //=============Objects================
     // Antorchas
     for( int i = 0; i < 16; i++){

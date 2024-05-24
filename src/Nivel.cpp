@@ -19,7 +19,7 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     camera.target = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.offset = (Vector2){ static_cast<float>(screenWidth / 2), static_cast<float>(screenHeight / 2) };
     camera.rotation = 0.0f;
-    camera.zoom = 20.0f;
+    camera.zoom = 5.0f;
 
 
 }
@@ -326,7 +326,7 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
     }
 }
 
-void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros) {
+void Nivel::Dar_genes(Vector<Vector3>& alelos, Vector<Espectro>* espectros) {
     // Verificar que el vector de alelos no esté vacío
     if (alelos.empty()) {
         std::cerr << "Error: El vector de alelos está vacío." << std::endl;
@@ -335,14 +335,14 @@ void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros)
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, alelos.size() - 1); // Distribución para seleccionar índices de alelos
+    std::uniform_int_distribution<> dist(0, alelos.getSize() - 1); // Distribución para seleccionar índices de alelos
 
     // Iterar sobre cada espectro y asignar un valor aleatorio de alelos a un atributo aleatorio
     for (auto& espectro : *espectros) {
         int random_index = dist(gen);
         std::cout << "Índice aleatorio generado: " << random_index << std::endl;
 
-        if (random_index < 0 || random_index >= alelos.size()) {
+        if (random_index < 0 || random_index >= alelos.getSize()) {
             std::cerr << "Error: Índice de alelo aleatorio fuera de rango." << std::endl;
             throw std::out_of_range("Índice de alelo aleatorio fuera de rango.");
         }
@@ -362,20 +362,17 @@ void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros)
     std::cout << "Función Dar_genes completada." << std::endl;
 }
 
-Vector<Espectro> Nivel::Regresar_resultado(){
-
-    return espectros;
-//    for(auto& espectro:espectros){
-//        std::cout<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion<<endl;
-//        return espectros;
-//
-//
-//
-//    }
+Vector<Espectro> Nivel::Regresar_resultado(string type){
+    if (type == "gris"){
+        return espectros;
+    } else if (type == "rojo"){
+        return espectroRojo;
+    } else if (type == "azul"){}
+        return espectroAzul;
 }
 
-std::vector<Vector3> Nivel::CargarAleloDesdeArchivo(const std::string& filename) {
-    std::vector<Vector3> alelos;
+Vector<Vector3> Nivel::CargarAleloDesdeArchivo(const std::string& filename) {
+    Vector<Vector3> alelos;
     std::ifstream file(filename);
 
     if (file.is_open()) {

@@ -19,12 +19,12 @@ int main(int argc, char* argv[]) {
 
     google::InitGoogleLogging(argv[0]);
 
-    Genetico genetico;
+    //Genetico genetico;
 
     LOG(INFO) << "Inicio del juego";
 
     // Vector de alelos
-    std::vector<Vector3> alelos;
+    Vector<Vector3> alelos;
     alelos.push_back(Vector3{1.0f, 5.0f, 1.0f});
     alelos.push_back(Vector3{2.0f, 1.0f, 2.0f});
     alelos.push_back(Vector3{1.0f, 4.0f, 3.0f});
@@ -58,11 +58,9 @@ int main(int argc, char* argv[]) {
 
         if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_SPACE)){
 
-
-            nivelActual->Regresar_resultado();
-            Vector<Espectro> resultados = nivelActual->Regresar_resultado();
-            genetico.Producir(resultados);
-
+            //nivelActual->Regresar_resultado();
+//            Vector<Espectro> resultados = nivelActual->Regresar_resultado();
+//            genetico.Producir(resultados);
 
             delete nivelActual;
 

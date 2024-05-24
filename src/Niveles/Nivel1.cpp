@@ -21,9 +21,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     hitbox = Hitbox();
     ball.setPosition({90,160});
     lastCollisionDetectionTime = GetTime();
-    camera.zoom = 1.0f;
-
-//camera.zoom = 1.0f;
 
 //==================Objetos==================
     for (int i = 0; i < 3; i++){
@@ -50,7 +47,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     espectros[3].setPosition({17,36});
 
-    camera.zoom = 1.0f;
 
 
     espectros[0].setPosition({17,36});
@@ -62,8 +58,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
 
     espectros[3].setPosition({17,36});
-
-
 
     espectros[1].setPosition({45,28});
     route2.push({31,28});
@@ -79,13 +73,10 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route3.push({31,11});
     espectros[2].setRoute(route3);
 
-    Genes.push_back(Vector3{1.0f, 5.0f, 1.0f});
-    Genes.push_back(Vector3{2.0f, 1.0f, 2.0f});
-    Genes.push_back(Vector3{1.0f, 4.0f, 3.0f});
 
-    std::vector<Vector3> alelos = CargarAleloDesdeArchivo("../assets/alelos.txt");
+    Vector<Vector3> alelos = CargarAleloDesdeArchivo("../assets/alelos.txt");
 
-    Dar_genes(alelos,&espectros);
+    Dar_genes(alelos, &espectros);
 
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());

@@ -16,6 +16,7 @@
 #include "Enemy/Ojo_Espectral.h"
 #include "Objects/Cofres.h"
 #include "Objects/Jarrones.h"
+#include "Algoritmos/Genetico.h"
 
 class Nivel {
 public:
@@ -49,9 +50,11 @@ public:
     void UpdateChests(Vector<Cofres>& cofres);
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
-    Vector<Vector3> Genes;
-    Vector<Espectro> Regresar_resultado();
+
+    Vector<Espectro> Regresar_resultado(string type);
     Vector<Vector3> result;
+
+    Genetico genetico;
 
 
 
@@ -87,15 +90,16 @@ protected:
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
 
-    void Dar_genes(Vector<Espectro> *espectros);
 
-    vector<Vector3> CargarAleloDesdeArchivo(const std::string& filename);
+    Vector<Vector3> CargarAleloDesdeArchivo(const std::string& filename);
 
 
 
     Vector<Espectro> espectros;
+    Vector<Espectro> espectroRojo;
+    Vector<Espectro> espectroAzul;
 
-    void Dar_genes(vector<Vector3> &alelos, Vector<Espectro> *espectros);
+    void Dar_genes(Vector<Vector3> &alelos, Vector<Espectro> *espectros);
 };
 
 #endif //SELDA_NIVEL_H
