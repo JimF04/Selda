@@ -199,7 +199,7 @@ void Nivel3::Update() {
             if(IsKeyDown(KEY_L)){
                 ball.Atacar();
                 contadorPuntuacion+=20;
-                espectro.setPosition({-1000,1000});
+                espectro.setPosition({-1000,-1000});
             }
         }
     }
