@@ -61,6 +61,8 @@ public:
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
     void UpdateChoco(Vector<Chocobos> &chocobos);
 
+    int bolas_fuego =0;
+
     void Vision(Enemy enemy);
     bool personaje_visto;
     void UpdateSlimes(Vector<Slime> &slimes);
@@ -75,6 +77,8 @@ public:
             if (rojo.type == "rojo") {
 
                 if (personaje_visto) {
+
+
                     rojo.LaunchFireball(activeFireballs);
                 }
                 UpdateFireballs(rojos, activeFireballs);
@@ -85,6 +89,11 @@ public:
     void UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& activeFireballs);
 
     int maxFireballDistance = 5;
+    Vector<Vector3> Genes;
+    Vector<Espectro> Regresar_resultado();
+    Vector<Vector3> result;
+
+
 
 protected:
     // Variables comunes a todos los niveles
@@ -126,6 +135,14 @@ protected:
     queue<Vector2> route8;
 
 
+
+    vector<Vector3> CargarAleloDesdeArchivo(const std::string& filename);
+
+
+
+    Vector<Espectro> espectros;
+
+    void Dar_genes(vector<Vector3> &alelos, Vector<Espectro> *espectros);
 };
 
 #endif //SELDA_NIVEL_H

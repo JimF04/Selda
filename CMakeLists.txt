@@ -57,6 +57,8 @@ add_executable(${PROJECT_NAME} src/main.cpp
         src/Enemy/Slime.cpp
         src/Enemy/Slime.h
         src/Objects/Fireball.h
+        src/Algoritmos/Genetico.cpp
+        src/Algoritmos/Genetico.h
 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib JsonCpp::JsonCpp glog::glog)

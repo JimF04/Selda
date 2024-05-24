@@ -20,6 +20,7 @@ public:
 
 
     void LaunchFireball(std::vector<FireBall>& activeFireballs) {
+
         FireBall fireball({position.x , position.y}, "enemigo");
         if (lastFireballTime >= fireballCooldown) {
             Vector2 fireballVelocity = {0, 0};
