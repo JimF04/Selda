@@ -79,13 +79,21 @@ void Nivel4::Update() {
     if (IsKeyDown(KEY_L))
         ball.Atacar();
 
-    if(IsKeyDown(KEY_K) && !keyKPressed) {
+    if (IsKeyDown(KEY_K) ) {
+        ball.IsDefending = true;
         ball.Defender();
         keyKPressed = true;
+        keyKReleaseTime = -1;
     }
 
     if (IsKeyUp(KEY_K)) {
-        keyKPressed = false;
+        if (keyKReleaseTime < 0) {
+            keyKReleaseTime = GetTime();
+        } else if (GetTime() - keyKReleaseTime >= 0.8f) {
+            ball.IsDefending = false;
+        }
+    } else {
+        keyKReleaseTime = -1;
     }
 
 

@@ -40,6 +40,7 @@
         int currentFrame;
         int frameSpeed;
         int lives;
+        bool IsDefending;
         Texture2D spritesheet;
         Rectangle sourceRec;
         int time_for_crums;

@@ -25,6 +25,7 @@ public:
     Boss boss;
     Vector<Slime> slimes;
     bool victoryMusicStarted;
+    float keyKReleaseTime;
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {

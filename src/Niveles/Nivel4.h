@@ -20,6 +20,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    float keyKReleaseTime;
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {

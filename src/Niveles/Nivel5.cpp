@@ -101,13 +101,21 @@ void Nivel5::Update() {
 
     }
 
-    if (IsKeyDown(KEY_K) && !keyKPressed) {
+    if (IsKeyDown(KEY_K) ) {
+        ball.IsDefending = true;
         ball.Defender();
         keyKPressed = true;
+        keyKReleaseTime = -1;
     }
 
     if (IsKeyUp(KEY_K)) {
-        keyKPressed = false;
+        if (keyKReleaseTime < 0) {
+            keyKReleaseTime = GetTime();
+        } else if (GetTime() - keyKReleaseTime >= 0.8f) {
+            ball.IsDefending = false;
+        }
+    } else {
+        keyKReleaseTime = -1;
     }
 
 
@@ -137,7 +145,7 @@ void Nivel5::Update() {
     if (distanceToPlayer < BossattackRange) {
         double currentTime = GetTime();
         boss.Ataque();
-        if (currentTime - lastBossAttackTime >= 2.0) {
+        if (currentTime - lastBossAttackTime >= 2.0 && !ball.IsDefending) {
             ball.DecreaseLives(2);
             lastBossAttackTime = currentTime;
             boss.Ataque();
@@ -171,12 +179,8 @@ void Nivel5::Update() {
     }
 
     for (auto &slime: slimes) {
-        // Calcular la distancia entre el slime y el jugador
         float distance = Vector2Distance(ball.GetPosition(), slime.GetPosition());
-
-        // Verificar si el slime está dentro del rango de ataque
         if (distance < slimeattackRange) {
-            // Llamar a la función Atacar del slime
             slime.Ataque();
         }
     }

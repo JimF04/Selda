@@ -28,6 +28,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    float keyKReleaseTime;
     Texture2D image;
     void ResetLevel();
     bool KeyQPressed = false;

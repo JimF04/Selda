@@ -23,6 +23,7 @@ public:
     virtual void Update() override;
     virtual void Draw() override;
     Music levelMusic;
+    float keyKReleaseTime;
     void ResetLevel();
     void Draw_Fog();
 

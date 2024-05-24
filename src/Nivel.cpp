@@ -159,7 +159,7 @@ void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
     for(auto& espectros: espectros){
         if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
 
-            if (ball.CheckCollisionWithEnemy(espectros)) {
+            if (ball.CheckCollisionWithEnemy(espectros) && !ball.IsDefending) {
                 ball.DecreaseLives(espectros.getDamage());
 
                 collisionDetected = true;
@@ -241,7 +241,7 @@ void Nivel::UpdateSlimes(Vector<Slime> &slimes){
     for(auto& slimes: slimes){
         if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
 
-            if (ball.CheckCollisionWithEnemy(slimes)) {
+            if (ball.CheckCollisionWithEnemy(slimes ) && !ball.IsDefending ) {
                 ball.DecreaseLives(slimes.getDamage());
 
                 collisionDetected = true;
