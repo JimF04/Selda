@@ -2,7 +2,8 @@
 #include "raymath.h"
 #include "raylib.h"
 
-Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight) {
+Nivel2::Nivel2(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight) {
+    contadorPuntuacion = puntuacionInicial;
     ball.setPosition({90, 416});
 
 
@@ -85,6 +86,22 @@ void Nivel2::Update() {
         keyKPressed = false;
     }
 
+    // ======================Eliminar Enemigos========================//
+
+    //ESPECTRO ROJO:
+
+    for(auto& espectro_rojo:espectroRojo){
+        float distance = Vector2Distance(ball.GetPosition(),espectro_rojo.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Rat";
+                ball.Atacar();
+                contadorPuntuacion+=20;
+                espectro_rojo.setPosition({-1000,1000});
+            }
+        }
+    }
+
     LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
@@ -148,7 +165,7 @@ void Nivel2::Draw() {
         DrawCenteredText("En vista",10, RED);
     }
 
-
+    DrawPuntuationCounter();
     DrawMiniMap();
 
     EndMode2D();

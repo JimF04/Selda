@@ -32,6 +32,8 @@ public:
     void ResetLevel();
     bool KeyQPressed = false;
 
+
+
     virtual bool CheckWinCondition() override {
         if (onstairs){
             winCondition = true;
@@ -41,8 +43,8 @@ public:
         }
         return winCondition;
     }
+    int puntuacionAcumulada = 0;
 
-    void DrawCounter();
 
 private:
 
@@ -56,6 +58,9 @@ private:
     Vector<Chocobos> chocobos;
 
     void DrawAStar(Stack<Vector2> path);
+
+
+
 
     Hitbox hitbox;
 };

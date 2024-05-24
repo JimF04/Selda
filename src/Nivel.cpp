@@ -317,11 +317,17 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posicion_player) {
 void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.setPosition({BallXPos, BallYPos});
     ball.ResetLives();
+    contadorPuntuacion = 0;
 }
 
 void Nivel::DrawChestCounter() {
     Vector2 drawPosition = {-115 + camera.target.x, -60 + camera.target.y};
     DrawText(FormatText("x: %d", contadorCofres), drawPosition.x, drawPosition.y, 10, WHITE);
+}
+
+void Nivel::DrawPuntuationCounter(){
+    Vector2  drawpos = {-115 + camera.target.x, -40 + camera.target.y};
+    DrawText(FormatText("Pts: %d",contadorPuntuacion),drawpos.x,drawpos.y,10,WHITE);
 }
 
 void Nivel::UpdateChests(Vector<Cofres>& cofres) {
@@ -334,7 +340,7 @@ void Nivel::UpdateChests(Vector<Cofres>& cofres) {
                 cofre.UpdateAnimation();
                 cofre.drawTile();
                 contadorCofres++;
-                cout << contadorCofres;
+                contadorPuntuacion+= 50;
                 cofreDetectado = true;
                 cofre.abierto = true; // Marcar el cofre como detectado para este fotograma
                 PlaySound(CofreSonido); // Reproduce el sonido del cofre

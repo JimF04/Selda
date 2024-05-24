@@ -29,6 +29,7 @@ public:
     int contadorCofres = 0;
     Sound Ojomusica;
     Sound CofreSonido;
+    int contadorPuntuacion = 0;
 
     \
     // Metodos de la clase
@@ -48,6 +49,7 @@ public:
     void UpdateEspectros(Vector<Espectro>& espectros);
 
     void DrawChestCounter();
+    void DrawPuntuationCounter();
 
     void UpdateRatones(Vector<Ratones>& ratones);
     void UpdatesAzules(Vector<Espectro> &azules, Vector2 vector2);
@@ -59,6 +61,11 @@ public:
     void Vision(Enemy enemy);
     bool personaje_visto;
     void UpdateSlimes(Vector<Slime> &slimes);
+    int GetPuntuacion()const {
+        return contadorPuntuacion;
+    }
+
+
 protected:
     // Variables comunes a todos los niveles
     int screenWidth;

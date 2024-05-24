@@ -1,3 +1,4 @@
+
 //
 // Created by winjimmy on 5/3/2024.
 //
@@ -17,7 +18,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     hitbox = Hitbox();
     ball.setPosition({90,160});
     lastCollisionDetectionTime = GetTime();
-    //camera.zoom = 1.0f;
 
 //==================Objetos==================
     for (int i = 0; i < 3; i++){
@@ -138,6 +138,53 @@ void Nivel1::Update() {
         keyKPressed = false;
     }
 
+    //==================Eliminar a los enemigos=======================//
+
+    //RATA:
+    for(auto& raton:ratones){
+        float distance = Vector2Distance(ball.GetPosition(),raton.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Rat";
+                ball.Atacar();
+                contadorPuntuacion += 10;
+                cout<<contadorPuntuacion;
+                raton.setPosition({-1000,1000});
+            }
+        }
+    }
+
+    //ESPECTROS:
+
+    for(auto& espectro:espectros){
+        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Espectro";
+                ball.Atacar();
+                contadorPuntuacion += 15;
+                cout<<contadorPuntuacion;
+                espectro.setPosition({-1000,1000});
+
+            }
+        }
+    }
+
+    //OJOS ESPECTRALES:
+
+    for(auto& ojo_espectral:ojos_espectrales){
+        float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Ojo espectral";
+                ball.Atacar();
+                ojo_espectral.setPosition({-1000,1000});
+                contadorPuntuacion += 15;
+            }
+        }
+    }
+
+
     LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
@@ -191,6 +238,7 @@ void Nivel1::Draw() {
     }
     DrawChestCounter();
 
+
     for(auto& jarron : jarrones) { // Dibuja cada jarrón en el vector de jarrones
         jarron.drawTile();
     }
@@ -200,14 +248,17 @@ void Nivel1::Draw() {
     for (auto& espectro : espectros) {
         espectro.Draw();
     }
+    DrawPuntuationCounter();
 
     for (auto& raton : ratones) {
         raton.Draw();
     }
+    DrawPuntuationCounter();
 
     for (auto& ojo_espectral : ojos_espectrales) {
         ojo_espectral.Draw();
     }
+    DrawPuntuationCounter();
 
     for (auto& chocobo : chocobos) {
         chocobo.Draw();
