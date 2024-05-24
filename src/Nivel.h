@@ -51,7 +51,7 @@ public:
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
 
-    Vector<Espectro> Regresar_resultado(string type);
+    Vector<Espectro> Regresar_resultado();
     Vector<Vector3> result;
 
     Genetico genetico;

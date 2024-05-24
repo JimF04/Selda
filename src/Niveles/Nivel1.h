@@ -33,10 +33,13 @@ public:
 
     virtual bool CheckWinCondition() override {
         if (onstairs){
-            winCondition = true;
-            Vector<Espectro> resultados = Regresar_resultado("gris");
+
+
+            Vector<Espectro> resultados = Regresar_resultado();
             genetico.Producir(resultados);
 
+
+            winCondition = true;
         }
         else {
             winCondition= false;

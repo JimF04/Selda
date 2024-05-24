@@ -103,8 +103,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     PlayMusicStream(levelMusic);
 
-
-
 }
 
 

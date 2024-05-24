@@ -8,7 +8,7 @@ Genetico::Genetico() {
 void Genetico::Producir(Vector<Espectro> resultados) {
     std::ofstream archivo("../assets/alelos.txt", std::ios::app);
     if (!archivo.is_open()) {
-        std::cerr << "Error: No se pudo abrir el archivo 'alelos.txt' para escritura." << std::endl;
+        LOG(INFO) << "Error: No se pudo abrir el archivo 'alelos.txt' para escritura.";
         return;
     }
 

@@ -17,16 +17,16 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     //==============Enemigos================
     for (int i = 0; i < 2; i++){
-        espectroRojo.push_back(Espectro("rojo"));
+        espectros.push_back(Espectro("rojo"));
     }
-    espectroRojo[0].setPosition({6, 36});
-    espectroRojo[1].setPosition({16, 25});
+    espectros[0].setPosition({6, 36});
+    espectros[1].setPosition({16, 25});
 
 
 
     Vector<Vector3> alelos = CargarAleloDesdeArchivo("../assets/alelos.txt");
 
-    Dar_genes(alelos, &espectroRojo);
+    Dar_genes(alelos, &espectros);
 
     cout << "Alelos " << alelos[0].x << " " << alelos[0].y << " " << alelos[0].z << endl;
 
@@ -103,7 +103,7 @@ void Nivel2::Update() {
     UpdateMusicStream(levelMusic);
 
     //==============Update de los enemigos===============
-    UpdateEspectros(espectroRojo);
+    UpdateEspectros(espectros);
 
     //==============Update de los objetos===============
     UpdateChests(cofres);
@@ -127,7 +127,7 @@ void Nivel2::Draw() {
     Draw_Fog();
 
     //==============Enemigos================
-    for (auto&enemigo : espectroRojo){
+    for (auto&enemigo : espectros){
         enemigo.Draw();
     }
 
@@ -190,7 +190,7 @@ void Nivel2::Draw_Fog(){
     DrawRingGradient(ballCenter, ballInnerRadius, ballOuterRadius, 0, 360, 100, Fade(BLACK, 0.99f), Fade(BLACK, 0.0f));
 
 
-    for (auto&enemigo : espectroRojo){
+    for (auto&enemigo : espectros){
 
         // Dibujar el mapa alrededor del enemigo
         Vector2 enemyCenter = enemigo.GetPosition();

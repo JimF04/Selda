@@ -362,13 +362,8 @@ void Nivel::Dar_genes(Vector<Vector3>& alelos, Vector<Espectro>* espectros) {
     std::cout << "Función Dar_genes completada." << std::endl;
 }
 
-Vector<Espectro> Nivel::Regresar_resultado(string type){
-    if (type == "gris"){
-        return espectros;
-    } else if (type == "rojo"){
-        return espectroRojo;
-    } else if (type == "azul"){}
-        return espectroAzul;
+Vector<Espectro> Nivel::Regresar_resultado(){
+    return espectros;
 }
 
 Vector<Vector3> Nivel::CargarAleloDesdeArchivo(const std::string& filename) {
