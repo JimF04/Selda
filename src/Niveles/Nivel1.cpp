@@ -76,7 +76,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
         ratones.push_back(Ratones());
     }
     ratones[0].setPosition({42, 28});
-
     ratones[1].setPosition({32, 11});
 
     for (int i = 0; i < 2; i++){
@@ -189,6 +188,18 @@ void Nivel1::Update() {
                 ball.Atacar();
                 ojo_espectral.setPosition({-1000,1000});
                 contadorPuntuacion += 15;
+            }
+        }
+    }
+
+    for(auto& choco:chocobos){
+        float distance = Vector2Distance(ball.GetPosition(),choco.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Ojo espectral";
+                ball.Atacar();
+                choco.setPosition({-1000,1000});
+                contadorPuntuacion += 30;
             }
         }
     }

@@ -50,9 +50,7 @@ public:
 private:
 
     Vector<Espectro> espectros;
-    queue<Vector2> route1;
-    queue<Vector2> route2;
-    queue<Vector2> route3;
+
 
     Vector<Ratones> ratones;
     Vector<Ojo_Espectral> ojos_espectrales;

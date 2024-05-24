@@ -93,29 +93,36 @@ protected:
     int floor[MAP_WIDTH][MAP_HEIGHT];
     int wall[MAP_WIDTH][MAP_HEIGHT];
     int saferoom[MAP_WIDTH][MAP_HEIGHT];
-
     int traps[MAP_WIDTH][MAP_HEIGHT];
     int falsefloor[MAP_WIDTH][MAP_HEIGHT];
-
     Ball ball;
     int stairs [4] = {158,159,183,184};
     bool onstairs = false;
-
     Stack<Vector2> path;
     Stack<Vector2> pathback;
     bool find_AStar = false;
     queue<Vector2> routa;
     bool visto_por_ojo;
-
     bool visto_por_enemigos;
-
     bool collisionDetected = false;
     double lastCollisionDetectionTime;
-
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
-
     std::vector<FireBall> activeFireballs;
+
+    queue<Vector2> route1;
+    queue<Vector2> route2;
+    queue<Vector2> route3;
+    queue<Vector2> route4;
+    queue<Vector2> route5;
+    queue<Vector2> route6;
+    queue<Vector2> route7;
+    queue<Vector2> route8;
+    queue<Vector2> route9;
+    queue<Vector2> route10;
+    queue<Vector2> route11;
+    queue<Vector2> route12;
+
 
 };
 
