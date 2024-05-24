@@ -76,9 +76,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     espectros[2].setRoute(route3);
 
 
-    Genes.push_back(Vector3{1.0f, 5.0f, 1.0f});
-    Genes.push_back(Vector3{2.0f, 1.0f, 2.0f});
-    Genes.push_back(Vector3{1.0f, 4.0f, 3.0f});
+
     Dar_genes(&espectros);
 
     for ( int i = 0; i < 2; i++){

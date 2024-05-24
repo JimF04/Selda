@@ -29,6 +29,11 @@ int main(int argc, char* argv[]) {
 
     int nivelActualIndex = 0;
 
+    Vector<Vector3> alelos;
+    alelos.push_back(Vector3{1.0f, 5.0f, 1.0f});
+    alelos.push_back(Vector3{2.0f, 1.0f, 2.0f});
+    alelos.push_back(Vector3{1.0f, 4.0f, 3.0f});
+
 
 
     while (!WindowShouldClose())
