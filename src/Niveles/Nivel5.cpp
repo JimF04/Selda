@@ -196,8 +196,10 @@ void Nivel5::Draw() {
     ball.Draw();
     ball.DrawHearts(camera);
     boss.Draw();
-    DrawChestCounter();
-    DrawPuntuationCounter();
+
+
+
+
 
     // Dibujar slimes
     for (auto& slime : slimes) {
@@ -224,10 +226,17 @@ void Nivel5::Draw() {
 
     if (boss.GetBossLives() <= 0) {
         const char* message = "You Conquered the Dungeon";
-
+        Vector2  scorepos = {-68 + camera.target.x, camera.target.y + 40};
+        DrawText(FormatText("Your final score was: %d",contadorPuntuacion),scorepos.x,scorepos.y,10,GREEN);
+        Vector2  treasurepos = {-60 + camera.target.x, camera.target.y + 20};
+        DrawText(FormatText("Treasures collected: %d",contadorCofres),treasurepos.x,treasurepos.y,10,GREEN);
         int messageWidth = MeasureText(message, 12);
         Vector2 messagePosition = { ball.GetPosition().x - messageWidth / 2, ball.GetPosition().y -30 };
         DrawText(message, messagePosition.x, messagePosition.y, 12, GREEN);
+    }
+    else{
+        DrawPuntuationCounter();
+        DrawChestCounter();
     }
 
     for (auto& jarron:jarrones){

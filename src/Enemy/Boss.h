@@ -10,7 +10,7 @@ private:
 public:
     Boss() {
         spritesheet = LoadTexture("../assets/enemyPack/chara_boss.png");
-        BossLives = 15;
+        BossLives = 1;
     }
 
     virtual void Ataque() override;
