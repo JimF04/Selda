@@ -27,7 +27,7 @@
 
         Ball();
         void Draw() const;
-        void Move(int deltaX, int deltaY); // Declaración del método Move
+        void Move(int deltaX, int deltaY);
         Vector2 GetPosition() const;
         int GetRadius() const;
         void setPosition(Vector2 pos);
@@ -65,25 +65,25 @@
             if (lastFireballTime >= fireballCooldown) {
                 Vector2 fireballVelocity = {0, 0};
 
-                // Determinamos la dirección de la bola de fuego según la dirección del jugador
+
                 switch (currentDir) {
                     case Player_RIGHT:
-                        fireballVelocity.x = 1.5f; // Aumentamos la posición en 1 en el eje x
+                        fireballVelocity.x = 1.5f;
                         break;
                     case Player_LEFT:
-                        fireballVelocity.x = -1.5f; // Reducimos la posición en 1 en el eje x
+                        fireballVelocity.x = -1.5f;
                         break;
                     case Player_DOWN:
-                        fireballVelocity.y = 1.5f; // Aumentamos la posición en 1 en el eje y
+                        fireballVelocity.y = 1.5f;
                         break;
                     case Player_UP:
-                        fireballVelocity.y = -1.5f; // Reducimos la posición en 1 en el eje y
+                        fireballVelocity.y = -1.5f;
                         break;
                     case Player_IDLE:
                         fireballVelocity.x = 1.5f;
                         break;
                     default:
-                        // No cambiamos la posición si la dirección no es válida
+
                         break;
                 }
 
@@ -97,16 +97,16 @@
 
 
         void UpdateFireballs() {
-            // Actualizamos todas las bolas de fuego activas
-            for (size_t i = 0; i < activeFireballs.size(); ++i) {
-                activeFireballs[i].UpdatePosition(); // Actualizamos la posición de la bola de fuego
-                activeFireballs[i].UpdateAnimation(); // Actualizamos la animación de la bola de fuego
 
-                // Verificamos la distancia recorrida por la bola de fuego
+            for (size_t i = 0; i < activeFireballs.size(); ++i) {
+                activeFireballs[i].UpdatePosition();
+                activeFireballs[i].UpdateAnimation();
+
+
                 if (Vector2Distance(activeFireballs[i].GetPosition(), position) > maxFireballDistance * 16) {
-                    // Si la distancia es mayor que la distancia máxima permitida, eliminamos la bola de fuego
+
                     activeFireballs.erase(activeFireballs.begin() + i);
-                    // Decrementamos el índice para evitar omitir el siguiente elemento después de borrar uno
+
                     --i;
                 }
             }
@@ -114,7 +114,7 @@
         }
 
         void DrawFireballs() const {
-            // Dibujamos todas las bolas de fuego activas
+
             for (size_t i = 0; i < activeFireballs.size(); ++i) {
                 activeFireballs[i].Draw();
             }
@@ -129,12 +129,10 @@
         int radius;
         Color color;
         std::vector<FireBall> activeFireballs;
-
         int maxFireballDistance = 3;
         float lastFireballTime;
         float fireballCooldown = 1.0f;
 
-        //Vidas vidas;
     };
 
 

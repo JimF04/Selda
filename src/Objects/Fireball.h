@@ -14,7 +14,7 @@ public:
         frameWidth = 16;
         frameHeight = 16;
         currentFrame = 0;
-        totalFrames = 5; // 5 frames para la animación del FireBall
+        totalFrames = 5;
         frameCounter = 0;
         frameSpeed = 8;
         sourceRec = {0, 17, static_cast<float>(frameWidth), static_cast<float>(frameHeight)};

@@ -40,7 +40,7 @@ void Chocobos::bresenham(Vector2 playerPos, int layer[MAP_WIDTH][MAP_HEIGHT]) {
             break;
     }
 
-    // Si el enemigo no puede ver al jugador, salir de la función
+
     if (!canSeePlayer) {
         updateDir(0.02f);
         return;
@@ -55,9 +55,8 @@ void Chocobos::bresenham(Vector2 playerPos, int layer[MAP_WIDTH][MAP_HEIGHT]) {
     int err = dx - dy;
 
     while (x0 != x1 || y0 != y1) {
-        // Check if the current position has an obstacle
+
         if (layer[x0][y0] != 0) {
-            //std::cout << "No ve al personaje" << std::endl;
             return;
         }
 
@@ -75,7 +74,7 @@ void Chocobos::bresenham(Vector2 playerPos, int layer[MAP_WIDTH][MAP_HEIGHT]) {
     float directionX = playerPos.x - position.x;
     float directionY = playerPos.y - position.y;
 
-    // Normaliza la dirección
+
     float length = sqrt(directionX * directionX + directionY * directionY);
     directionX /= length;
     directionY /= length;

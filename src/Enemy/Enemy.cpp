@@ -53,37 +53,37 @@ void Enemy::Move(int deltaX, int deltaY) {
     position.x += deltaX;
     position.y += deltaY;
 
-    // Determine which animation to play based on movement
+
     if (deltaX > 0) {
         currentDirection = RIGHT;
-        // Moving right
-        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
-        // Reset any previous flips
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = FRAME_HEIGHT * 3;
+
+        sourceRec.width = FRAME_WIDTH;
     } else if (deltaX < 0) {
         currentDirection = LEFT;
-        // Moving left
-        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
-        // Flip the sprite horizontally
-        sourceRec.width = -FRAME_WIDTH; // Invert the width
+
+        sourceRec.y = FRAME_HEIGHT * 3;
+
+        sourceRec.width = -FRAME_WIDTH;
     } else if (deltaY > 0) {
         currentDirection = DOWN;
-        // Moving down
-        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
 
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+        sourceRec.y = FRAME_HEIGHT * 2;
+
+        sourceRec.width = FRAME_WIDTH;
     } else if (deltaY < 0) {
         currentDirection = UP;
-        // Moving up
-        sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = FRAME_HEIGHT * 4;
+        sourceRec.width = FRAME_WIDTH;
     } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
         currentDirection = IDLE;
-        // No movement, idle animation
-        sourceRec.y = 0; // Row 1: Idle
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = 0;
+        sourceRec.width = FRAME_WIDTH;
     }
-    // Update the animation
+
     UpdateAnimation();
 }
 
@@ -106,52 +106,51 @@ int Enemy::GetRadius() const
 }
 
 void Enemy::moveToTile(int targetX, int targetY, float pixel) {
-    // Calculate the distance to the target tile
-    float deltaX = (targetX * 16) - position.x; // Assuming each tile is 16x16 pixels
+    float deltaX = (targetX * 16) - position.x;
     float deltaY = (targetY * 16) - position.y;
 
-    // Calculate the normalized direction vector
+
     float directionX = (deltaX != 0) ? (deltaX / abs(deltaX)) : 0;
     float directionY = (deltaY != 0) ? (deltaY / abs(deltaY)) : 0;
 
-    // Move 'pixel' amount towards the target on each axis
+
     position.x += directionX * pixel;
     position.y += directionY * pixel;
 
-    // Determine which animation to play based on movement
+
     if (deltaX > 0) {
         currentDirection = RIGHT;
-        // Moving right
-        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
-        // Reset any previous flips
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = FRAME_HEIGHT * 3;
+
+        sourceRec.width = FRAME_WIDTH;
     } else if (deltaX < 0) {
         currentDirection = LEFT;
-        // Moving left
-        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
-        // Flip the sprite horizontally
-        sourceRec.width = -FRAME_WIDTH; // Invert the width
+
+        sourceRec.y = FRAME_HEIGHT * 3;
+
+        sourceRec.width = -FRAME_WIDTH;
     } else if (deltaY > 0) {
         currentDirection = DOWN;
-        // Moving down
-        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = FRAME_HEIGHT * 2;
+        sourceRec.width = FRAME_WIDTH;
     } else if (deltaY < 0) {
         currentDirection = UP;
-        // Moving up
-        sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = FRAME_HEIGHT * 4;
+        sourceRec.width = FRAME_WIDTH;
     } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
         currentDirection = IDLE;
-        // No movement, idle animation
-        sourceRec.y = 0; // Row 1: Idle
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = 0;
+        sourceRec.width = FRAME_WIDTH;
     }
 
-    // Update the animation
+
     UpdateAnimation();
 
-    // Ensure the enemy doesn't overshoot the target
+
     if ((deltaX > 0 && position.x > targetX * 16) || (deltaX < 0 && position.x < targetX * 16)) {
         position.x = targetX * 16;
     }
@@ -163,12 +162,11 @@ void Enemy::moveToTile(int targetX, int targetY, float pixel) {
 
 void Enemy::FollowPath(Stack<Vector2>& path) {
     if (!path.empty()) {
-        Vector2 target = path.top(); // Obtén el próximo destino sin quitarlo del camino
-        moveToTile(target.x, target.y, speed); // Ajusta el valor de 'pixel' según tu preferencia
+        Vector2 target = path.top();
+        moveToTile(target.x, target.y, speed);
 
         // Verifica si el enemigo ha llegado al centro del destino actual
         if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {
-            // Si el enemigo está lo suficientemente cerca del centro del destino actual, quita el destino del camino
             path.pop();
         }
     }
@@ -176,12 +174,12 @@ void Enemy::FollowPath(Stack<Vector2>& path) {
 
 void Enemy::LoopPath(queue<Vector2> &path) {
     if (!path.empty() && halegado()) {
-        Vector2 target = path.front(); // Obtén el próximo destino sin quitarlo del camino
-        moveToTile(target.x, target.y, speed); // Ajusta el valor de 'pixel' según tu preferencia
+        Vector2 target = path.front();
+        moveToTile(target.x, target.y, speed);
 
-        // Verifica si el enemigo ha llegado al centro del destino actual
+
         if (abs(position.x - target.x * 16) <= 0.5 && abs(position.y - target.y * 16) <= 0.5) {
-            // Si el enemigo está lo suficientemente cerca del centro del destino actual, mueve el destino al final del camino
+
             path.pop();
             path.push(target);
         }
@@ -198,19 +196,17 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
         return false;
     }
 
-    // Obtiene la última "crumb" (últimas coordenadas del jugador)
 
     if(distanceToPlayer<40 && distanceToPlayer>20){
-        // Calcula la dirección hacia la "crumb"
+
         float directionX = target.x - position.x;
         float directionY = target.y - position.y;
 
-        // Normaliza la dirección
+
         float length = sqrt(directionX * directionX + directionY * directionY);
         directionX /= length;
         directionY /= length;
 
-        // Mueve al enemigo en la dirección de la "crumb"
 
         Move(directionX*speed,directionY*speed);
 
@@ -235,9 +231,9 @@ void Enemy::UpdateAnimation() {
     if (frameCounter >= frameSpeed) {
         frameCounter = 0;
         currentFrame++;
-        if (currentFrame > 3) // Si excede el número de frames de la animación
+        if (currentFrame > 3)
         {
-            currentFrame = 0; // Reiniciar la animación
+            currentFrame = 0;
         }
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }
@@ -289,7 +285,7 @@ void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
             {0, -1}  // Arriba
     };
 
-    // Elegir dirección actual si no hay una dirección previa
+
     if (previousDeltaX == 0 && previousDeltaY == 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -299,22 +295,22 @@ void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
         previousDeltaY = dir.second;
     }
 
-    // Calcular nueva posición en la dirección actual
+
     int newX = position.x + previousDeltaX * TILE_SIZE;
     int newY = position.y + previousDeltaY * TILE_SIZE;
 
-    // Verificar si puede moverse en la dirección actual
+
     if (newX >= 0 && newX < MAP_WIDTH * TILE_SIZE && newY >= 0 && newY < MAP_HEIGHT * TILE_SIZE && wall[newX / TILE_SIZE][newY / TILE_SIZE] == 0) {
         moveToTile(newX / TILE_SIZE, newY / TILE_SIZE, 1.0f);
     } else {
-        // Si no puede moverse en la dirección actual, intentar girar a la derecha o izquierda
+
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 1);
 
         bool moved = false;
         for (int i = 0; i < 2; ++i) {
-            int direction = dis(gen) == 0 ? 1 : -1; // Elegir girar a la derecha o izquierda aleatoriamente
+            int direction = dis(gen) == 0 ? 1 : -1;
             int currentIndex = (std::find(directions.begin(), directions.end(), std::make_pair(previousDeltaX, previousDeltaY)) - directions.begin());
             int newDirIndex = (currentIndex + direction) % directions.size();
             if (newDirIndex < 0) newDirIndex += directions.size();
@@ -332,7 +328,7 @@ void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
             }
         }
 
-        // Si no pudo girar a la derecha o izquierda, intentar moverse en cualquier dirección
+
         if (!moved) {
             std::vector<std::pair<int, int>> mutableDirections = directions;
             std::shuffle(mutableDirections.begin(), mutableDirections.end(), gen);
@@ -354,27 +350,27 @@ void Enemy::MoveRandomly(const int wall[MAP_WIDTH][MAP_HEIGHT]) {
 void Enemy::changeDirection(Direction newDirection) {
     currentDirection = newDirection;
 
-    // Actualizar el sprite según la nueva dirección
+
     switch (currentDirection) {
         case RIGHT:
-            sourceRec.y = FRAME_HEIGHT * 3; // Fila 4: Caminar de lado
-            sourceRec.width = FRAME_WIDTH;  // Resetear el ancho
+            sourceRec.y = FRAME_HEIGHT * 3;
+            sourceRec.width = FRAME_WIDTH;
             break;
         case LEFT:
-            sourceRec.y = FRAME_HEIGHT * 3; // Fila 4: Caminar de lado
-            sourceRec.width = -FRAME_WIDTH; // Invertir el ancho
+            sourceRec.y = FRAME_HEIGHT * 3;
+            sourceRec.width = -FRAME_WIDTH;
             break;
         case DOWN:
-            sourceRec.y = FRAME_HEIGHT * 2; // Fila 3: Caminar hacia adelante
-            sourceRec.width = FRAME_WIDTH;  // Resetear el ancho
+            sourceRec.y = FRAME_HEIGHT * 2;
+            sourceRec.width = FRAME_WIDTH;
             break;
         case UP:
-            sourceRec.y = FRAME_HEIGHT * 4; // Fila 3: Caminar hacia adelante
-            sourceRec.width = FRAME_WIDTH;  // Resetear el ancho
+            sourceRec.y = FRAME_HEIGHT * 4;
+            sourceRec.width = FRAME_WIDTH;
             break;
         case IDLE:
-            sourceRec.y = 0; // Fila 1: Idle
-            sourceRec.width = FRAME_WIDTH; // Resetear el ancho
+            sourceRec.y = 0;
+            sourceRec.width = FRAME_WIDTH;
             break;
     }
 }
@@ -383,11 +379,11 @@ void Enemy::updateDir(float deltaTime) {
     lastDirectionChangeTime += deltaTime;
 
     if (lastDirectionChangeTime >= changeInterval) {
-        // Cambiar la dirección aleatoriamente
-        Direction newDirection = static_cast<Direction>(rand() % 4); // Suponiendo que hay 4 direcciones
+
+        Direction newDirection = static_cast<Direction>(rand() % 4);
         changeDirection(newDirection);
 
-        // Resetear el tiempo acumulado
+
         lastDirectionChangeTime = 0.0f;
     }
 }

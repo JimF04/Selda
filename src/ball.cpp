@@ -34,10 +34,7 @@ Ball::Ball() {
 
 void Ball::Draw() const
 {
-//    DrawCircleV(position, radius, color);
 
-
-    // Dibujar el sprite
     DrawTextureRec(spritesheet, sourceRec, {position.x - FRAME_WIDTH / 2, position.y - FRAME_HEIGHT / 2}, WHITE);
 
 }
@@ -47,37 +44,30 @@ void Ball::Move(int deltaX, int deltaY)
     position.x += deltaX;
     position.y += deltaY;
 
-    // Determine which animation to play based on movement
+
     if (deltaX > 0) {
         currentDir = Player_RIGHT;
-        // Moving right
-        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
-        // Reset any previous flips
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+        sourceRec.y = FRAME_HEIGHT * 3;
+        sourceRec.width = FRAME_WIDTH;
     } else if (deltaX < 0) {
         currentDir = Player_LEFT;
-        // Moving left
-        sourceRec.y = FRAME_HEIGHT * 3; // Row 4: Walk sideways
-        // Flip the sprite horizontally
-        sourceRec.width = -FRAME_WIDTH; // Invert the width
+        sourceRec.y = FRAME_HEIGHT * 3;
+        sourceRec.width = -FRAME_WIDTH;
     } else if (deltaY > 0) {
         currentDir = Player_DOWN;
-        // Moving down
-        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+        sourceRec.y = FRAME_HEIGHT * 2;
+        sourceRec.width = FRAME_WIDTH;
     } else if (deltaY < 0) {
         currentDir = Player_UP;
-        // Moving up
-        sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+        sourceRec.y = FRAME_HEIGHT * 4;
+        sourceRec.width = FRAME_WIDTH;
     } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
         currentDir = Player_IDLE;
-        // No movement, idle animation
-        sourceRec.y = 0; // Row 1: Idle
-        sourceRec.width = FRAME_WIDTH; // Reset the width
+
+        sourceRec.y = 0;
+        sourceRec.width = FRAME_WIDTH;
     }
 
-    // Update the animation
     UpdateAnimation();
 
     GetCrumbs();
@@ -129,17 +119,17 @@ void Ball::Dano(){
 
 void Ball::UpdateAnimation()
 {
-    // Actualiza el frame actual basado en el tiempo
+
     frameCounter++;
     if (frameCounter >= frameSpeed)
     {
         frameCounter = 0;
         currentFrame++;
-        if (currentFrame > 2) // Si excede el número de frames de la animación
+        if (currentFrame > 2)
         {
-            currentFrame = 0; // Reiniciar la animación
+            currentFrame = 0;
         }
-        // Actualizar el rectángulo fuente de la textura para el siguiente frame
+
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }}
 
@@ -182,13 +172,13 @@ int Ball::ResetLives() {
 
 void Ball::DrawHearts(Camera2D camera) const {
     const int heartSize = 15;
-    // Calcula la posición inicial de los corazones
+
     Vector2 heartPosition = {position.x-117 , position.y-78};
 
     for (int i = 0; i < lives; ++i) {
-        // Dibuja el corazón en la posición actual
+
         DrawTextureEx(heartTexture, heartPosition, 0.0f, static_cast<float>(heartSize) / heartTexture.width, WHITE);
-        // Avanza la posición para el próximo corazón
+
         heartPosition.x += heartSize -5;
     }
 }

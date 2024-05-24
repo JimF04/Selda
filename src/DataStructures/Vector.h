@@ -7,9 +7,9 @@
 template <typename T>
 class Vector {
 private:
-    T *data; // Puntero al array de elementos
-    size_t capacity; // Capacidad actual del vector
-    size_t size; // Tamaño actual del vector
+    T *data;
+    size_t capacity;
+    size_t size;
 
 public:
     // Constructor por defecto
@@ -39,7 +39,7 @@ public:
         return *this;
     }
 
-    // Función para añadir elementos al final del vector
+
     void push_back(const T &value) {
         if (size >= capacity) {
             size_t new_capacity = (capacity == 0) ? 1 : capacity * 2;
@@ -49,7 +49,7 @@ public:
         size++;
     }
 
-    // Función para acceder a los elementos por índice
+
     T& operator[](size_t index) {
         if (index >= size) {
             throw std::out_of_range("Índice fuera de rango");
@@ -64,27 +64,27 @@ public:
         return data[index];
     }
 
-    // Función que devuelve el tamaño del vector
+
     size_t getSize() const {
         return size;
     }
 
-    // Función que devuelve la capacidad del vector
+
     size_t getCapacity() const {
         return capacity;
     }
 
-    // Método que devuelve si el vector está vacío
+
     bool empty() const {
         return size == 0;
     }
 
-    // Método que devuelve un iterador al principio del vector
+
     T* begin() {
         return data;
     }
 
-    // Método que devuelve un iterador al final del vector
+
     T* end() {
         return data + size;
     }
@@ -99,7 +99,7 @@ public:
         }
         --size;
     }
-// Función interna para cambiar la capacidad del vector
+
     void resize(size_t new_capacity) {
         T *new_data = new T[new_capacity];
         for (size_t i = 0; i < size; ++i) {

@@ -25,7 +25,7 @@ public:
         if (lastFireballTime >= fireballCooldown) {
             Vector2 fireballVelocity = {0, 0};
 
-            // Determinamos la dirección de la bola de fuego según la dirección del jugador
+
             switch (currentDirection) {
                 case RIGHT:
                     fireballVelocity.x = 0.5;
@@ -43,7 +43,7 @@ public:
                     fireballVelocity.x = 0.5f;
                     break;
                 default:
-                    // No cambiamos la posición si la dirección no es válida
+
                     break;
             }
 

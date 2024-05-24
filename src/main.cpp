@@ -7,8 +7,8 @@
 #include "Niveles/Nivel5.h"
 #include "Algoritmos/Genetico.h"
 #include <glog/logging.h>
-#include <fstream> // Incluir la biblioteca para la manipulación de archivos
-#include <vector>  // Incluir la biblioteca para el uso de vectores
+#include <fstream>
+#include <vector>
 
 int main(int argc, char* argv[]) {
     // Inicialización de Glog
@@ -23,13 +23,13 @@ int main(int argc, char* argv[]) {
 
     LOG(INFO) << "Inicio del juego";
 
-    // Vector de alelos
+
     std::vector<Vector3> alelos;
     alelos.push_back(Vector3{1.0f, 5.0f, 1.0f});
     alelos.push_back(Vector3{2.0f, 1.0f, 2.0f});
     alelos.push_back(Vector3{1.0f, 4.0f, 3.0f});
 
-    // Código para guardar alelos en un archivo de texto antes de iniciar el juego
+
     std::ofstream file("../assets/alelos.txt");
     if (file.is_open()) {
         for (const auto& alelo : alelos) {
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 
             delete nivelActual;
 
-            nivelActualIndex++; // Avanzar al siguiente nivel
+            nivelActualIndex++;
             if (nivelActualIndex >= 5){
                 nivelActualIndex = 0;
                 puntuacionAcumulada = 0;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
         } else if (IsKeyPressed(KEY_LEFT)){ // Solo para pruebas
             delete nivelActual;
 
-            nivelActualIndex--; // Retroceder al nivel anterior
+            nivelActualIndex--;
             if (nivelActualIndex < 0){
                 nivelActualIndex = 5;
                 puntuacionAcumulada = 0;

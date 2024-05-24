@@ -337,20 +337,20 @@ void Nivel1::Draw() {
 
 
 void Nivel1::DrawAStar(Stack<Vector2> path) {
-    // Calcula el desplazamiento necesario para centrar los círculos en cada celd
-    float offsetX = (TILE_SIZE - 6) / 2.0f; // 5 es el radio del círculo
+
+    float offsetX = (TILE_SIZE - 6) / 2.0f;
     float offsetY = (TILE_SIZE - 6) / 2.0f;
 
-    // Dibujar círculos verdes en cada posición del camino encontrado
+
     while (!path.empty()) {
         Vector2 point = path.top();
         path.pop();
 
-        // Convertir las coordenadas de la matriz a las coordenadas del mundo
+
         float worldX = static_cast<float>(point.x * TILE_SIZE + offsetX);
         float worldY = static_cast<float>(point.y * TILE_SIZE + offsetY);
 
-        // Dibujar un círculo verde en la posición del mundo
+
         DrawCircle(worldX, worldY, 5, GREEN);
     }
 }
