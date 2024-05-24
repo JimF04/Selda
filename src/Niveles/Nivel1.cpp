@@ -11,6 +11,10 @@
 #include "../Enemy/Enemy.h"
 #include "../Objects/Cofres.h"
 #include "../Objects/Jarrones.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <vector>
 
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
@@ -77,7 +81,13 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route4.push({56,38});
     espectros[3].setRoute(route4);
 
+    Genes.push_back(Vector3{1.0f, 5.0f, 1.0f});
+    Genes.push_back(Vector3{2.0f, 1.0f, 2.0f});
+    Genes.push_back(Vector3{1.0f, 4.0f, 3.0f});
 
+    std::vector<Vector3> alelos = CargarAleloDesdeArchivo("../assets/alelos.txt");
+
+    Dar_genes(alelos,&espectros);
 
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());
@@ -111,6 +121,8 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
 
     PlayMusicStream(levelMusic);
 
+
+
 }
 
 
@@ -118,7 +130,7 @@ void Nivel1::Update() {
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
-    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    bool isShiftPressed = IsKeyDown(KEY_E);
     static bool keyKPressed = false;
 
 
@@ -283,8 +295,8 @@ void Nivel1::Draw() {
 
     //========================Enemigos========================
 
-    for (auto& espectro : espectros) {
-        espectro.Draw();
+    for (auto& Espectro : espectros) {
+        Espectro.Draw();
     }
     DrawPuntuationCounter();
 

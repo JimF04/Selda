@@ -225,7 +225,9 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
 void Enemy::Ataque(){
     sourceRec.y = FRAME_HEIGHT*5;
+    ataques +=1;
     UpdateAnimation();
+
 }
 
 void Enemy::UpdateAnimation() {
@@ -239,6 +241,7 @@ void Enemy::UpdateAnimation() {
         }
         sourceRec.x = currentFrame * FRAME_WIDTH;
     }
+    duracion +=1;
 }
 bool Enemy::GetCollisionWithHitbox(const Hitbox &hitbox) const {
     return CheckCollisionCircleRec(position, radius, hitbox.GetRect());
@@ -247,10 +250,12 @@ bool Enemy::GetCollisionWithHitbox(const Hitbox &hitbox) const {
 
 void Enemy::SetEliminated(bool eliminated) {
     this->eliminated = eliminated;
+    muerto = true;
 }
 
 bool Enemy::IsEliminated() const {
     return eliminated;
+
 }
 
 Vector2 Enemy::Get_inial_position(){

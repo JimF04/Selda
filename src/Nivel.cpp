@@ -23,6 +23,7 @@ Nivel::Nivel(int screenWidth, int screenHeight) : screenWidth(screenWidth), scre
     CofreSonido = LoadSound("../assets/COFRE.mp3");
     Ojomusica = LoadSound("../assets/OjoSound.mp3");
 
+
 }
 
 void Nivel::LoadMap(std::string mapJson, int layerIndex, int layer[MAP_WIDTH][MAP_HEIGHT]) {
@@ -407,6 +408,51 @@ void Nivel::UpdateChoco(Vector<Chocobos> &chocobos){
             }
         }
         collisionDetected = false;
+    }
+}
+
+void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros) {
+    // Verificar que el vector de alelos no esté vacío
+    if (alelos.empty()) {
+        std::cerr << "Error: El vector de alelos está vacío." << std::endl;
+        throw std::runtime_error("El vector de alelos está vacío.");
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, alelos.size() - 1); // Distribución para seleccionar índices de alelos
+
+    // Iterar sobre cada espectro y asignar un valor aleatorio de alelos a un atributo aleatorio
+    for (auto& espectro : *espectros) {
+        int random_index = dist(gen);
+        std::cout << "Índice aleatorio generado: " << random_index << std::endl;
+
+        if (random_index < 0 || random_index >= alelos.size()) {
+            std::cerr << "Error: Índice de alelo aleatorio fuera de rango." << std::endl;
+            throw std::out_of_range("Índice de alelo aleatorio fuera de rango.");
+        }
+
+        Vector3 alelo = alelos[random_index];
+
+        // Debugging: imprimir el alelo seleccionado y los valores asignados
+        std::cout << "Asignando alelo: (" << alelo.x << ", " << alelo.y << ", " << alelo.z << ") al espectro" << std::endl;
+
+        espectro.speed = alelo.x;
+        espectro.lives = alelo.y;
+        espectro.damage = alelo.z;
+
+        std::cout << "Asignación completada para el espectro." << std::endl;
+    }
+
+    std::cout << "Función Dar_genes completada." << std::endl;
+}
+
+Vector<Espectro> Nivel::Regresar_resultado(){
+
+
+    for(auto& espectro:espectros){
+        std::cout<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion<<endl;
+        return espectros;
 
     }
 }
@@ -507,6 +553,28 @@ void Nivel::UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& acti
         rojo.lastFireballTime += GetFrameTime();
 
     }
+}
+
+std::vector<Vector3> Nivel::CargarAleloDesdeArchivo(const std::string& filename) {
+    std::vector<Vector3> alelos;
+    std::ifstream file(filename);
+
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            float x, y, z;
+            if (iss >> x >> y >> z) {
+                alelos.push_back(Vector3{x, y, z});
+            }
+        }
+        file.close();
+    } else {
+        std::cerr << "Error: No se pudo abrir el archivo " << filename << std::endl;
+        throw std::runtime_error("No se pudo abrir el archivo de alelos.");
+    }
+
+    return alelos;
 }
 
 

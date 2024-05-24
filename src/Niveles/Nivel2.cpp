@@ -19,6 +19,7 @@ Nivel2::Nivel2(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     //==============Enemigos================
     for (int i = 0; i < 5; i++){
         espectroRojo.push_back(Espectro("rojo"));
+        espectros.push_back(Espectro("gris"));
     }
 
     espectroRojo[0].setPosition({6, 36});
