@@ -72,10 +72,13 @@ public:
 
     void UpdateRojos(Vector<Espectro> &rojos, std::vector<FireBall>& activeFireballs){
         for (auto& rojo : rojos) {
-            if (personaje_visto){
-                rojo.LaunchFireball(activeFireballs);
+            if (rojo.type == "rojo") {
+
+                if (personaje_visto) {
+                    rojo.LaunchFireball(activeFireballs);
+                }
+                UpdateFireballs(rojos, activeFireballs);
             }
-            UpdateFireballs(rojos, activeFireballs);
         }
     }
 

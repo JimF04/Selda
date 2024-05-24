@@ -155,7 +155,9 @@ void Nivel::DrawCenteredText(const char* text, int fontSize, Color color) {
 void Nivel::UpdateEspectros(Vector<Espectro>& espectros) {
     AStar astar(wall);
     Backtrack backtrack(wall);
-    if(RataVe){}
+    if(RataVe){
+
+    }
     else {
         for (auto &espectros: espectros) {
             if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
@@ -501,9 +503,10 @@ void Nivel::UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& acti
     }
 
     for ( auto & rojo : rojos){
-        rojo.lastFireballTime += GetFrameTime();
-    }
 
+        rojo.lastFireballTime += GetFrameTime();
+
+    }
 }
 
 

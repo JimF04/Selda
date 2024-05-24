@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
         nivelActual->Draw();
 
 
-        if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_SPACE)){
+        if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_RIGHT)){
             puntuacionAcumulada =100 + nivelActual->GetPuntuacion();
             delete nivelActual;
 
@@ -67,6 +67,32 @@ int main(int argc, char* argv[]) {
                     break;
             }
 
+        } else if (IsKeyPressed(KEY_LEFT)){ // Solo para pruebas
+            delete nivelActual;
+
+            nivelActualIndex--; // Retroceder al nivel anterior
+            if (nivelActualIndex < 0){
+                nivelActualIndex = 5;
+                puntuacionAcumulada = 0;
+            }
+
+            switch (nivelActualIndex){
+                case 0:
+                    nivelActual = new Nivel1(screenWidth, screenHeight);
+                    break;
+                case 1:
+                    nivelActual = new Nivel2(screenWidth, screenHeight,puntuacionAcumulada);
+                    break;
+                case 2:
+                    nivelActual = new Nivel3(screenWidth, screenHeight,puntuacionAcumulada);
+                    break;
+                case 3:
+                    nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada);
+                    break;
+                case 4:
+                    nivelActual = new Nivel5(screenWidth, screenHeight,puntuacionAcumulada);
+                    break;
+            }
         }
 
         EndDrawing();

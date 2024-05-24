@@ -63,22 +63,22 @@ Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     rojo[1].setRoute(route2);
 
     for ( int i = 0; i < 2; i++){
-        gris.push_back(Espectro("gris"));
+        rojo.push_back(Espectro("gris"));
     }
 
-    gris[0].setPosition({37,25});
+    rojo[2].setPosition({37,25});
     route3.push({37,11});
     route3.push({43,11});
     route3.push({37,11});
     route3.push({37,25});
-    gris[0].setRoute(route3);
+    rojo[2].setRoute(route3);
 
-    gris[1].setPosition({21,39});
+    rojo[3].setPosition({21,39});
     route4.push({36,39});
     route4.push({36,44});
     route4.push({21,44});
     route4.push({21,39});
-    gris[1].setRoute(route4);
+    rojo[3].setRoute(route4);
 
     for ( int i = 0; i < 1; i++){
         azul.push_back(Espectro("azul"));
@@ -188,16 +188,16 @@ void Nivel4::Update() {
         }
     }
 
-    for(auto& espectro:gris){
-        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
-        if(distance < ball.GetRadius() + 10){
-            if(IsKeyDown(KEY_L)){
-                ball.Atacar();
-                contadorPuntuacion+=20;
-                espectro.setPosition({-1000,1000});
-            }
-        }
-    }
+//    for(auto& espectro:gris){
+//        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
+//        if(distance < ball.GetRadius() + 10){
+//            if(IsKeyDown(KEY_L)){
+//                ball.Atacar();
+//                contadorPuntuacion+=20;
+//                espectro.setPosition({-1000,1000});
+//            }
+//        }
+//    }
 
     for(auto& ojo_espectral:ojos_espectrales){
         float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
@@ -225,19 +225,20 @@ void Nivel4::Update() {
     chocobos[1].bresenham(ball.GetPosition(), wall);
     chocobos[2].bresenham(ball.GetPosition(), wall);
 
+    UpdateRojos(rojo, activeFireballs);
+
     UpdateEspectros(rojo);
     UpdateEspectros(azul);
-    UpdateEspectros(gris);
     UpdatesAzules(azul, ball.GetPosition());
-    UpdateRojos(rojo, activeFireballs);
+
     UpdateChoco(chocobos);
     UpdateOjos(ojos_espectrales,ball.GetPosition());
 
     if (!personaje_visto) {
         rojo[0].LoopPath(route1);
         rojo[1].LoopPath(route2);
-        gris[0].LoopPath(route3);
-        gris[1].LoopPath(route4);
+        rojo[2].LoopPath(route3);
+        rojo[3].LoopPath(route4);
         azul[0].LoopPath(route5);
     }
 
@@ -272,9 +273,6 @@ void Nivel4::Draw() {
         espectro.Draw();
     }
 
-    for (auto& espectro : gris) {
-        espectro.Draw();
-    }
 
     for (auto& choco : chocobos) {
         choco.Draw();
