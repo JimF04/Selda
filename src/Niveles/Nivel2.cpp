@@ -16,11 +16,11 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     PlayMusicStream(levelMusic);
 
     //==============Enemigos================
-    for (int i = 0; i < 1; i++){
+    for (int i = 0; i < 2; i++){
         espectroRojo.push_back(Espectro("rojo"));
     }
     espectroRojo[0].setPosition({6, 36});
-    //espectroRojo[1].setPosition({16, 25});
+    espectroRojo[1].setPosition({16, 25});
 
     //=============Objects================
     // Antorchas
@@ -95,7 +95,7 @@ void Nivel2::Update() {
 
     //==============Update de los enemigos===============
     UpdateEspectros(espectroRojo);
-    UpdateRojos(espectroRojo);
+    UpdateRojos(espectroRojo, activeFireballs);
 
     //==============Update de los objetos===============
     UpdateChests(cofres);
@@ -121,7 +121,7 @@ void Nivel2::Draw() {
     //==============Enemigos================
     for (auto&enemigo : espectroRojo){
         enemigo.Draw();
-        enemigo.DrawFireballs();
+        enemigo.DrawFireballs(activeFireballs);
     }
 
     //============Objetos================

@@ -406,6 +406,36 @@ void Nivel::Vision(Enemy enemy){
 }
 
 
+void Nivel::UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& activeFireballs) {
+    // Actualizamos todas las bolas de fuego activas
+
+    for (size_t i = 0; i < activeFireballs.size(); ++i) {
+        activeFireballs[i].UpdatePosition();
+        activeFireballs[i].UpdateAnimation(); // Actualizamos la animación de la bola de fuego
+
+        // Calculamos la distancia entre la bola de fuego y la bola principal
+        float distanceToBall = Vector2Distance(activeFireballs[i].GetPosition(), ball.GetPosition());
+        //Comprobamos si hay colisión
+        if (distanceToBall < ball.GetRadius() + 2) {
+            ball.DecreaseLives(1);
+            activeFireballs.erase(activeFireballs.begin() + i);
+            cout << "Colisión detectada entre la bola de fuego y la pelota" << endl; // Imprimir un mensaje
+        } else
+
+            // Verificamos la distancia recorrida por la bola de fuego
+        if (Vector2Distance(activeFireballs[i].GetPosition(), ball.GetPosition()) > maxFireballDistance * 16) {
+            activeFireballs.erase(activeFireballs.begin() + i);
+            --i;
+        }
+    }
+
+    for ( auto & rojo : rojos){
+        rojo.lastFireballTime += GetFrameTime();
+    }
+
+}
+
+
 
 
 

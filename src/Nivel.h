@@ -17,6 +17,7 @@
 #include "Enemy/Chocobos.h"
 #include "Objects/Cofres.h"
 #include "Objects/Jarrones.h"
+#include "Objects/Fireball.h"
 
 class Nivel {
 public:
@@ -56,14 +57,18 @@ public:
     bool personaje_visto;
 
 
-    void UpdateRojos(Vector<Espectro> &rojos){
+    void UpdateRojos(Vector<Espectro> &rojos, std::vector<FireBall>& activeFireballs){
         for (auto& rojo : rojos) {
             if (personaje_visto){
-                rojo.LaunchFireball();
+                rojo.LaunchFireball(activeFireballs);
             }
-            rojo.UpdateFireballs(ball);
+            UpdateFireballs(rojos, activeFireballs);
         }
     }
+
+    void UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& activeFireballs);
+
+    int maxFireballDistance = 5;
 
 protected:
     // Variables comunes a todos los niveles
@@ -96,6 +101,8 @@ protected:
 
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
+
+    std::vector<FireBall> activeFireballs;
 
 };
 
