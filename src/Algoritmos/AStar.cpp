@@ -37,7 +37,7 @@ void quickSort(AStarNode** arr, int low, int high) {
 }
 
 void AStar::printPath(Stack<Vector2> path) const {
-    std::cout << "Path found:" << std::endl;
+    LOG(INFO) << "Camino encontrado:";
     while (!path.empty()) {
         Vector2 point = path.top();
         std::cout << "(" << static_cast<int>(point.x) << ", " << static_cast<int>(point.y) << ")" << std::endl;

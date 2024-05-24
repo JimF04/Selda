@@ -8,7 +8,7 @@ bool Backtrack::isValid(int x, int y) {
 }
 
 void Backtrack::printPath(Stack<Vector2> path) const {
-    std::cout << "Path found:" << std::endl;
+    LOG(INFO) << "Camino encontrado:";
     while (!path.empty()) {
         Vector2 point = path.top();
         std::cout << "(" << static_cast<int>(point.x) << ", " << static_cast<int>(point.y) << ")" << std::endl;
