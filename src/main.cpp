@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
                     nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada);
                     break;
                 case 4:
-                    nivelActual = new Nivel5(screenWidth, screenHeight);
+                    nivelActual = new Nivel5(screenWidth, screenHeight,puntuacionAcumulada);
                     break;
             }
 

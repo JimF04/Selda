@@ -317,7 +317,7 @@ void Nivel::UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 posicion_player) {
 void Nivel::ResetLevel(float BallXPos, float BallYPos) {
     ball.setPosition({BallXPos, BallYPos});
     ball.ResetLives();
-    contadorPuntuacion = 0;
+    contadorPuntuacion /= 2;
 }
 
 void Nivel::DrawChestCounter() {

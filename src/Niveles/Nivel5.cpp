@@ -1,8 +1,9 @@
 #include "Nivel5.h"
 #include "../Algoritmos/AStar.h"
 
-Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight) {
+Nivel5::Nivel5(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight) {
     // Iniciar clases
+    contadorPuntuacion = puntuacionInicial;
     ball = Ball();
     ball.setPosition({ 592, 704 });
     boss = Boss();
@@ -20,7 +21,27 @@ Nivel5::Nivel5(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     lastSlimeSpawnTime = GetTime();
     victoryMusicStarted = false;
 
+
+    //==============Dibujo de los jarrones===============//
+    for(int i = 0; i<11;i++){
+        jarrones.push_back(Jarrones());
+    }
+    jarrones[0].setPosition({35,17});
+    jarrones[1].setPosition({38,17});
+    jarrones[2].setPosition({30,6});
+    jarrones[3].setPosition({43,6});
+    jarrones[4].setPosition({27,42});
+    jarrones[5].setPosition({46,42});
+    jarrones[6].setPosition({55,31});
+    jarrones[7].setPosition({55,18});
+    jarrones[8].setPosition({18,31});
+    jarrones[9].setPosition({19,15});
+    jarrones[10].setPosition({36,30});
+
+
+
 }
+
 
 void Nivel5::Update() {
     double currentTime = GetTime();
@@ -72,7 +93,9 @@ void Nivel5::Update() {
             float attackRange = 30.0f;
 
             if (distance < attackRange) {
+                contadorPuntuacion += 50;
                 slimes[i].setPosition({1200, -1100});
+
             }
         }
 
@@ -92,6 +115,7 @@ void Nivel5::Update() {
     LayerCollision(deltaX, deltaY, wall, "wall");
     LayerCollision(deltaX, deltaY, saferoom, "saferoom");
     UpdateMusicStream(levelMusic);
+    UpdateJars(jarrones);
 
     //==============Update de los enemigos===============
 
@@ -108,7 +132,6 @@ void Nivel5::Update() {
     boss.FollowPath(path);
     UpdateSlimes(slimes);
     UpdateChests(cofres);
-
 
 
     if (distanceToPlayer < BossattackRange) {
@@ -134,32 +157,32 @@ void Nivel5::Update() {
     }
 
 
-
     if (boss.GetBossLives() == 0 && !victoryMusicStarted) {
         StopMusicStream(levelMusic);
         victoryMusicStarted = true;
-        boss.setPosition({1000,-1100});
+        boss.setPosition({1000, -1100});
+        contadorPuntuacion += 1500;
     }
 
-    if(victoryMusicStarted){
+    if (victoryMusicStarted) {
         PlayMusicStream(victoryMusic);
         UpdateMusicStream(victoryMusic);
 
     }
 
-    for (auto& slime : slimes){
+    for (auto &slime: slimes) {
         // Calcular la distancia entre el slime y el jugador
         float distance = Vector2Distance(ball.GetPosition(), slime.GetPosition());
 
         // Verificar si el slime está dentro del rango de ataque
-        if (distance < slimeattackRange ) {
+        if (distance < slimeattackRange) {
             // Llamar a la función Atacar del slime
             slime.Ataque();
         }
     }
 
-}
 
+}
 
 void Nivel5::Draw() {
     BeginMode2D(camera);
@@ -173,6 +196,8 @@ void Nivel5::Draw() {
     ball.Draw();
     ball.DrawHearts(camera);
     boss.Draw();
+    DrawChestCounter();
+    DrawPuntuationCounter();
 
     // Dibujar slimes
     for (auto& slime : slimes) {
@@ -199,9 +224,14 @@ void Nivel5::Draw() {
 
     if (boss.GetBossLives() <= 0) {
         const char* message = "You Conquered the Dungeon";
+
         int messageWidth = MeasureText(message, 12);
         Vector2 messagePosition = { ball.GetPosition().x - messageWidth / 2, ball.GetPosition().y -30 };
         DrawText(message, messagePosition.x, messagePosition.y, 12, GREEN);
+    }
+
+    for (auto& jarron:jarrones){
+        jarron.drawTile();
     }
 
     EndMode2D();
