@@ -50,8 +50,6 @@ public:
 private:
 
     Vector<Espectro> espectros;
-
-
     Vector<Ratones> ratones;
     Vector<Ojo_Espectral> ojos_espectrales;
     Vector<Chocobos> chocobos;

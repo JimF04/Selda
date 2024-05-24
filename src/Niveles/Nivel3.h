@@ -20,6 +20,9 @@ public:
     virtual void Draw() override;
     Music levelMusic;
     float keyKReleaseTime;
+    Vector<Espectro> espectros;
+    Vector<Ojo_Espectral> ojos_espectrales;
+    Vector<Chocobos> chocobos;
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {

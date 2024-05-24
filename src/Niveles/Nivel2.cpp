@@ -261,6 +261,13 @@ void Nivel2::Draw() {
         jarron.drawTile();
     }
 
+    for (auto& chocobo : chocobos) {
+        chocobo.Draw();
+    }
+
+    for (auto& ojo_espectral : ojos_espectrales) {
+        ojo_espectral.Draw();
+    }
 
     Draw_Fog();
 
@@ -270,13 +277,7 @@ void Nivel2::Draw() {
         enemigo.DrawFireballs(activeFireballs);
     }
 
-    for (auto& chocobo : chocobos) {
-        chocobo.Draw();
-    }
 
-    for (auto& ojo_espectral : ojos_espectrales) {
-        ojo_espectral.Draw();
-    }
 
     //============Objetos================
     for (auto&objeto : torch){
