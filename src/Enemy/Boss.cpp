@@ -14,7 +14,7 @@ void Boss::Draw() const
 void Boss::SpawnSlime(Vector<Slime> &slimes){
     Slime nuevoSlime;
     slimes.push_back(nuevoSlime);
-    std::cout<<"Se creo un slime";
+    LOG(INFO) << "Slime spawned";
 
 }
 

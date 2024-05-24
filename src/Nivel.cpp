@@ -482,7 +482,7 @@ void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros)
     // Iterar sobre cada espectro y asignar un valor aleatorio de alelos a un atributo aleatorio
     for (auto& espectro : *espectros) {
         int random_index = dist(gen);
-        std::cout << "Índice aleatorio generado: " << random_index << std::endl;
+        LOG(INFO)<< "Índice aleatorio generado: " << random_index;
 
         if (random_index < 0 || random_index >= alelos.size()) {
             std::cerr << "Error: Índice de alelo aleatorio fuera de rango." << std::endl;
@@ -492,23 +492,23 @@ void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros)
         Vector3 alelo = alelos[random_index];
 
         // Debugging: imprimir el alelo seleccionado y los valores asignados
-        std::cout << "Asignando alelo: (" << alelo.x << ", " << alelo.y << ", " << alelo.z << ") al espectro" << std::endl;
+        LOG(INFO)<< "Asignando alelo: (" << alelo.x << ", " << alelo.y << ", " << alelo.z << ") al espectro";
 
         espectro.speed = alelo.x;
         espectro.lives = alelo.y;
         espectro.damage = alelo.z;
 
-        std::cout << "Asignación completada para el espectro." << std::endl;
+        LOG(INFO)<< "Asignación completada para el espectro.";
     }
 
-    std::cout << "Función Dar_genes completada." << std::endl;
+    LOG(INFO)<< "Función Dar_genes completada.";
 }
 
 Vector<Espectro> Nivel::Regresar_resultado(){
 
 
     for(auto& espectro:espectros){
-        std::cout<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion<<endl;
+        LOG(INFO)<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion;
         return espectros;
 
     }
@@ -562,7 +562,6 @@ void Nivel::Vision(Enemy enemy){
     while (x0 != x1 || y0 != y1) {
         // Check if the current position has an obstacle
         if (wall[x0][y0] != 0) {
-            //std::cout << "No ve al personaje" << std::endl;
             visto_por_enemigos = false;
 
             return;
@@ -595,7 +594,7 @@ void Nivel::UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& acti
         if (distanceToBall < ball.GetRadius() + 2 && !ball.IsDefending) {
             ball.DecreaseLives(1);
             activeFireballs.erase(activeFireballs.begin() + i);
-            cout << "Colisión detectada entre la bola de fuego y la pelota" << endl; // Imprimir un mensaje
+            LOG(INFO)<< "Colisión detectada entre la bola de fuego y la pelota";
         } else
 
             // Verificamos la distancia recorrida por la bola de fuego

@@ -177,7 +177,7 @@ void Nivel1::Update() {
         float distance = Vector2Distance(ball.GetPosition(),raton.GetPosition());
         if(distance < ball.GetRadius() + 10){
             if(IsKeyDown(KEY_L)){
-                cout<<"Collisioned with Rat";
+            LOG(INFO) << "Collisioned with Rat";
                 ball.Atacar();
                 contadorPuntuacion += 10;
                 cout<<contadorPuntuacion;
@@ -192,10 +192,9 @@ void Nivel1::Update() {
         float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
         if(distance < ball.GetRadius() + 10){
             if(IsKeyDown(KEY_L)){
-                cout<<"Collisioned with Espectro";
+                LOG(INFO) << "Collisioned with Espectro";
                 ball.Atacar();
                 contadorPuntuacion += 15;
-                cout<<contadorPuntuacion;
                 espectro.setPosition({-1000,1000});
 
             }
@@ -208,7 +207,7 @@ void Nivel1::Update() {
         float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
         if(distance < ball.GetRadius() + 10){
             if(IsKeyDown(KEY_L)){
-                cout<<"Collisioned with Ojo espectral";
+                LOG(INFO)<<"Collisioned with Ojo espectral";
                 ball.Atacar();
                 ojo_espectral.setPosition({-1000,1000});
                 contadorPuntuacion += 15;
@@ -220,7 +219,7 @@ void Nivel1::Update() {
         float distance = Vector2Distance(ball.GetPosition(),choco.GetPosition());
         if(distance < ball.GetRadius() + 10){
             if(IsKeyDown(KEY_L)){
-                cout<<"Collisioned with Ojo espectral";
+                LOG(INFO)<<"Collisioned with Ojo espectral";
                 ball.Atacar();
                 choco.setPosition({-1000,1000});
                 contadorPuntuacion += 30;
