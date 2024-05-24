@@ -20,23 +20,23 @@ public:
 
 
     void LaunchFireball() {
-        FireBall fireball(position, "enemigo");
+        FireBall fireball({position.x , position.y}, "enemigo");
         if (lastFireballTime >= fireballCooldown) {
             Vector2 fireballVelocity = {0, 0};
 
             // Determinamos la dirección de la bola de fuego según la dirección del jugador
             switch (currentDirection) {
                 case RIGHT:
-                    fireballVelocity.x = 0.5; // Aumentamos la posición en 1 en el eje x
+                    fireballVelocity.x = 0.5;
                     break;
                 case LEFT:
-                    fireballVelocity.x = -0.5f; // Reducimos la posición en 1 en el eje x
+                    fireballVelocity.x = -0.5f;
                     break;
                 case DOWN:
-                    fireballVelocity.y = 0.5f; // Aumentamos la posición en 1 en el eje y
+                    fireballVelocity.y = 0.5f;
                     break;
                 case UP:
-                    fireballVelocity.y = -0.5f; // Reducimos la posición en 1 en el eje y
+                    fireballVelocity.y = -0.5f;
                     break;
                 case IDLE:
                     fireballVelocity.x = 0.5f;
@@ -55,26 +55,30 @@ public:
     }
 
 
-    void UpdateFireballs() {
+    void UpdateFireballs(Ball ball) {
         // Actualizamos todas las bolas de fuego activas
+
         for (size_t i = 0; i < activeFireballs.size(); ++i) {
-            activeFireballs[i].UpdatePosition(); // Actualizamos la posición de la bola de fuego
+            activeFireballs[i].UpdatePosition();
             activeFireballs[i].UpdateAnimation(); // Actualizamos la animación de la bola de fuego
 
             // Calculamos la distancia entre la bola de fuego y la bola principal
             float distanceToBall = Vector2Distance(activeFireballs[i].GetPosition(), ball.GetPosition());
-            cout << "Distancia entre bola de fuego y pelota: " << distanceToBall << endl;
-            // Comprobamos si hay colisión
-            if (distanceToBall < ball.GetRadius() + 150 ) {
-                ball.DecreaseLives(1);
+//            cout << "Distancia entre bola de fuego y pelota: " << distanceToBall << endl;
+//
+//            cout << "Fuego x: " << activeFireballs[i].GetPosition().x << endl;
+//            cout << "Fuego y: " << activeFireballs[i].GetPosition().y << endl;
+//            cout << "Pelota x: " << ball.GetPosition().x << endl;
+//            cout << "Pelota y: " << ball.GetPosition().y << endl;
+             //Comprobamos si hay colisión
+            if (distanceToBall < ball.GetRadius() + 15) {
+                ball.DecreaseLives(51);
                 cout << "Colisión detectada entre la bola de fuego y la pelota" << endl; // Imprimir un mensaje
-            }else
+            } else
 
-            // Verificamos la distancia recorrida por la bola de fuego
+                // Verificamos la distancia recorrida por la bola de fuego
             if (Vector2Distance(activeFireballs[i].GetPosition(), position) > maxFireballDistance * 16) {
-                // Si la distancia es mayor que la distancia máxima permitida, eliminamos la bola de fuego
                 activeFireballs.erase(activeFireballs.begin() + i);
-                // Decrementamos el índice para evitar omitir el siguiente elemento después de borrar uno
                 --i;
             }
         }
@@ -83,7 +87,6 @@ public:
 
 
     void DrawFireballs() const {
-        // Dibujamos todas las bolas de fuego activas
         for (size_t i = 0; i < activeFireballs.size(); ++i) {
             activeFireballs[i].Draw();
         }
@@ -97,11 +100,9 @@ private:
 
     std::vector<FireBall> activeFireballs;
 
-    int maxFireballDistance = 3;
+    int maxFireballDistance = 5;
     float lastFireballTime;
     float fireballCooldown = 1.5f;
-
-    Ball ball;
 
 };
 

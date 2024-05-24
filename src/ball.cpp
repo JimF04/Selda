@@ -182,8 +182,6 @@ int Ball::ResetLives() {
 
 void Ball::DrawHearts(Camera2D camera) const {
     const int heartSize = 15;
-
-
     // Calcula la posición inicial de los corazones
     Vector2 heartPosition = {position.x-117 , position.y-78};
 

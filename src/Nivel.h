@@ -58,13 +58,11 @@ public:
 
     void UpdateRojos(Vector<Espectro> &rojos){
         for (auto& rojo : rojos) {
-
             if (personaje_visto){
                 rojo.LaunchFireball();
-                rojo.UpdateFireballs();
             }
+            rojo.UpdateFireballs(ball);
         }
-
     }
 
 protected:
