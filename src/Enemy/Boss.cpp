@@ -24,8 +24,16 @@ int Boss::GetBossLives() {
 
 void Boss::DecreaseBossLives(){
     BossLives --;
-
 }
+
+void Boss::IncreaseBossLives(int vidas){
+    if (BossLives + vidas > 15) {
+        BossLives = 15;
+    } else {
+        BossLives += vidas;
+    }
+}
+
 
 void Boss::Ataque(){
     sourceRec.y = 48*6;

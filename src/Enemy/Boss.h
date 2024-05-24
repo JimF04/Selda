@@ -10,7 +10,7 @@ private:
 public:
     Boss() {
         spritesheet = LoadTexture("../assets/enemyPack/chara_boss.png");
-        BossLives = 25;
+        BossLives = 15;
     }
 
     virtual void Ataque() override;
@@ -19,6 +19,8 @@ public:
     int GetBossLives();
 
     void DecreaseBossLives();
+
+    void IncreaseBossLives(int vidas);
 };
 
 #endif // SELDA_BOSS_H

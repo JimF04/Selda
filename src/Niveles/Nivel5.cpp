@@ -38,7 +38,7 @@ void Nivel5::Update() {
 
     if (ball.lives <= 0) {
         Nivel::ResetLevel(592, 704);
-
+        boss.IncreaseBossLives(2);
     }
 
     if (isShiftPressed) {
@@ -59,7 +59,7 @@ void Nivel5::Update() {
         if (currentTime - lastAttackTime >= 1.0) {
             ball.Atacar();
             float distanceToBoss = Vector2Distance(ball.GetPosition(), boss.GetPosition());
-            float attackRangeToBoss = 30.0f;
+            float attackRangeToBoss = 35.0f;
 
             if (distanceToBoss < attackRangeToBoss) {
                 boss.DecreaseBossLives();
@@ -183,7 +183,7 @@ void Nivel5::Draw() {
         float healthBarWidth = 150.0f;
         float healthBarHeight = 5.0f;
         Vector2 healthBarPosition = { ball.GetPosition().x - healthBarWidth / 2, ball.GetPosition().y + 70 };
-        float healthPercentage = static_cast<float>(boss.GetBossLives()) / 25;
+        float healthPercentage = static_cast<float>(boss.GetBossLives()) / 15;
 
         DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth, healthBarHeight, BLACK);
         DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
@@ -193,7 +193,7 @@ void Nivel5::Draw() {
         const char* bossName = "SunderBloop the Shatterer:";
         int fontSize = 10; // Font size
         Vector2 textPosition = { ball.GetPosition().x - 73, ball.GetPosition().y + 60 };
-        DrawText(bossName, textPosition.x, textPosition.y, fontSize, WHITE);
+        DrawText(bossName, textPosition.x, textPosition.y, fontSize, LIGHTGRAY);
     }
 
 
