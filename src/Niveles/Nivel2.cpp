@@ -86,7 +86,7 @@ void Nivel2::Update() {
     if (IsKeyUp(KEY_K)) {
         if (keyKReleaseTime < 0) {
             keyKReleaseTime = GetTime();
-        } else if (GetTime() - keyKReleaseTime >= 0.8f) {
+        } else if (GetTime() - keyKReleaseTime >= 0.6f) {
             ball.IsDefending = false;
         }
     } else {

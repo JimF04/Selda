@@ -70,7 +70,7 @@ void Ball::Move(int deltaX, int deltaY)
         // Moving up
         sourceRec.y = FRAME_HEIGHT * 4; // Row 3: Walk forward
         sourceRec.width = FRAME_WIDTH; // Reset the width
-    } else {
+    } else if (!IsKeyDown(KEY_L) && !IsKeyDown(KEY_K)) {
         currentDir = Player_IDLE;
         // No movement, idle animation
         sourceRec.y = 0; // Row 1: Idle

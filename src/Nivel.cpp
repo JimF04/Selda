@@ -378,7 +378,7 @@ void Nivel::UpdateChoco(Vector<Chocobos> &chocobos){
     for(auto& choco: chocobos){
         if (!collisionDetected && GetTime() - lastCollisionDetectionTime >= 2.0) {
 
-            if (ball.CheckCollisionWithEnemy(choco)) {
+            if (ball.CheckCollisionWithEnemy(choco)&& !ball.IsDefending) {
                 ball.DecreaseLives(1);
 
                 collisionDetected = true;

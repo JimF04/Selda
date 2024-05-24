@@ -80,7 +80,7 @@ void Nivel5::Update() {
         if (currentTime - lastAttackTime >= 1.0) {
             ball.Atacar();
             float distanceToBoss = Vector2Distance(ball.GetPosition(), boss.GetPosition());
-            float attackRangeToBoss = 35.0f;
+            float attackRangeToBoss = 20.0f;
 
             if (distanceToBoss < attackRangeToBoss) {
                 boss.DecreaseBossLives();
@@ -111,7 +111,7 @@ void Nivel5::Update() {
     if (IsKeyUp(KEY_K)) {
         if (keyKReleaseTime < 0) {
             keyKReleaseTime = GetTime();
-        } else if (GetTime() - keyKReleaseTime >= 0.8f) {
+        } else if (GetTime() - keyKReleaseTime >= 0.6f) {
             ball.IsDefending = false;
         }
     } else {
@@ -214,7 +214,7 @@ void Nivel5::Draw() {
         float healthBarWidth = 150.0f;
         float healthBarHeight = 5.0f;
         Vector2 healthBarPosition = { ball.GetPosition().x - healthBarWidth / 2, ball.GetPosition().y + 70 };
-        float healthPercentage = static_cast<float>(boss.GetBossLives()) / 15;
+        float healthPercentage = static_cast<float>(boss.GetBossLives()) / 20;
 
         DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth, healthBarHeight, BLACK);
         DrawRectangle(healthBarPosition.x, healthBarPosition.y, healthBarWidth * healthPercentage, healthBarHeight, RED);
