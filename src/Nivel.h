@@ -110,6 +110,7 @@ protected:
     double lastCollisionDetectionTime;
     Vector<Jarrones> jarrones;
     Vector<Cofres> cofres;
+
     std::vector<FireBall> activeFireballs;
 
     queue<Vector2> route1;

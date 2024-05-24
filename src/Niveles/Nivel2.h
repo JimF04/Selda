@@ -27,8 +27,6 @@ public:
     void ResetLevel();
     void Draw_Fog();
 
-    // Declaración de la función para dibujar las sombras
-    void DrawShadowMap();
 
     virtual bool CheckWinCondition() override {
         if (onstairs){

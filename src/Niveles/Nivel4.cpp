@@ -9,7 +9,6 @@
 Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     contadorPuntuacion = puntuacionInicial;
-    ball = Ball();
     ball.setPosition({ 112, 672 });
 
     LoadMap("../Level4.json", 0, floor);

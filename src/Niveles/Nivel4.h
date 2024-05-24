@@ -41,10 +41,6 @@ public:
     }
 
 private:
-    Enemy enemigo;
-    void DrawAStar(Stack<Vector2> path);
-    bool collisionDetected;
-    double lastCollisionDetectionTime;
 
     Vector<Cofres> cofres;
 
