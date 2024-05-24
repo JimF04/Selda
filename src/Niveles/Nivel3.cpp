@@ -9,9 +9,7 @@
 
 Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight){
     contadorPuntuacion = puntuacionInicial;
-    ball = Ball();
     ball.setPosition({ 368, 80 });
-    enemigo = Enemy();
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 
@@ -178,6 +176,7 @@ void Nivel3::Update() {
     UpdateEspectros(espectros);
     UpdateOjos(ojos_espectrales,ball.GetPosition());
     UpdateChoco(chocobos);
+    UpdatesAzules(espectros, ball.GetPosition());
 
     if (!personaje_visto) {
         espectros[0].LoopPath(route1);
@@ -186,8 +185,6 @@ void Nivel3::Update() {
         espectros[3].LoopPath(route4);
 
     }
-
-
 
     //==============Update de los objetos===============
     UpdateChests(cofres);
@@ -236,7 +233,7 @@ void Nivel3::Update() {
 
 void Nivel3::ResetLevel() {
     ball.setPosition({90, 160});
-    enemigo.setPosition({100, 300});
+    //enemigo.setPosition({100, 300});
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
 }

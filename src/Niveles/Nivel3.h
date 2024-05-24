@@ -36,7 +36,6 @@ public:
     }
 
 private:
-    Enemy enemigo;
     bool collisionDetected;
     double lastCollisionDetectionTime;
 

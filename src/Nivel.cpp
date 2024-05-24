@@ -274,11 +274,31 @@ void Nivel::UpdatesAzules(Vector<Espectro> &azules, Vector2 player_pos) {
 
             if(visto_por_ojo && !espectro.halegado()){
 
-                espectro.setPosition({(player_pos.x/TILE_SIZE)+2,(player_pos.y/TILE_SIZE)-2});
+                espectro.setPosition({(player_pos.x/TILE_SIZE),(player_pos.y/TILE_SIZE)});
                 espectro.set_llego(true);
+
+                AStar astar(wall);
+
+                for (auto& espectro : azules) {
+
+                    int ball_x_grid = static_cast<int>(ball.GetPosition().x / TILE_SIZE);
+                    int ball_y_grid = static_cast<int>(ball.GetPosition().y / TILE_SIZE);
+
+                    int enemy_x_grid = static_cast<int>(espectro.GetPosition().x / TILE_SIZE);
+                    int enemy_y_grid = static_cast<int>(espectro.GetPosition().y / TILE_SIZE);
+
+
+
+
+
+
+                }
+
             }
             else{
+
                 espectro.MoveRandomly(wall);
+
                 espectro.set_llego(false);
             }
         }
