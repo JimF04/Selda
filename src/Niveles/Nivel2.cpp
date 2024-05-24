@@ -119,6 +119,7 @@ void Nivel2::Update() {
 
     //==============Update de los enemigos===============
     UpdateEspectros(espectroRojo);
+    UpdateRojos(espectroRojo, activeFireballs);
 
     //==============Update de los objetos===============
     UpdateChests(cofres);
@@ -144,6 +145,7 @@ void Nivel2::Draw() {
     //==============Enemigos================
     for (auto&enemigo : espectroRojo){
         enemigo.Draw();
+        enemigo.DrawFireballs(activeFireballs);
     }
 
     //============Objetos================
