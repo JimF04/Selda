@@ -59,9 +59,10 @@ int main(int argc, char* argv[]) {
         if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_SPACE)){
 
 
-            nivelActual->Regresar_resultado();
-            Vector<Espectro> resultados = nivelActual->Regresar_resultado();
-            genetico.Producir(resultados);
+            if(nivelActualIndex == 0){
+                Vector<Espectro> resultados = nivelActual->Regresar_resultado();
+                genetico.Producir(resultados);
+            }
 
 
             delete nivelActual;

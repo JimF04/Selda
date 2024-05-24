@@ -18,6 +18,7 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     //==============Enemigos================
     for (int i = 0; i < 2; i++){
         espectroRojo.push_back(Espectro("rojo"));
+        espectros.push_back(Espectro("gris"));
     }
     espectroRojo[0].setPosition({6, 36});
     espectroRojo[1].setPosition({16, 25});
@@ -43,6 +44,7 @@ Nivel2::Nivel2(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     torch[13].setPosition({67, 34});
     torch[14].setPosition({64, 37});
     torch[15].setPosition({67, 37});
+
 }
 
 

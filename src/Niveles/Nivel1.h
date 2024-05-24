@@ -41,7 +41,6 @@ public:
         }
         return winCondition;
     }
-
     void DrawCounter();
 
 
