@@ -56,6 +56,7 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     espectros[0].setRoute(route1);
 
     espectros[1].setPosition({45,28});
+    espectros[1].setPosition({45,28});
     route2.push({31,28});
     route2.push({31,20});
     route2.push({45,20});
@@ -82,7 +83,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
         ratones.push_back(Ratones());
     }
     ratones[0].setPosition({42, 28});
-    ratones[1].setPosition({32, 11});
 
     for (int i = 0; i < 2; i++){
         ojos_espectrales.push_back(Ojo_Espectral());
@@ -121,7 +121,6 @@ void Nivel1::Update() {
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
 
-    camera.zoom=1.0f;
 
     if (ball.lives <= 0) {
         Nivel::ResetLevel(90, 160);
