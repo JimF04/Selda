@@ -1,9 +1,10 @@
 #include "Nivel5.h"
 #include "../Algoritmos/AStar.h"
 
-Nivel5::Nivel5(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight) {
+Nivel5::Nivel5(int screenWidth, int screenHeight,int puntuacionInicial, int cofreInicial) : Nivel(screenWidth, screenHeight) {
     // Iniciar clases
     contadorPuntuacion = puntuacionInicial;
+    contadorCofres = cofreInicial;
     ball = Ball();
     ball.setPosition({ 592, 704 });
     boss = Boss();

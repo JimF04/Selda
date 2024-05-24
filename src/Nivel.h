@@ -70,6 +70,9 @@ public:
         return contadorPuntuacion;
     }
 
+    int GetCofres() const{
+        return contadorCofres;
+    }
 
 
     void UpdateRojos(Vector<Espectro> &rojos, std::vector<FireBall>& activeFireballs){

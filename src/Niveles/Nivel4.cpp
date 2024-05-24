@@ -6,9 +6,10 @@
 #include "raylib.h"
 #include "raymath.h"
 
-Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight){
+Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial, int cofreInicial) : Nivel(screenWidth, screenHeight){
     // Iniciar clases
     contadorPuntuacion = puntuacionInicial;
+    contadorCofres = cofreInicial;
     ball.setPosition({ 112, 672 });
 
     LoadMap("../Level4.json", 0, floor);

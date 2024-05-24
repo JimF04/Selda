@@ -7,11 +7,12 @@
 #include "raymath.h"
 
 
-Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight){
+Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial, int cofreInicial) : Nivel(screenWidth, screenHeight){
     contadorPuntuacion = puntuacionInicial;
     ball.setPosition({ 368, 80 });
     collisionDetected = false;
     lastCollisionDetectionTime = GetTime();
+    contadorCofres = cofreInicial;
 
 
     LoadMap("../Level3.json", 0, floor);

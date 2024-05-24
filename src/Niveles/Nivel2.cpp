@@ -2,8 +2,9 @@
 #include "raymath.h"
 #include "raylib.h"
 
-Nivel2::Nivel2(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(screenWidth, screenHeight) {
+Nivel2::Nivel2(int screenWidth, int screenHeight,int puntuacionInicial, int cofreInicial) : Nivel(screenWidth, screenHeight) {
     contadorPuntuacion = puntuacionInicial;
+    contadorCofres = cofreInicial;
     ball.setPosition({90, 416});
 
 

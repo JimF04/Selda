@@ -50,6 +50,7 @@ int main(int argc, char* argv[]) {
     int nivelActualIndex = 0;
 
     int puntuacionAcumulada = 0;
+    int cofreAcumulado = 0;
 
     while (!WindowShouldClose())
     {
@@ -61,6 +62,7 @@ int main(int argc, char* argv[]) {
 
         if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_RIGHT)){
             puntuacionAcumulada =100 + nivelActual->GetPuntuacion();
+            cofreAcumulado = nivelActual->GetCofres();
 
 
             if(nivelActualIndex == 0){
@@ -75,6 +77,7 @@ int main(int argc, char* argv[]) {
             if (nivelActualIndex >= 5){
                 nivelActualIndex = 0;
                 puntuacionAcumulada = 0;
+                cofreAcumulado = 0;
             }
 
             switch (nivelActualIndex){
@@ -82,16 +85,16 @@ int main(int argc, char* argv[]) {
                     nivelActual = new Nivel1(screenWidth, screenHeight);
                     break;
                 case 1:
-                    nivelActual = new Nivel2(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel2(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
                 case 2:
-                    nivelActual = new Nivel3(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel3(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
                 case 3:
-                    nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
                 case 4:
-                    nivelActual = new Nivel5(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel5(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
             }
 
@@ -109,16 +112,16 @@ int main(int argc, char* argv[]) {
                     nivelActual = new Nivel1(screenWidth, screenHeight);
                     break;
                 case 1:
-                    nivelActual = new Nivel2(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel2(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
                 case 2:
-                    nivelActual = new Nivel3(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel3(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
                 case 3:
-                    nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel4(screenWidth, screenHeight,puntuacionAcumulada, cofreAcumulado);
                     break;
                 case 4:
-                    nivelActual = new Nivel5(screenWidth, screenHeight,puntuacionAcumulada);
+                    nivelActual = new Nivel5(screenWidth, screenHeight,puntuacionAcumulada,  cofreAcumulado);
                     break;
             }
         }
