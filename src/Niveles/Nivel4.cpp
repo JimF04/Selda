@@ -51,6 +51,8 @@ Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
 }
 
 void Nivel4::Update() {
+    camera.zoom=1.0f;
+
     static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;

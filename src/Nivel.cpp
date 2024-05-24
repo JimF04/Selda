@@ -468,7 +468,7 @@ void Nivel::UpdateFireballs(Vector<Espectro> &rojos, std::vector<FireBall>& acti
         // Calculamos la distancia entre la bola de fuego y la bola principal
         float distanceToBall = Vector2Distance(activeFireballs[i].GetPosition(), ball.GetPosition());
         //Comprobamos si hay colisión
-        if (distanceToBall < ball.GetRadius() + 2) {
+        if (distanceToBall < ball.GetRadius() + 2 && !ball.IsDefending) {
             ball.DecreaseLives(1);
             activeFireballs.erase(activeFireballs.begin() + i);
             cout << "Colisión detectada entre la bola de fuego y la pelota" << endl; // Imprimir un mensaje

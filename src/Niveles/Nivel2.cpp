@@ -17,11 +17,56 @@ Nivel2::Nivel2(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     PlayMusicStream(levelMusic);
 
     //==============Enemigos================
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < 5; i++){
         espectroRojo.push_back(Espectro("rojo"));
     }
+
     espectroRojo[0].setPosition({6, 36});
-    espectroRojo[1].setPosition({16, 25});
+    route1.push({14,36});
+    route1.push({14,43});
+    route1.push({3,43});
+    route1.push({6,36});
+    espectroRojo[0].setRoute(route1);
+
+
+    espectroRojo[1].setPosition({23, 22});
+    route2.push({23,30});
+    route2.push({23,22});
+    espectroRojo[1].setRoute(route2);
+
+
+
+    espectroRojo[2].setPosition({52, 17});
+    route3.push({52,32});
+    route3.push({52,17});
+    espectroRojo[2].setRoute(route3);
+
+
+    espectroRojo[3].setPosition({10, 7});
+    route4.push({10,12});
+    route4.push({15,12});
+    route4.push({15,7});
+    route4.push({15,12});
+    route4.push({15,12});
+    route4.push({10,12});
+    route4.push({10,7});
+
+    espectroRojo[4].setPosition({27, 2});
+    route5.push({34,2});
+    route5.push({27,2});
+
+
+
+    for ( int i = 0; i < 3; i++){
+        chocobos.push_back(Chocobos());
+    }
+    chocobos[0].setPosition({52, 41});
+    chocobos[1].setPosition({42, 29});
+    chocobos[2].setPosition({67, 26});
+
+    ojos_espectrales.push_back(Ojo_Espectral());
+    ojos_espectrales[0].setPosition({31,11});
+
 
     //=============Objects================
     // Antorchas
@@ -44,7 +89,30 @@ Nivel2::Nivel2(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     torch[13].setPosition({67, 34});
     torch[14].setPosition({64, 37});
     torch[15].setPosition({67, 37});
+
+    for (int i = 0; i < 6; i++){
+        jarrones.push_back(Jarrones());
+    }
+    jarrones[0].setPosition({16, 8});
+    jarrones[1].setPosition({14, 45});
+    jarrones[2].setPosition({37, 24});
+    jarrones[3].setPosition({48, 46});
+    jarrones[4].setPosition({51, 8});
+    jarrones[5].setPosition({62, 20});
+
+    for (int i = 0; i < 5; i++){
+        cofres.push_back(Cofres());
+    }
+    cofres[0].setPosition({45,25});
+    cofres[1].setPosition({14,6});
+    cofres[2].setPosition({39, 32});
+    cofres[3].setPosition({48, 24});
+    cofres[4].setPosition({14, 35});
+
+
 }
+
+
 
 
 void Nivel2::Update() {
@@ -55,6 +123,7 @@ void Nivel2::Update() {
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
 
+    camera.zoom=1.0f;
     if (ball.lives <=0){
         Nivel::ResetLevel(90,416);
 
@@ -109,6 +178,32 @@ void Nivel2::Update() {
         }
     }
 
+    //Ojos espectrales
+    for(auto& ojo_espectral:ojos_espectrales){
+        float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Ojo espectral";
+                ball.Atacar();
+                ojo_espectral.setPosition({-1000,1000});
+                contadorPuntuacion += 15;
+            }
+        }
+    }
+
+    for(auto& choco:chocobos){
+        float distance = Vector2Distance(ball.GetPosition(),choco.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                cout<<"Collisioned with Ojo espectral";
+                ball.Atacar();
+                choco.setPosition({-1000,1000});
+                contadorPuntuacion += 30;
+            }
+        }
+    }
+
+
     LayerCollision(deltaX, deltaY, traps, "traps");
     LayerCollision(deltaX, deltaY, falsefloor, "falsefloor");
     LayerCollision(deltaX, deltaY, wall, "wall");
@@ -121,9 +216,27 @@ void Nivel2::Update() {
     UpdateEspectros(espectroRojo);
     UpdateRojos(espectroRojo, activeFireballs);
 
+
+    if (!personaje_visto) {
+        espectroRojo[0].LoopPath(route1);
+        espectroRojo[1].LoopPath(route2);
+        espectroRojo[2].LoopPath(route3);
+        espectroRojo[3].LoopPath(route4);
+        espectroRojo[4].LoopPath(route5);
+    }
+
+    chocobos[0].bresenham(ball.GetPosition(), wall);
+    chocobos[1].bresenham(ball.GetPosition(), wall);
+    chocobos[2].bresenham(ball.GetPosition(), wall);
+
     //==============Update de los objetos===============
     UpdateChests(cofres);
     UpdateJars(jarrones);
+    UpdateChoco(chocobos);
+    UpdateOjos(ojos_espectrales, ball.GetPosition());
+
+
+
 
 
 }
@@ -140,6 +253,15 @@ void Nivel2::Draw() {
     mapa.DrawMap(traps, 25, TEXTURE_TILEMAP);
     mapa.DrawMap(falsefloor, 25, TEXTURE_TILEMAP);
 
+    for(auto& cofre:cofres){
+        cofre.drawTile();
+    }
+
+    for(auto& jarron : jarrones){
+        jarron.drawTile();
+    }
+
+
     Draw_Fog();
 
     //==============Enemigos================
@@ -148,19 +270,23 @@ void Nivel2::Draw() {
         enemigo.DrawFireballs(activeFireballs);
     }
 
+    for (auto& chocobo : chocobos) {
+        chocobo.Draw();
+    }
+
+    for (auto& ojo_espectral : ojos_espectrales) {
+        ojo_espectral.Draw();
+    }
+
     //============Objetos================
     for (auto&objeto : torch){
         objeto.drawTile();
     }
 
-    for(auto& cofre:cofres){
-        cofre.drawTile();
-    }
+
     DrawChestCounter();
 
-    for(auto& jarron : jarrones){
-        jarron.drawTile();
-    }
+
 
     // Dibujar personajes
     ball.Draw();

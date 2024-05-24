@@ -44,6 +44,8 @@ Nivel5::Nivel5(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
 
 
 void Nivel5::Update() {
+    camera.zoom=1.0f;
+
     double currentTime = GetTime();
     static bool cofreDetectado = false;
     int deltaX = 0;

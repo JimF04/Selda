@@ -118,10 +118,6 @@ protected:
     queue<Vector2> route6;
     queue<Vector2> route7;
     queue<Vector2> route8;
-    queue<Vector2> route9;
-    queue<Vector2> route10;
-    queue<Vector2> route11;
-    queue<Vector2> route12;
 
 
 };

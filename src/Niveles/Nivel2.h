@@ -45,9 +45,9 @@ private:
     double lastCollisionDetectionTime;
 
     Vector<Torch> torch;
-
+    Vector<Chocobos> chocobos;
     Vector<Espectro> espectroRojo;
-
+    Vector<Ojo_Espectral> ojos_espectrales;
     Vector<Cofres> cofres;
 
 

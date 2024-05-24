@@ -63,7 +63,7 @@ public:
 
 
     float lastFireballTime;
-    float fireballCooldown = 1.5f;
+    float fireballCooldown = 10.5f;
 
 
 private:

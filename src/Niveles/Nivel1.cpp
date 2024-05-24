@@ -21,30 +21,32 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     lastCollisionDetectionTime = GetTime();
 
 //==================Objetos==================
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 4; i++){
         cofres.push_back(Cofres());
     }
     cofres[0].setPosition({31,2});
     cofres[1].setPosition({68,42});
     cofres[2].setPosition({38, 20});
+    cofres[3].setPosition({16, 4});
 
-    for (int i = 0; i < 2; i++){
+    for (int i = 0; i < 6; i++){
         jarrones.push_back(Jarrones());
     }
     jarrones[0].setPosition({43, 12});
     jarrones[1].setPosition({43, 2});
+    jarrones[2].setPosition({16, 9});
+    jarrones[3].setPosition({61, 24});
+    jarrones[4].setPosition({68, 45});
+    jarrones[5].setPosition({20, 45});
 
 
 //====================Enemigos==================
-    for ( int i = 0; i < 3; i++){
+
+   //Agrega x cantidad de espectros de un solo tipo
+    for ( int i = 0; i < 4; i++){
         espectros.push_back(Espectro("gris"));
 
     }
-
-    espectros.push_back(Espectro("azul"));
-
-    espectros[3].setPosition({17,36});
-
 
     espectros[0].setPosition({17,36});
     route1.push({23,36});
@@ -52,9 +54,6 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route1.push({17,44});
     route1.push({17,36});
     espectros[0].setRoute(route1);
-    espectros[3].setPosition({17,36});
-
-
 
     espectros[1].setPosition({45,28});
     route2.push({31,28});
@@ -69,6 +68,13 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route3.push({32,6});
     route3.push({31,11});
     espectros[2].setRoute(route3);
+
+    espectros[3].setPosition({56,38});
+    route4.push({56,43});
+    route4.push({40,43});
+    route4.push({56,43});
+    route4.push({56,38});
+    espectros[3].setRoute(route4);
 
 
 
@@ -85,8 +91,13 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     ojos_espectrales[1].setPosition({68,39});
 
 
-    chocobos.push_back(Chocobos());
+    for ( int i = 0; i < 2; i++){
+        chocobos.push_back(Chocobos());
+    }
     chocobos[0].setPosition({10, 21});
+    chocobos[1].setPosition({38, 38});
+
+
 
 //==========Matrices de colisiones================
     LoadMap("../Level1.json", 0, floor);
@@ -109,6 +120,8 @@ void Nivel1::Update() {
     float speed = 1.0f;
     bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
     static bool keyKPressed = false;
+
+    camera.zoom=1.0f;
 
     if (ball.lives <= 0) {
         Nivel::ResetLevel(90, 160);
@@ -222,10 +235,9 @@ void Nivel1::Update() {
     UpdateChoco(chocobos);
 
     chocobos[0].bresenham(ball.GetPosition(), wall);
+    chocobos[1].bresenham(ball.GetPosition(), wall);
 
-    //    for (auto& chocobo : chocobos) {
-    //        Vision(chocobo);
-    //    }
+
 
     //==========Updates de los objetos================
 
@@ -236,6 +248,8 @@ void Nivel1::Update() {
         espectros[0].LoopPath(route1);
         espectros[1].LoopPath(route2);
         espectros[2].LoopPath(route3);
+        espectros[3].LoopPath(route4);
+
     }
 
     // Reproducción del sonido si el personaje es visto por un ojo
