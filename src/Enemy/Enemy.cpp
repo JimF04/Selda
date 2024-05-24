@@ -214,8 +214,9 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
 
 void Enemy::Ataque(){
     sourceRec.y = FRAME_HEIGHT*5;
-    UpdateAnimation();
     ataques +=1;
+    UpdateAnimation();
+
 }
 
 void Enemy::UpdateAnimation() {

@@ -73,9 +73,9 @@ public:
         this->damage = damage;
     };
 
-    bool muerto;
-    int ataques;
-    int duracion;
+    bool muerto= false;
+    int ataques=0;
+    int duracion=0;
 
 
 protected:

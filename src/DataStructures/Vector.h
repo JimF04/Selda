@@ -15,16 +15,6 @@ private:
     size_t capacity; // Capacidad actual del vector
     // Tamaño actual del vector
 
-    void resize(size_t new_capacity) {
-        T *new_data = new T[new_capacity];
-        for (size_t i = 0; i < size; ++i) {
-            new_data[i] = data[i];
-        }
-        delete[] data;
-        data = new_data;
-        capacity = new_capacity;
-    }
-
 public:
     // Constructor por defecto
     Vector() : data(nullptr), capacity(0), size(0) {}
@@ -83,6 +73,16 @@ public:
     }
 
     size_t size;
+
+    void resize(size_t new_capacity) {
+        T *new_data = new T[new_capacity];
+        for (size_t i = 0; i < size; ++i) {
+            new_data[i] = data[i];
+        }
+        delete[] data;
+        data = new_data;
+        capacity = new_capacity;
+    }
 };
 
 

@@ -326,35 +326,35 @@ void Nivel::UpdateJars(Vector<Jarrones>& jarrones){
     }
 }
 
-void Nivel::Dar_genes(Vector<Espectro> *espectros){
-    // Verificar que el vector de genes no esté vacío
-    if (Genes.empty()) {
-        std::cerr << "Error: El vector de genes está vacío." << std::endl;
-        throw std::runtime_error("El vector de genes está vacío.");
+void Nivel::Dar_genes(std::vector<Vector3>& alelos, Vector<Espectro>* espectros) {
+    // Verificar que el vector de alelos no esté vacío
+    if (alelos.empty()) {
+        std::cerr << "Error: El vector de alelos está vacío." << std::endl;
+        throw std::runtime_error("El vector de alelos está vacío.");
     }
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 2); // Distribución para seleccionar índices de genes (0, 1, 2)
+    std::uniform_int_distribution<> dist(0, alelos.size() - 1); // Distribución para seleccionar índices de alelos
 
-    // Iterar sobre cada espectro y asignar un valor aleatorio de genes a un atributo aleatorio
+    // Iterar sobre cada espectro y asignar un valor aleatorio de alelos a un atributo aleatorio
     for (auto& espectro : *espectros) {
         int random_index = dist(gen);
         std::cout << "Índice aleatorio generado: " << random_index << std::endl;
 
-        if (random_index < 0 || random_index >= Genes.size) {
-            std::cerr << "Error: Índice de gene aleatorio fuera de rango." << std::endl;
-            throw std::out_of_range("Índice de gene aleatorio fuera de rango.");
+        if (random_index < 0 || random_index >= alelos.size()) {
+            std::cerr << "Error: Índice de alelo aleatorio fuera de rango." << std::endl;
+            throw std::out_of_range("Índice de alelo aleatorio fuera de rango.");
         }
 
-        Vector3 gen = Genes[random_index];
+        Vector3 alelo = alelos[random_index];
 
-        // Debugging: imprimir el gene seleccionado y los valores asignados
-        std::cout << "Asignando gen: (" << gen.x << ", " << gen.y << ", " << gen.z << ") al espectro" << std::endl;
+        // Debugging: imprimir el alelo seleccionado y los valores asignados
+        std::cout << "Asignando alelo: (" << alelo.x << ", " << alelo.y << ", " << alelo.z << ") al espectro" << std::endl;
 
-        espectro.speed = gen.x;
-        espectro.lives = gen.y;
-        espectro.damage = gen.z;
+        espectro.speed = alelo.x;
+        espectro.lives = alelo.y;
+        espectro.damage = alelo.z;
 
         std::cout << "Asignación completada para el espectro." << std::endl;
     }
@@ -363,8 +363,37 @@ void Nivel::Dar_genes(Vector<Espectro> *espectros){
 }
 
 Vector<Espectro> Nivel::Regresar_resultado(){
-    return espectros;
 
+    return espectros;
+//    for(auto& espectro:espectros){
+//        std::cout<<"muerto:"<<espectro.muerto<<"ataques:"<<espectro.ataques<<"duracion:"<<espectro.duracion<<endl;
+//        return espectros;
+//
+//
+//
+//    }
+}
+
+std::vector<Vector3> Nivel::CargarAleloDesdeArchivo(const std::string& filename) {
+    std::vector<Vector3> alelos;
+    std::ifstream file(filename);
+
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            float x, y, z;
+            if (iss >> x >> y >> z) {
+                alelos.push_back(Vector3{x, y, z});
+            }
+        }
+        file.close();
+    } else {
+        std::cerr << "Error: No se pudo abrir el archivo " << filename << std::endl;
+        throw std::runtime_error("No se pudo abrir el archivo de alelos.");
+    }
+
+    return alelos;
 }
 
 

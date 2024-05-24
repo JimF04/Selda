@@ -7,6 +7,8 @@
 #include "Niveles/Nivel5.h"
 #include "Algoritmos/Genetico.h"
 #include <glog/logging.h>
+#include <fstream> // Incluir la biblioteca para la manipulación de archivos
+#include <vector>  // Incluir la biblioteca para el uso de vectores
 
 int main(int argc, char* argv[]) {
     // Inicialización de Glog
@@ -15,10 +17,29 @@ int main(int argc, char* argv[]) {
     google::SetLogDestination(google::GLOG_ERROR, "../logging/registro.log");
     google::SetLogDestination(google::GLOG_FATAL, "../logging/registro.log");
 
-
     google::InitGoogleLogging(argv[0]);
 
+    Genetico genetico;
+
     LOG(INFO) << "Inicio del juego";
+
+    // Vector de alelos
+    std::vector<Vector3> alelos;
+    alelos.push_back(Vector3{1.0f, 5.0f, 1.0f});
+    alelos.push_back(Vector3{2.0f, 1.0f, 2.0f});
+    alelos.push_back(Vector3{1.0f, 4.0f, 3.0f});
+
+    // Código para guardar alelos en un archivo de texto antes de iniciar el juego
+    std::ofstream file("../assets/alelos.txt");
+    if (file.is_open()) {
+        for (const auto& alelo : alelos) {
+            file << alelo.x << " " << alelo.y << " " << alelo.z << "\n";
+        }
+        file.close();
+        LOG(INFO) << "Alelos guardados en assets/alelos.txt";
+    } else {
+        LOG(ERROR) << "No se pudo abrir el archivo para escribir los alelos.";
+    }
 
     const int screenWidth = 1200;
     const int screenHeight = 800;
@@ -26,26 +47,23 @@ int main(int argc, char* argv[]) {
     SetTargetFPS(60);
 
     Nivel* nivelActual = new Nivel1(screenWidth, screenHeight);
-
     int nivelActualIndex = 0;
-
-    Vector<Vector3> alelos;
-    alelos.push_back(Vector3{1.0f, 5.0f, 1.0f});
-    alelos.push_back(Vector3{2.0f, 1.0f, 2.0f});
-    alelos.push_back(Vector3{1.0f, 4.0f, 3.0f});
-
-
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
 
-
         nivelActual->Update();
         nivelActual->Draw();
 
-
         if (nivelActual->CheckWinCondition() || IsKeyPressed(KEY_SPACE)){
+
+
+            nivelActual->Regresar_resultado();
+            Vector<Espectro> resultados = nivelActual->Regresar_resultado();
+            genetico.Producir(resultados);
+
+
             delete nivelActual;
 
             nivelActualIndex++; // Avanzar al siguiente nivel
@@ -70,14 +88,12 @@ int main(int argc, char* argv[]) {
                     nivelActual = new Nivel5(screenWidth, screenHeight);
                     break;
             }
-
         }
 
         EndDrawing();
     }
 
     LOG(INFO) << "Fin de la aplicación";
-
     CloseWindow();
 
     return 0;

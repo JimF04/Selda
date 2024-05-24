@@ -1,25 +1,26 @@
 #ifndef GENETICO_H
 #define GENETICO_H
 
-#include <vector>
+#include "../DataStructures/Vector.h"
+#include "raylib.h"
 #include "../Enemy/Espectro.h"
+#include <fstream>
+#include <iostream>
 
 class Genetico {
 public:
-    // Constructor que recibe un vector de referencias a Espectro
-    Genetico(std::vector<Espectro>& espectros);
+    Genetico();
 
-    // Método para seleccionar los dos mejores espectros y mutarlos
-    std::vector<Vector3> seleccionarYMutar();
+    void Producir(Vector<Espectro> resultados);
+
+
 
 private:
-    std::vector<Espectro>& espectros; // Referencia al vector de espectros
+    Vector<size_t> ObtenerMejoresIndices(const Vector<float>& promedios, int numMejores);
+    void MutarVector(Vector3& vec);
+    float RandFloat(float min, float max);
 
-    // Método para realizar la mutación en un solo espectro
-    Vector3 mutar(const Espectro& espectro);
-
-    // Método para realizar la mutación combinando dos espectros
-    Vector3 mutar(const Espectro& espectro1, const Espectro& espectro2);
+    int RandInt(int min, int max);
 };
 
 #endif // GENETICO_H

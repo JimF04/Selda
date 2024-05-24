@@ -50,8 +50,10 @@ public:
     void UpdateJars(Vector<Jarrones>& jarrones);
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
     Vector<Vector3> Genes;
+    Vector<Espectro> Regresar_resultado();
+    Vector<Vector3> result;
 
-    Vector<Espectro> Regresar_resultado(Vector<Espectro> espectros);
+
 
 protected:
     // Variables comunes a todos los niveles
@@ -87,9 +89,13 @@ protected:
 
     void Dar_genes(Vector<Espectro> *espectros);
 
-    Vector<Espectro> Regresar_resultado();
+    vector<Vector3> CargarAleloDesdeArchivo(const std::string& filename);
+
+
 
     Vector<Espectro> espectros;
+
+    void Dar_genes(vector<Vector3> &alelos, Vector<Espectro> *espectros);
 };
 
 #endif //SELDA_NIVEL_H

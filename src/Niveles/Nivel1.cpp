@@ -9,6 +9,10 @@
 #include "../Enemy/Enemy.h"
 #include "../Objects/Cofres.h"
 #include "../Objects/Jarrones.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <vector>
 
 Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHeight){
     InitAudioDevice();
@@ -75,9 +79,13 @@ Nivel1::Nivel1(int screenWidth, int screenHeight) : Nivel(screenWidth, screenHei
     route3.push({31,11});
     espectros[2].setRoute(route3);
 
+    Genes.push_back(Vector3{1.0f, 5.0f, 1.0f});
+    Genes.push_back(Vector3{2.0f, 1.0f, 2.0f});
+    Genes.push_back(Vector3{1.0f, 4.0f, 3.0f});
 
+    std::vector<Vector3> alelos = CargarAleloDesdeArchivo("../assets/alelos.txt");
 
-    Dar_genes(&espectros);
+    Dar_genes(alelos,&espectros);
 
     for ( int i = 0; i < 2; i++){
         ratones.push_back(Ratones());

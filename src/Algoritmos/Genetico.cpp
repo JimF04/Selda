@@ -1,67 +1,80 @@
-#include <vector>
-#include <algorithm>
-#include <random>
-
+#include "Genetico.h"
 #include "../Enemy/Espectro.h"
 
-class Genetico {
-public:
-    Genetico(std::vector<Espectro>& espectros) : espectros(espectros) {}
+Genetico::Genetico() {
+    // Constructor predeterminado, no es necesario proporcionar una implementación si no se requiere inicialización adicional
+}
 
-    std::vector<Vector3> seleccionarYMutar() {
-        std::vector<float> promedios;
+void Genetico::Producir(Vector<Espectro> resultados) {
+    std::ofstream archivo("../assets/alelos.txt", std::ios::app);
+    if (!archivo.is_open()) {
+        std::cerr << "Error: No se pudo abrir el archivo 'alelos.txt' para escritura." << std::endl;
+        return;
+    }
 
-        // Calcular el promedio de muerto, ataque y duracion para cada espectro
-        for (const auto& espectro : espectros) {
-            float promedio = (espectro.muerto + espectro.ataques + espectro.duracion) / 3.0f;
-            promedios.push_back(promedio);
+    // Calcular la puntuación de cada espectro (duración * ataques * vida)
+    Vector<float> puntuaciones;
+    for (const auto& espectro : resultados) {
+        float puntuacion = espectro.duracion * espectro.ataques * espectro.lives;
+        puntuaciones.push_back(puntuacion);
+    }
+
+    // Encontrar los dos mejores espectros basados en la puntuación
+    Vector<size_t> mejoresIndices = ObtenerMejoresIndices(puntuaciones, 2);
+
+    // Seleccionar aleatoriamente valores de los padres
+    int padre1 = RandInt(0, 1);
+    int padre2 = 1 - padre1;
+
+    // Combinar los valores de los padres para generar un nuevo Vector3
+    Vector3 nuevoVector;
+    nuevoVector.x = (resultados[mejoresIndices[padre1]].speed + resultados[mejoresIndices[padre2]].speed) / 2.0f;
+    nuevoVector.y = (resultados[mejoresIndices[padre1]].damage + resultados[mejoresIndices[padre2]].damage) / 2.0f;
+    nuevoVector.z = (resultados[mejoresIndices[padre1]].lives + resultados[mejoresIndices[padre2]].lives) / 2.0f;
+
+    // Redondear los valores del nuevo vector y asegurarse de que no excedan 6
+    nuevoVector.x = std::min(std::round(nuevoVector.x * 1000) / 1000, 6.0f);
+    nuevoVector.y = std::min(std::round(nuevoVector.y * 1000) / 1000, 6.0f);
+    nuevoVector.z = std::min(std::round(nuevoVector.z * 1000) / 1000, 6.0f);
+
+    // Escribir el nuevo Vector3 en el archivo alelos.txt
+    archivo << nuevoVector.x << " " << nuevoVector.y << " " << nuevoVector.z << "\n";
+
+    archivo.close();
+}
+
+int Genetico::RandInt(int min, int max) {
+    // Implementación del método RandInt
+    return min + rand() % (max - min + 1);
+}
+
+Vector<size_t> Genetico::ObtenerMejoresIndices(const Vector<float>& promedios, int numMejores) {
+    // Implementación del método ObtenerMejoresIndices
+    Vector<size_t> indices;
+    for (size_t i = 0; i < promedios.size; ++i) {
+        indices.push_back(i);
+    }
+
+    for (size_t i = 0; i < promedios.size - 1; ++i) {
+        for (size_t j = i + 1; j < promedios.size; ++j) {
+            if (promedios[i] < promedios[j]) {
+                std::swap(indices[i], indices[j]);
+            }
         }
-
-        // Ordenar los espectros según sus promedios
-        std::vector<size_t> indices(promedios.size());
-        std::iota(indices.begin(), indices.end(), 0); // Genera una secuencia de índices
-        std::sort(indices.begin(), indices.end(), [&promedios](size_t i1, size_t i2) {
-            return promedios[i1] > promedios[i2]; // Orden descendente
-        });
-
-        // Seleccionar los dos mejores espectros
-        const Espectro& mejor1 = espectros[indices[0]];
-        const Espectro& mejor2 = espectros[indices[1]];
-
-        // Realizar la mutación
-        Vector3 nuevo1 = mutar(mejor1);
-        Vector3 nuevo2 = mutar(mejor2);
-        Vector3 nuevo3 = mutar(mejor1, mejor2);
-
-        return { nuevo1, nuevo2, nuevo3 };
     }
 
-private:
-    std::vector<Espectro>& espectros;
+    indices.resize(numMejores);
+    return indices;
+}
 
-    Vector3 mutar(const Espectro& espectro) {
-        // Realizar mutación en un solo espectro
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<> dist(-0.1, 0.1); // Mutación pequeña
+void Genetico::MutarVector(Vector3& vec) {
+    // Implementación del método MutarVector
+    vec.x += RandFloat(-0.1f, 0.1f);
+    vec.y += RandFloat(-0.1f, 0.1f);
+    vec.z += RandFloat(-0.1f, 0.1f);
+}
 
-        float new_x = espectro.speed + espectro.speed * dist(gen);
-        float new_y = espectro.lives + espectro.lives * dist(gen);
-        float new_z = espectro.damage + espectro.damage * dist(gen);
-
-        return { new_x, new_y, new_z };
-    }
-
-    Vector3 mutar(const Espectro& espectro1, const Espectro& espectro2) {
-        // Realizar mutación combinando dos espectros
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_real_distribution<> dist(-0.1, 0.1); // Mutación pequeña
-
-        float new_x = (espectro1.speed + espectro2.speed) / 2.0f + ((espectro1.speed + espectro2.speed) / 2.0f) * dist(gen);
-        float new_y = (espectro1.lives + espectro2.lives) / 2.0f + ((espectro1.lives + espectro2.lives) / 2.0f) * dist(gen);
-        float new_z = (espectro1.damage + espectro2.damage) / 2.0f + ((espectro1.damage + espectro2.damage) / 2.0f) * dist(gen);
-
-        return { new_x, new_y, new_z };
-    }
-};
+float Genetico::RandFloat(float min, float max) {
+    // Implementación del método RandFloat
+    return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+}
