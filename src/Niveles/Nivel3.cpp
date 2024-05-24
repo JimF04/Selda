@@ -55,6 +55,7 @@ Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     espectros[0].setPosition({8, 28});
     route1.push({8,19});
     route1.push({8,28});
+    route1.push({8,19});
     espectros[0].setRoute(route1);
 
     espectros[1].setPosition({36, 17});
@@ -68,9 +69,9 @@ Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     route3.push({20,40});
     route3.push({25,40});
     route3.push({25,46});
-    route1.push({30,46});
-    route1.push({30,41});
-    route1.push({30,46});
+    route3.push({30,46});
+    route3.push({30,41});
+    route3.push({30,46});
     route3.push({25,46});
     route3.push({25,40});
     route3.push({20,40});
