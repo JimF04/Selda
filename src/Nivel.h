@@ -53,7 +53,7 @@ public:
     void DrawChestCounter();
     void DrawPuntuationCounter();
 
-    void UpdateRatones(Vector<Ratones>& ratones);
+    void UpdateRatones(Vector<Ratones>& ratones, Vector<Espectro>& espectros);
     void UpdatesAzules(Vector<Espectro> &azules, Vector2 vector2);
 
     void UpdateChests(Vector<Cofres>& cofres);
@@ -101,6 +101,8 @@ protected:
     Stack<Vector2> path;
     Stack<Vector2> pathback;
     bool find_AStar = false;
+    bool RataVe;
+
     queue<Vector2> routa;
     bool visto_por_ojo;
     bool visto_por_enemigos;
