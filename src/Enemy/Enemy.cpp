@@ -69,7 +69,8 @@ void Enemy::Move(int deltaX, int deltaY) {
     } else if (deltaY > 0) {
         currentDirection = DOWN;
         // Moving down
-        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward        sourceRec.y = FRAME_HEIGHT * 2; // Row 3: Walk forward
+
         sourceRec.width = FRAME_WIDTH; // Reset the width
     } else if (deltaY < 0) {
         currentDirection = UP;
@@ -222,7 +223,6 @@ bool Enemy::FollowBreadcrumb(Vector2& breadcrumbs) {
     }
 }
 
-
 void Enemy::Ataque(){
     sourceRec.y = FRAME_HEIGHT*5;
     UpdateAnimation();
@@ -233,7 +233,7 @@ void Enemy::UpdateAnimation() {
     if (frameCounter >= frameSpeed) {
         frameCounter = 0;
         currentFrame++;
-        if (currentFrame > 2) // Si excede el número de frames de la animación
+        if (currentFrame > 3) // Si excede el número de frames de la animación
         {
             currentFrame = 0; // Reiniciar la animación
         }
