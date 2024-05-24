@@ -44,14 +44,13 @@ Nivel5::Nivel5(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
 
 
 void Nivel5::Update() {
-    camera.zoom=1.0f;
 
     double currentTime = GetTime();
     static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
-    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    bool isShiftPressed = IsKeyDown(KEY_E);
     static bool keyKPressed = false;
     static double lastAttackTime = 0.0;
     static double lastBossAttackTime = 0.0;

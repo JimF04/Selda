@@ -110,13 +110,13 @@ Nivel3::Nivel3(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
 
 void Nivel3::Update() {
 
-    camera.zoom=1.0f;
+    //camera.zoom=1.0f;
 
     static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
-    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    bool isShiftPressed = IsKeyDown(KEY_E);
     static bool keyKPressed = false;
 
 

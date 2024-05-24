@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
             puntuacionAcumulada =100 + nivelActual->GetPuntuacion();
 
 
-            if(nivelActualIndex == 0 || nivelActualIndex ==1){
+            if(nivelActualIndex == 0){
                 Vector<Espectro> resultados = nivelActual->Regresar_resultado();
                 genetico.Producir(resultados);
             }

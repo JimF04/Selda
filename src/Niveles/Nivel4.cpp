@@ -108,13 +108,12 @@ Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
 
 
 void Nivel4::Update() {
-    camera.zoom=1.0f;
 
     static bool cofreDetectado = false;
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
-    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    bool isShiftPressed = IsKeyDown(KEY_E);
     static bool keyKPressed = false;
 
     if (ball.lives <=0){

@@ -121,10 +121,8 @@ void Nivel2::Update() {
     int deltaX = 0;
     int deltaY = 0;
     float speed = 1.0f;
-    bool isShiftPressed = IsKeyDown(KEY_LEFT_SHIFT);
+    bool isShiftPressed = IsKeyDown(KEY_E);
     static bool keyKPressed = false;
-
-    camera.zoom=1.0f;
     if (ball.lives <=0){
         Nivel::ResetLevel(90,416);
 
