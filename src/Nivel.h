@@ -61,6 +61,8 @@ public:
     void UpdateOjos(Vector<Ojo_Espectral> &ojos, Vector2 vector2);
     void UpdateChoco(Vector<Chocobos> &chocobos);
 
+    int bolas_fuego =0;
+
     void Vision(Enemy enemy);
     bool personaje_visto;
     void UpdateSlimes(Vector<Slime> &slimes);
@@ -75,6 +77,8 @@ public:
             if (rojo.type == "rojo") {
 
                 if (personaje_visto) {
+
+
                     rojo.LaunchFireball(activeFireballs);
                 }
                 UpdateFireballs(rojos, activeFireballs);
