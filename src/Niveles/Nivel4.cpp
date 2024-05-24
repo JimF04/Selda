@@ -27,28 +27,86 @@ Nivel4::Nivel4(int screenWidth, int screenHeight,int puntuacionInicial) : Nivel(
     PlayMusicStream(levelMusic);
 
 
-
-
-    for(int i = 0;i<3;i++){
+    for(int i = 0;i<5;i++){
         cofres.push_back(Cofres());
     }
     cofres[0].setPosition({24,5});
-    cofres[1].setPosition({72,12});
+    cofres[1].setPosition({52,39});
     cofres[2].setPosition({45,26});
+    cofres[3].setPosition({45,15});
+    cofres[4].setPosition({23,31});
 
 
 
-    for(int i = 0; i < 3;i++){
+    for(int i = 0; i < 5;i++){
         jarrones.push_back(Jarrones());
     }
 
     jarrones[0].setPosition({23,23});
     jarrones[1].setPosition({72,29});
     jarrones[2].setPosition({13,6});
+    jarrones[3].setPosition({35,10});
+    jarrones[4].setPosition({28,38});
 
+
+    for ( int i = 0; i < 2; i++){
+        rojo.push_back(Espectro("rojo"));
+    }
+
+    rojo[0].setPosition({49,26});
+    route1.push({49,34});
+    route1.push({49,26});
+    rojo[0].setRoute(route1);
+
+    rojo[1].setPosition({21,8});
+    route2.push({28,8});
+    route2.push({21,8});
+    rojo[1].setRoute(route2);
+
+    for ( int i = 0; i < 2; i++){
+        gris.push_back(Espectro("gris"));
+    }
+
+    gris[0].setPosition({37,25});
+    route3.push({37,11});
+    route3.push({43,11});
+    route3.push({37,11});
+    route3.push({37,25});
+    gris[0].setRoute(route3);
+
+    gris[1].setPosition({21,39});
+    route4.push({36,39});
+    route4.push({36,44});
+    route4.push({21,44});
+    route4.push({21,39});
+    gris[1].setRoute(route4);
+
+    for ( int i = 0; i < 1; i++){
+        azul.push_back(Espectro("azul"));
+    }
+
+    azul[0].setPosition({71,20});
+    route5.push({71,41});
+    route5.push({71,20});
+    azul[0].setRoute(route5);
+
+    for ( int i = 0; i < 3; i++){
+        chocobos.push_back(Chocobos());
+    }
+    chocobos[0].setPosition({25, 22});
+    chocobos[1].setPosition({25, 30});
+    chocobos[2].setPosition({69, 17});
+
+    for ( int i = 0; i < 2; i++){
+        ojos_espectrales.push_back(Ojo_Espectral());
+    }
+    ojos_espectrales[0].setPosition({57, 45});
+    ojos_espectrales[1].setPosition({37, 25});
 
 
 }
+
+
 
 void Nivel4::Update() {
     camera.zoom=1.0f;
@@ -109,12 +167,85 @@ void Nivel4::Update() {
 
 
     //==============Update de los enemigos===============
+    for(auto& espectro:rojo){
+        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                ball.Atacar();
+                contadorPuntuacion+=20;
+                espectro.setPosition({-1000,1000});
+            }
+        }
+    }
+
+    for(auto& espectro:azul){
+        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                ball.Atacar();
+                contadorPuntuacion+=20;
+                espectro.setPosition({-1000,1000});
+            }
+        }
+    }
+
+    for(auto& espectro:gris){
+        float distance = Vector2Distance(ball.GetPosition(),espectro.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                ball.Atacar();
+                contadorPuntuacion+=20;
+                espectro.setPosition({-1000,1000});
+            }
+        }
+    }
+
+    for(auto& ojo_espectral:ojos_espectrales){
+        float distance = Vector2Distance(ball.GetPosition(),ojo_espectral.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                ball.Atacar();
+                ojo_espectral.setPosition({-1000,1000});
+                contadorPuntuacion += 15;
+            }
+        }
+    }
+
+    for(auto& choco:chocobos){
+        float distance = Vector2Distance(ball.GetPosition(),choco.GetPosition());
+        if(distance < ball.GetRadius() + 10){
+            if(IsKeyDown(KEY_L)){
+                ball.Atacar();
+                choco.setPosition({-1000,1000});
+                contadorPuntuacion += 30;
+            }
+        }
+    }
+
+    chocobos[0].bresenham(ball.GetPosition(), wall);
+    chocobos[1].bresenham(ball.GetPosition(), wall);
+    chocobos[2].bresenham(ball.GetPosition(), wall);
+
+    UpdateEspectros(rojo);
+    UpdateEspectros(azul);
+    UpdateEspectros(gris);
+    UpdatesAzules(azul, ball.GetPosition());
+    UpdateRojos(rojo, activeFireballs);
+    UpdateChoco(chocobos);
+    UpdateOjos(ojos_espectrales,ball.GetPosition());
+
+    if (!personaje_visto) {
+        rojo[0].LoopPath(route1);
+        rojo[1].LoopPath(route2);
+        gris[0].LoopPath(route3);
+        gris[1].LoopPath(route4);
+        azul[0].LoopPath(route5);
+    }
 
 
     //==============Update de los objetos===============
     UpdateChests(cofres);
     UpdateJars(jarrones);
-
 }
 
 
@@ -130,6 +261,29 @@ void Nivel4::Draw() {
     DrawMiniMap();
     ball.Draw();
     ball.DrawHearts(camera);
+
+    //===========Enemigos================
+    for (auto& espectro : rojo) {
+        espectro.Draw();
+        espectro.DrawFireballs(activeFireballs);
+
+    }
+
+    for (auto& espectro : azul) {
+        espectro.Draw();
+    }
+
+    for (auto& espectro : gris) {
+        espectro.Draw();
+    }
+
+    for (auto& choco : chocobos) {
+        choco.Draw();
+    }
+
+    for (auto& ojos : ojos_espectrales) {
+        ojos.Draw();
+    }
 
     //===========Objetos================
     for(auto& cofre:cofres){

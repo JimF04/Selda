@@ -21,6 +21,13 @@ public:
     virtual void Draw() override;
     Music levelMusic;
     float keyKReleaseTime;
+    Vector<Espectro> gris;
+    Vector<Espectro> azul;
+    Vector<Espectro> rojo;
+    Vector<Ojo_Espectral> ojos_espectrales;
+    Vector<Chocobos> chocobos;
+
+
     void ResetLevel();
 
     virtual bool CheckWinCondition() override {
